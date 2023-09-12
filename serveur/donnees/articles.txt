@@ -1,0 +1,19 @@
+Smartphone Eco-Friendly;Un smartphone respectueux de l'environnement avec une batterie durable et un boîtier en matériaux recyclés.;Électronique;349.99;Neuf
+
+Meuble en Bois Massif;Une table en bois massif faite à la main avec des finitions impeccables.;Mobilier;249.99;Neuf
+
+Vélo de Ville Électrique;Un vélo électrique idéal pour les déplacements en ville, avec une autonomie de 50 km.;Sport et Loisirs;799.99;Neuf
+
+Robe de Soirée Élégante;Une robe de soirée élégante en satin avec une coupe flatteuse.;Mode;129.99;Neuf
+
+Tapis en Fibres Naturelles;Un tapis en fibres naturelles de haute qualité pour ajouter une touche d'élégance à votre intérieur.;Décoration;79.99;Neuf
+
+Livre "L'Écologie au Quotidien";Un livre informatif sur les pratiques écologiques à adopter au quotidien.;Livres;24.99;Neuf
+
+Sac à Dos de Randonnée;Un sac à dos spacieux et durable, idéal pour les aventures en plein air.;Sport et Loisirs;89.99;Neuf
+
+Écouteurs Sans Fil;Des écouteurs sans fil de haute qualité avec une excellente qualité sonore.;Électronique;69.99;Neuf
+
+Montre en Bois Éthique;Une montre en bois fabriquée de manière éthique avec un design élégant.;Accessoires;149.99;Neuf
+
+Jeu de Société Éducatif;Un jeu de société éducatif pour toute la famille, favorisant l'apprentissage interactif.;Jeux et Jouets;34.99;Neuf
