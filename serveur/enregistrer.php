@@ -13,18 +13,21 @@
 </head>
 <body>
     <h2>ENREGISTREMENT D'UN FILM</h2> 
-        <?php
-            $titre = $_POST['titre'];
-            $res = $_POST['res'];
-            $duree = $_POST['duree'];
+    <?php
+        $nomProduit = $_POST['nomProduit'];
+        $description = $_POST['description'];
+        $categorie = $_POST['categorie'];
+        $prix = $_POST['prix'];
+        $etat = $_POST['etat'];
 
-            $ficFilms = fopen("donnees/films.txt","a+");
-            $ligne = $titre.";".$res.";".$duree."\n";
-            fputs($ficFilms, $ligne);
-            fclose($ficFilms);
-            echo "Film ".$titre." a été bien enregistré";
-        ?>
+        $ficArticles = fopen("donnees/articles.txt", "a+");
+        $ligne = $nomProduit . ";" . $description . ";" . $categorie . ";" . $prix . ";" . $etat . "\n";
+        fputs($ficArticles, $ligne);
+        fclose($ficArticles);
+        echo "L'article " . $nomProduit . " a été bien enregistré";
+    ?>
+
     <br>
-    <a href="../index.html">Retour à la page d'accueil</a> 
+    <a href="../index.php">Retour à la page d'accueil</a> 
 </body>
 </html>
