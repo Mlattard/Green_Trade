@@ -13,6 +13,7 @@
 </head>
 </body>
 <div class="container">
+<h1>Objets à vendre</h1>
     <?php
     $ficArticles = fopen("donnees/articles.txt","r");
     ?>
@@ -30,7 +31,7 @@
                 ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <!-- Si vous avez une image pour chaque produit, vous pouvez l'ajouter ici -->
+                        <!-- Image -->
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $nomProduit; ?></h5>
                             <p class="card-text"><?php echo $description; ?></p>

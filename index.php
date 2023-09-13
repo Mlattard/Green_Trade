@@ -30,6 +30,9 @@
           <a class="nav-link" href="javascript:lister();">Objets à vendre</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="javascript:listerMembres();">Liste des membres</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a>
         </li>
       </ul>
@@ -83,8 +86,10 @@
         </div>
     </div>
 <!-- Fin modal enregistrer un article -->
-<!-- Formulaire lister -->
-<form id="formLister" action="serveur/lister.php"  method="POST"></form>
+    <!-- Formulaire lister -->
+    <form id="formLister" action="serveur/lister.php"  method="POST"></form>
+    <form id="formListerMembres" action="serveur/listerMembres.php"  method="POST"></form>
+
     <!-- Fin formulaire lister -->
 
     

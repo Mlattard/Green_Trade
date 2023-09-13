@@ -12,7 +12,7 @@
     <script src="../client/js/global.js"></script>
 </head>
 <body>
-    <h2>ENREGISTREMENT D'UN FILM</h2> 
+    <h2>ENREGISTREMENT D'UN ARTICLE</h2> 
     <?php
         $nomProduit = $_POST['nomProduit'];
         $description = $_POST['description'];
