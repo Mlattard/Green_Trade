@@ -21,7 +21,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Se Connecter</a>
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
@@ -39,6 +39,7 @@
                 </div>
             </div>
         </nav>
+
         <!-- Modal enregistrer un membre -->
         <div class="modal fade" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
             <div class="modal-dialog">
@@ -95,6 +96,39 @@
             </div>
         </div>
         <!-- Fin modal enregistrer un membre -->
+
+
+        <!-- Modal connexion membre -->
+        <div class="modal fade" id="modalConnexion" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabelMembre">Connexion</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span id="msgErrConnexion"></span>
+                        <form class="row g-3" action="serveur/connexion/controleurConnexion.php" method="POST">
+                            <div class="col-md-12">
+                                <label for="courrielConnexion" class="form-label">Adresse Email</label>
+                                <input type="email" class="form-control is-valid" id="courrielConnexion" name="courrielConnexion" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="mdpConnexion" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control is-valid" pattern="^[A-Za-Z0-9_\$#\-]{6,10}$" id="mdpConnexion" name="mdpConnexion" required>
+                            </div>
+                            <br />
+                            <div class="col-6">
+                                <button class="btn btn-primary" type="submit">Se connecter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin modal connexion -->
+
+
         <!-- Modal enregistrer un article -->
         <div class="modal fade" id="modalEnregistrer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -142,6 +176,7 @@
             </div>
         </div>
         <!-- Fin modal enregistrer un article -->
+
         <!-- Formulaire lister -->
         <form id="formLister" action="serveur/lister.php" method="POST"></form>
         <form id="formListerMembres" action="serveur/listerMembres.php" method="POST"></form>

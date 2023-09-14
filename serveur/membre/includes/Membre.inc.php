@@ -27,12 +27,12 @@
 
         // Setters
 
-        function setIdm($idm){$this->$idm=$idm;}
-        function setNom($nom){$this->$nom=$nom;}
-        function setPrenom($prenom){$this->$prenom=$prenom;}
-        function setCourriel($courriel){$this->$courriel=$courriel;}
-        function setSexe($sexe){$this->$sexe=$sexe;}
-        function setDaten($daten){$this->$daten=$daten;}
+        function setIdm($idm){$this->idm=$idm;}
+        function setNom($nom){$this->nom=$nom;}
+        function setPrenom($prenom){$this->prenom=$prenom;}
+        function setCourriel($courriel){$this->courriel=$courriel;}
+        function setSexe($sexe){$this->sexe=$sexe;}
+        function setDaten($daten){$this->daten=$daten;}
 
         // Fonctions
 

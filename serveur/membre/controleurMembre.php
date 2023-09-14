@@ -1,5 +1,5 @@
 <?php
-    require_once('includes/Membre.php');
+    require_once('includes/Membre.inc.php');
     require_once('modeleMembre.php');
 
     function Ctr_Ajouter(){
@@ -19,3 +19,4 @@
 ?>
 
 <br/>
+<a href="../../index.php">Retour à l'accueil</a>
