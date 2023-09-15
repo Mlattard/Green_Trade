@@ -8,4 +8,6 @@
 <body>
     <h1>Page Admin en travaux, prévu pour la partie 3</h1>
 </body>
+<br/>
+<a href="../../index.php">Retour à l'accueil</a>
 </html>

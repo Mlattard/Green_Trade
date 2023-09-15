@@ -18,6 +18,5 @@ let validerFormEnregistrer = () => {
             document.getElementById("msgPass").innerHTML = "";
         }, 3000);
     }
-
     return etat;
 }
