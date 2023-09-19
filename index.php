@@ -1,3 +1,4 @@
+<?php
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -6,10 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>GreenTrade - Accueil</title>
         <link rel="stylesheet" href="client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="client/public/css/style.css">
         <script src="client/public/utilitaires/jquery-3.6.3.min.js"></script>
         <script src="client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
         <script src="client/public/js/global.js"></script>
+        <link rel="stylesheet" href="client/public/css/style.css">
     </head>
 
     <script>
@@ -66,7 +67,7 @@
         <!-- Fin barre navigation -->
         
         <!-- Modal enregistrer un membre -->
-        <div class="modal fade" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
+        <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -123,7 +124,7 @@
         <!-- Fin modal enregistrer un membre -->
 
         <!-- Modal connexion membre -->
-        <div class="modal fade" id="modalConnexion" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
+        <div class="modal fade modal-custom-width" id="modalConnexion" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -153,7 +154,7 @@
         <!-- Fin modal connexion -->
 
         <!-- Modal enregistrer un article -->
-        <div class="modal fade" id="modalEnregistrer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade modal-custom-width" id="modalEnregistrer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
