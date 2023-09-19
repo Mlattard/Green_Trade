@@ -1,4 +1,7 @@
 <?php
+    if(isset($_COOKIE['PHPSESSID'])){
+        unset($_COOKIE);
+    }
     session_start();
 ?>
 
@@ -15,20 +18,6 @@
         <script src="client/public/js/global.js"></script>
         <link rel="stylesheet" href="client/public/css/style.css">
     </head>
-
-    <script>
-    $('form input').on("input", function () {
-        $(document).ready(function () {// Vérifiez si l'entrée est valide (par exemple, non vide)
-            if ($(this).val().trim() !== "") {
-                // Si l'entrée est valide, ajoutez la classe CSS "is-valid"
-                $(this).addClass("is-valid");
-            } else {
-                // Si l'entrée n'est pas valide, retirez la classe CSS "is-valid"
-                $(this).removeClass("is-valid");
-            }
-        });
-    });
-    </script>
 
     <body>
         <!-- Barre navigation -->
@@ -210,4 +199,18 @@
         <form id="formListerMembres" action="serveur/listerMembres.php" method="POST"></form>
         <!-- Fin formulaire lister -->
     </body>
+
+    <script>
+        $('form input').on("input", function () {
+            $(document).ready(function () {// Vérifiez si l'entrée est valide (par exemple, non vide)
+                if ($(this).val().trim() !== "") {
+                    // Si l'entrée est valide, ajoutez la classe CSS "is-valid"
+                    $(this).addClass("is-valid");
+                } else {
+                    // Si l'entrée n'est pas valide, retirez la classe CSS "is-valid"
+                    $(this).removeClass("is-valid");
+                }
+            });
+        });
+    </script>
 </html>

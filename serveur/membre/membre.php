@@ -43,7 +43,7 @@
                         </li>
                     </ul>
                     <?php
-                        echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom'];
+                        echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)";
                     ?>
                 </div>
             </div>
@@ -54,10 +54,7 @@
     <div class="container" >
     </div>
     <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
-        <!-- Bouton de déconnexion-->
-        <!--        <input type="submit" value="Déconnectez vous"/>-->
-        <!--        <p><b>Vous êtes bien connectés !</b></p>-->
-        <input type="hidden" name="deconnexion" value="deconnexion">
+        <input type="hidden" name="action" value="deconnexion">
         </form>
 
 </body>

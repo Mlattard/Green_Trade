@@ -15,12 +15,12 @@
                 $ligne = $reponse->fetch_object();
                 if($ligne->statut == 'A'){
                     //obtenir les infos du membre
-                    $requete = "SELECT * FROM connexion WHERE courriel=?";
+                    $requete = "SELECT * FROM membres WHERE courriel=?";
                     $stmt = $connexion->prepare($requete);
                     $stmt->bind_param("s", $courriel);
                     $stmt->execute();
                     $reponse = $stmt->get_result();
-                    $ligne2 = $reponse -> fetch_objet();
+                    $ligne2 = $reponse -> fetch_object();
                     if($ligne->role == 'M'){
                         $_SESSION['role'] = 'M';
                         $_SESSION['prenom'] = $ligne2->prenom;
