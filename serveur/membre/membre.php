@@ -2,17 +2,64 @@
     session_start();
     if(!isset( $_SESSION['role'])){
         header('location: ../../index.php');
+        exit();
     }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Membre</title>
-</head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GreenTrade - Page membre</title>
+        <link rel="stylesheet" href="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
+        <script src="../../client/public/utilitaires/jquery-3.6.3.min.js"></script>
+        <script src="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
+        <script src="../../client/public/js/global.js"></script>
+        <link rel="stylesheet" href="../../client/public/css/style.css">
+    </head>
 <body>
-    <h1>Page Membre en travaux, prévu pour la partie 3</h1>
+     <!-- Barre navigation -->
+     <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">GreenTrade</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <!-- Lien Accueil -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                        </li>
+                        <!-- Lien Se connecter -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profil</a>
+                        </li>
+                        <!-- Lien Devenir Membre -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:document.getElementById('formDeconnexion').submit();">Deconnexion</a>
+                        </li>
+                    </ul>
+                    <?php
+                        echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom'];
+                    ?>
+                </div>
+            </div>
+        </nav>
+        <!-- Fin barre navigation -->
+
+        <h1>Page Membre en travaux, prévu pour la partie 3</h1>
+    <div class="container" >
+    </div>
+    <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
+        <!-- Bouton de déconnexion-->
+        <!--        <input type="submit" value="Déconnectez vous"/>-->
+        <!--        <p><b>Vous êtes bien connectés !</b></p>-->
+        <input type="hidden" name="deconnexion" value="deconnexion">
+        </form>
+
 </body>
 
 <br/>

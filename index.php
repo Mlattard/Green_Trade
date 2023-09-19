@@ -145,6 +145,7 @@
                                 <label for="mdpConnexion" class="form-label">Mot de passe</label>
                                 <input type="password" class="form-control " pattern="^[A-Za-z0-9_\$#!\-]{6,10}$" id="mdpConnexion" name="mdpConnexion" required>
                             </div>
+                            <input type="hidden" name="action" value="connexion">
                             <br />
                             <div class="col-6">
                                 <button class="btn btn-primary" type="submit">Se connecter</button>

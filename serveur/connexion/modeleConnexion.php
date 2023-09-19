@@ -20,11 +20,11 @@
                     $stmt->bind_param("s", $courriel);
                     $stmt->execute();
                     $reponse = $stmt->get_result();
-                    $ligne = $reponse -> fetch_objet();
+                    $ligne2 = $reponse -> fetch_objet();
                     if($ligne->role == 'M'){
                         $_SESSION['role'] = 'M';
-                        $_SESSION['prenom'] = $ligne->prenom;
-                        $_SESSION['nom'] = $ligne->nom;
+                        $_SESSION['prenom'] = $ligne2->prenom;
+                        $_SESSION['nom'] = $ligne2->nom;
                         header('Location: ../membre/membre.php');
                         exit();
                     } else { // Dans ce cas c'est un admin
