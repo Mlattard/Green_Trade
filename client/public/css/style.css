@@ -1,5 +1,5 @@
 .modal-custom-width .modal-dialog {
-    width: 5000px;
-    max-width: 5000px; /* Définissez la largeur souhaitée ici */
+    width: 1000px;
+    max-width: 1000px; /* Définissez la largeur souhaitée ici */
     margin: 1.75rem auto; /* Pour centrer le modal horizontalement */
 }

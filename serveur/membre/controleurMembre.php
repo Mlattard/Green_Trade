@@ -9,7 +9,7 @@
         $sexe = $_POST['sexe'];
         $daten = $_POST['daten'];
 
-        $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten);
+        $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
         $msg = Mdl_Ajouter($membre, $_POST['mdp']);
         return $msg;
     }

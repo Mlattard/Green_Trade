@@ -68,12 +68,12 @@
                     </div>
                     <div class="modal-body">
                         <span id="msgErrEnregMembre"></span>
-                        <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST">
-                            <div class="col-md-12">
+                        <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data">
+                            <div class="col-md-6">
                                 <label for="nom" class="form-label">Nom du membre</label>
                                 <input type="text" class="form-control" id="nom" name="nom" required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="prenom" class="form-label">Prenom du membre</label>
                                 <input type="text" class="form-control" id="prenom" name="prenom" required>
                             </div>
@@ -81,15 +81,15 @@
                                 <label for="courriel" class="form-label">Adresse Email</label>
                                 <input type="email" class="form-control " id="courriel" name="courriel" required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="mdp" class="form-label">Mot de passe</label>
                                 <input type="password" class="form-control " pattern="^[A-Za-Z0-9_\$#!\-]{6,10}$" id="mdp" name="mdp" required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="mdpc" class="form-label">Confirmer mot de passe</label>
                                 <input type="password" class="form-control " pattern="^[A-Za-Z0-9_\$#!\-]{6,10}$" id="mdpc" name="mdpC" required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="sexe" class="form-label">Sexe</label>
                                 <select class="form-select " id="sexe" name="sexe" required>
                                     <option value="M">Homme</option>
@@ -97,9 +97,13 @@
                                     <option value="A">Autre</option>
                                 </select>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label for="daten" class="form-label">Date de naissance</label>
-                                <input type="text" class="form-control " id="daten" name="daten" required>
+                                <input type="date" class="form-control is-valid" id="daten" name="daten">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="photo" class="form-label">Ajouter votre photo</label>
+                                <input type="file" class="form-control is-valid " id="photo" name="photo">
                             </div>
                             <br />
                             <div class="col-6">

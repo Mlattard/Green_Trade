@@ -1,6 +1,19 @@
 <?php
     require_once('../bd/connexion.inc.php');
 
+    function chargerPhoto($nom, $prenom){
+        $photo = "avatarMembre.png";
+        $dossierPhotos = "photos/";
+        $objPhotoRecue = $_FILES['photo'][0];
+        if($objPhotoRecue -> tmp_name !== ""){
+            $nouveauNom = sha1($nom.$prenom.time());
+            $extension = strrchr($objPhotoRecue -> name, ".");
+            $photo = $nouveauNom.".".$extension;
+            @move_upload_file($objPhotoRecue -> tmp_name, $dossierPhoto.$photo);
+        }
+        return $photo;
+    }
+
     function Mdl_Ajouter($membre, $mdp){
         global $connexion;
         $nom = $membre->getNom();
@@ -8,6 +21,7 @@
         $courriel = $membre->getCourriel();
         $sexe = $membre->getSexe();
         $daten = $membre->getDaten();
+
         $msg = "";
 
         try{
@@ -17,9 +31,10 @@
             $stmt->execute();
             $reponse = $stmt->get_result();
             if ($reponse -> num_rows == 0) {
-                $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?)";
+                $photo = chargerPhoto($nom, $prenom);
+                $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
                 $stmt = $connexion->prepare($requete);
-                $stmt->bind_param("sssss", $nom, $prenom, $courriel, $sexe, $daten);
+                $stmt->bind_param("ssssss", $nom, $prenom, $courriel, $sexe, $daten, $photo);
                 // le premier argument de bind_param donne le type des arguments passé après: 5 's' car 5 String, on aurait utilisé i pour integer
                 $stmt->execute();
                 $idm = $connexion->insert_id;
