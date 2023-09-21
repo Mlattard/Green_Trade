@@ -4,12 +4,12 @@
     function chargerPhoto($nom, $prenom){
         $photo = "avatarMembre.png";
         $dossierPhotos = "photos/";
-        $objPhotoRecue = $_FILES['photo'][0];
-        if($objPhotoRecue -> tmp_name !== ""){
+        $objPhotoRecue = $_FILES['photo'];
+        if($objPhotoRecue['tmp_name'][0]){
             $nouveauNom = sha1($nom.$prenom.time());
-            $extension = strrchr($objPhotoRecue -> name, ".");
+            $extension = strrchr($objPhotoRecue['name'][0], ".");
             $photo = $nouveauNom.".".$extension;
-            @move_upload_file($objPhotoRecue -> tmp_name, $dossierPhoto.$photo);
+            @move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhoto.$photo);
         }
         return $photo;
     }
