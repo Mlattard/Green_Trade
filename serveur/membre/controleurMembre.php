@@ -8,12 +8,13 @@
         $courriel = $_POST['courriel'];
         $sexe = $_POST['sexe'];
         $daten = $_POST['daten'];
-
+                
         $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
+        $msg = $membre->getNom();
         $msg = Mdl_Ajouter($membre, $_POST['mdp']);
         return $msg;
     }
-
+    
     $msg = Ctr_Ajouter();
     echo $msg;
 ?>

@@ -41,7 +41,7 @@
         // Fonctions
 
         function afficher(){
-            $rep = "<img src='../photos/".$photo."'> ". $this->idm."  ".$this->nom."  ".$this->prenom."  ".$this->courriel."  ";
+            $rep = "<img src='../photos/".$this->photo."'> ".$this->idm."  ".$this->nom."  ".$this->prenom."  ".$this->courriel."  ";
             if ($this->sexe == 'F'){
                 $sexe = 'Feminin';
             } else if ($this->sexe == 'M'){

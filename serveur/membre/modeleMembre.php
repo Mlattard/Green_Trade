@@ -9,7 +9,7 @@
             $nouveauNom = sha1($nom.$prenom.time());
             $extension = strrchr($objPhotoRecue['name'][0], ".");
             $photo = $nouveauNom.".".$extension;
-            @move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhoto.$photo);
+            move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
         }
         return $photo;
     }
@@ -31,11 +31,12 @@
             $stmt->execute();
             $reponse = $stmt->get_result();
             if ($reponse -> num_rows == 0) {
-                $photo = chargerPhoto($nom, $prenom);
+                $photo = "avatarMembre.png"; //chargerPhoto($nom, $prenom);
                 $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
                 $stmt = $connexion->prepare($requete);
                 $stmt->bind_param("ssssss", $nom, $prenom, $courriel, $sexe, $daten, $photo);
-                // le premier argument de bind_param donne le type des arguments passé après: 5 's' car 5 String, on aurait utilisé i pour integer
+                // le premier argument de bind_param donne le type des arguments passé après: 6 's' car 6 String,
+                // on aurait utilisé i pour integer
                 $stmt->execute();
                 $idm = $connexion->insert_id;
                 
@@ -43,12 +44,12 @@
                 $stmt = $connexion->prepare($requete);
                 $stmt->bind_param("iss", $idm, $courriel, $mdp);
                 $stmt->execute();
-                $msg="<h3>Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré</h3>";
+                $msg = "<h3>Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré</h3>";
             } else {
-                $msg = "Le courriel ".$courriel. " est déjà dans la base de donnée";
+                $msg = "<h3>Le courriel ".$courriel." est déjà dans la base de donnée</h3>";
             }
         } catch(Exception $e) {
-            $msg="Une erreur est survenue lors de l'enregistrement: ".$e->getMessage()."\br";
+            $msg = "<h3>Une erreur est survenue lors de l'enregistrement: ".$e->getMessage()."\br</h3>";
         } finally {
             return $msg;
         }

@@ -43,7 +43,7 @@
                         </li>
                     </ul>
                     <?php
-                        echo "Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']. "<img src='". $_SESSION['photo']. "'width=48 height=48>"." :)";
+                        echo "<div class = 'infoMembre'><img class = 'avatar' src='".$_SESSION['photo']."'width=48 height=48>"."Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)</div>";
                     ?>
                 </div>
             </div>

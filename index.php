@@ -68,7 +68,7 @@
                     </div>
                     <div class="modal-body">
                         <span id="msgErrEnregMembre"></span>
-                        <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data">
+                        <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data" onSubmit="return validerFormEnreg();">
                             <div class="col-md-6">
                                 <label for="nom" class="form-label">Nom du membre</label>
                                 <input type="text" class="form-control" id="nom" name="nom" required>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="mdpc" class="form-label">Confirmer mot de passe</label>
-                                <input type="password" class="form-control " pattern="^[A-Za-Z0-9_\$#!\-]{6,10}$" id="mdpc" name="mdpC" required>
+                                <input type="password" class="form-control " pattern="^[A-Za-Z0-9_\$#!\-]{6,10}$" id="mdpc" name="mdpc" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="sexe" class="form-label">Sexe</label>
