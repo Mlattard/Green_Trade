@@ -5,11 +5,11 @@
         $photo = "avatarMembre.png";
         $dossierPhotos = "photos/";
         $objPhotoRecue = $_FILES['photo'];
-        if($objPhotoRecue['tmp_name'][0]){
+        if($objPhotoRecue['tmp_name'][0]!== ""){
             $nouveauNom = sha1($nom.$prenom.time());
             $extension = strrchr($objPhotoRecue['name'][0], ".");
-            $photo = $nouveauNom.".".$extension;
-            move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
+            $photo = $nouveauNom.$extension;
+            @move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
         }
         return $photo;
     }
@@ -21,7 +21,6 @@
         $courriel = $membre->getCourriel();
         $sexe = $membre->getSexe();
         $daten = $membre->getDaten();
-
         $msg = "";
 
         try{
@@ -31,7 +30,7 @@
             $stmt->execute();
             $reponse = $stmt->get_result();
             if ($reponse -> num_rows == 0) {
-                $photo = "avatarMembre.png"; //chargerPhoto($nom, $prenom);
+                $photo = chargerPhoto($nom, $prenom);
                 $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
                 $stmt = $connexion->prepare($requete);
                 $stmt->bind_param("ssssss", $nom, $prenom, $courriel, $sexe, $daten, $photo);
