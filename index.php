@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="photo" class="form-label">Ajouter votre photo</label>
-                                <input type="file" class="form-control is-valid " id="photo" name="photo">
+                                <input type="file" class="form-control is-valid " id="photo" name="photo[]">
                             </div>
                             <br />
                             <div class="col-6">
