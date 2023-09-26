@@ -53,4 +53,18 @@
             return $msg;
         }
     }
+
+    function Mdl_Lister(){
+        global $connexion;
+        try{
+            $requete = "SELECT * FROM membres";
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $reponse = $stmt->get_result();
+        } catch(Exception $e) {
+            return [];
+        }finally{
+            return $reponse;
+        }
+    }
 ?>

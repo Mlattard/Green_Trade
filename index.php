@@ -58,6 +58,160 @@
         </nav>
         <!-- Fin barre navigation -->
         
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card_perso" style="width: 18rem;">
+                        <img src="serveur/film/pochettes/$ligne->photo" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">$ligne->nom</h5>
+                            <h5 class="card-title">$ligne->prenom</h5>
+                            <p class="card-text">$ligne->daten</p>
+                            <p class="card-text">$ligne->courriel</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Répétez ces quatre colonnes pour chaque carte supplémentaire -->
+            </div>
+        </div>
+
         <!-- Modal enregistrer un membre -->
         <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
             <div class="modal-dialog">
