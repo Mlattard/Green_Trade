@@ -9,7 +9,7 @@
             $nouveauNom = sha1($nom.$prenom.time());
             $extension = strrchr($objPhotoRecue['name'][0], ".");
             $photo = $nouveauNom.$extension;
-            @move_upload_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
+            @move_uploaded_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
         }
         return $photo;
     }
