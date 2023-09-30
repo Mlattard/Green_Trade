@@ -5,14 +5,25 @@
         $photo = "avatarMembre.png";
         $dossierPhotos = "photos/";
         $objPhotoRecue = $_FILES['photo'];
+   
+        echo "Nom: $nom, Prenom: $prenom<br>";
+   
         if($objPhotoRecue['tmp_name'][0]!== ""){
             $nouveauNom = sha1($nom.$prenom.time());
             $extension = strrchr($objPhotoRecue['name'][0], ".");
             $photo = $nouveauNom.$extension;
+   
+            echo "Nouveau Nom: $nouveauNom, Extension: $extension, Photo: $photo<br>";
+   
             @move_uploaded_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
+            if (!file_exists($dossierPhotos.$photo)) {
+                $msg = "Erreur lors du téléchargement du fichier.";
+            }
         }
+
         return $photo;
     }
+   
 
     function Mdl_Ajouter($membre, $mdp){
         global $connexion;
