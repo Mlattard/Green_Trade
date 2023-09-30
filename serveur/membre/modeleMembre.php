@@ -9,13 +9,15 @@
         echo "Nom: $nom, Prenom: $prenom<br>";
    
         if($objPhotoRecue['tmp_name'][0]!== ""){
-            $nouveauNom = sha1($nom.$prenom.time());
-            $extension = strrchr($objPhotoRecue['name'][0], ".");
+            $nouveauNom = $nom.$prenom.time();
+            $extension = strrchr($objPhotoRecue['name'], ".");
+
+            echo "Extension: $extension<br>";
             $photo = $nouveauNom.$extension;
    
-            echo "Nouveau Nom: $nouveauNom, Extension: $extension, Photo: $photo<br>";
+            echo "Photo: $photo, Dossier: ".$dossierPhotos.$photo."<br>";
    
-            @move_uploaded_file($objPhotoRecue['tmp_name'][0], $dossierPhotos.$photo);
+            @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
             if (!file_exists($dossierPhotos.$photo)) {
                 $msg = "Erreur lors du téléchargement du fichier.";
             }
