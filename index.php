@@ -17,36 +17,52 @@
     <script src="client/public/js/global.js"></script>
     <link rel="stylesheet" href="client/public/css/style.css">
   </head>
-  <body>
-    <!-- Barre navigation -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="serveur\membre\photos\logo.png" alt="Logo de GreenTrade" class="logo" style="width: 50px; height: auto; margin-right: 10px;">
-            GreenTrade
-        </a>        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <!-- Lien Accueil -->
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-            </li>
-            <!-- Lien Se connecter -->
-            <li class="nav-item">
-              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
-            </li>
-            <!-- Lien Devenir Membre -->
-            <li class="nav-item">
-              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" >Contactez-nous</a>
-            </li>
-            <!--
-                        <li class="nav-item"><a class="nav-link" href="javascript:lister();">Objets à vendre</a></li><li class="nav-item"><a class="nav-link" href="javascript:listerMembres();">Liste des membres</a></li><li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a></li> -->
-          </ul>
+       <body>
+        <!-- Barre navigation -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="serveur\membre\photos\logo.png" alt="Logo de GreenTrade" class="logo" style="width: 50px; height: auto; margin-right: 10px;">
+                GreenTrade
+            </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <!-- Lien Accueil -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                        </li>
+                        <!-- Lien Se connecter -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
+                        </li>
+                        <!-- Lien Devenir Membre -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" >Contactez-nous</a>
+                        </li>
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:lister();">Objets à vendre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:listerMembres();">Liste des membres</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Fin barre navigation -->
+        
+        
         </div>
       </div>
     </nav>
