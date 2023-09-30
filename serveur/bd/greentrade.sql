@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2023 at 10:46 PM
+-- Generation Time: Sep 30, 2023 at 08:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,19 +40,19 @@ CREATE TABLE `connexion` (
 --
 
 INSERT INTO `connexion` (`idm`, `courriel`, `pass`, `role`, `statut`) VALUES
-(1, 'admin@greentrade.com', 'admin', 'A', 'A'),
-(2, 'johndoe@example.com', 'password1', 'U', 'A'),
-(3, 'janesmith@example.com', 'password2', 'U', 'A'),
-(4, 'robertjohnson@example.com', 'password3', 'U', 'A'),
-(5, 'emilywilliams@example.com', 'password4', 'U', 'A'),
-(6, 'michaelbrown@example.com', 'password5', 'U', 'A'),
-(7, 'sarahdavis@example.com', 'password6', 'U', 'A'),
-(8, 'dananderson@example.com', 'password7', 'U', 'A'),
-(9, 'oliviawilson@example.com', 'password8', 'U', 'A'),
-(10, 'jessicalee@example.com', 'password9', 'U', 'A'),
-(11, 'davidgarcia@example.com', 'password10', 'U', 'A'),
-(12, 'walezka.marrder@gmail.com', 'Wm123!', 'M', 'A'),
-(13, 'ludwid-m@hotmail.com', 'Wm1!', 'M', 'A');
+(1, 'admin@greentrade.com', 'admin123!', 'A', 'A'),
+(2, 'johndoe@example.com', 'test123!', 'U', 'A'),
+(3, 'janesmith@example.com', 'test123!', 'U', 'A'),
+(4, 'robertjohnson@example.com', 'test123!', 'U', 'A'),
+(5, 'emilywilliams@example.com', 'test123!', 'U', 'A'),
+(6, 'michaelbrown@example.com', 'test123!', 'U', 'A'),
+(7, 'sarahdavis@example.com', 'test123!', 'U', 'A'),
+(8, 'dananderson@example.com', 'test123!', 'U', 'A'),
+(9, 'oliviawilson@example.com', 'test123!', 'U', 'A'),
+(10, 'jessicalee@example.com', 'test123!', 'U', 'A'),
+(11, 'davidgarcia@example.com', 'test123!', 'U', 'A'),
+(16, 'walezka.marrder@gmail.com', 'test123!', 'M', 'A'),
+(23, 'martin@gmail.com', 'test123!', 'M', 'A');
 
 -- --------------------------------------------------------
 
@@ -86,8 +86,8 @@ INSERT INTO `membres` (`idm`, `nom`, `prenom`, `courriel`, `sexe`, `datenaissanc
 (9, 'Wilson', 'Olivia', 'oliviawilson@example.com', 'F', '1997-01-12', 'avatarMembre.png'),
 (10, 'Lee', 'Jessica', 'jessicalee@example.com', 'F', '1987-06-25', 'avatarMembre.png'),
 (11, 'Garcia', 'David', 'davidgarcia@example.com', 'M', '1994-08-08', 'avatarMembre.png'),
-(12, 'MARRDER', 'WALEZKA', 'walezka.marrder@gmail.com', 'F', '1994-03-21', 'avatarMembre.png'),
-(13, 'Quiroz', 'Ligia', 'ludwid-m@hotmail.com', 'M', '1995-05-05', 'b0dae0e4eb7beba17fc58ff022a5b23a0fc88a16');
+(16, 'MARRDER', 'WALEZKA', 'walezka.marrder@gmail.com', 'F', '2023-09-21', 'walezka.jpeg'),
+(23, 'Tremblay', 'Martin', 'martin@gmail.com', 'M', '1992-10-13', 'TremblayMartin1696095823.png');
 
 --
 -- Indexes for dumped tables
@@ -113,7 +113,7 @@ ALTER TABLE `membres`
 -- AUTO_INCREMENT for table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idm` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables

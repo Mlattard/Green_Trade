@@ -17,56 +17,44 @@
     <script src="client/public/js/global.js"></script>
     <link rel="stylesheet" href="client/public/css/style.css">
   </head>
-       <body>
-        <!-- Barre navigation -->
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="serveur\membre\photos\logo.png" alt="Logo de GreenTrade" class="logo" style="width: 50px; height: auto; margin-right: 10px;">
-                GreenTrade
-            </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <!-- Lien Accueil -->
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-                        </li>
-                        <!-- Lien Se connecter -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
-                        </li>
-                        <!-- Lien Devenir Membre -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" >Contactez-nous</a>
-                        </li>
-                        <!--
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:lister();">Objets à vendre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:listerMembres();">Liste des membres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a>
-                        </li> -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- Fin barre navigation -->
-        
-        
+  <body>
+    <!-- Barre navigation -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="serveur\membre\photos\logo.png" alt="Logo de GreenTrade" class="logo" style="width: 50px; height: auto; margin-right: 10px;"> GreenTrade </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <!-- Lien Accueil -->
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+            </li>
+            <!-- Lien Se connecter -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
+            </li>
+            <!-- Lien Devenir Membre -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contactez-nous</a>
+            </li>
+            <!--
+                        <li class="nav-item"><a class="nav-link" href="javascript:lister();">Objets à vendre</a></li><li class="nav-item"><a class="nav-link" href="javascript:listerMembres();">Liste des membres</a></li><li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a></li> -->
+          </ul>
         </div>
       </div>
     </nav>
     <!-- Fin barre navigation -->
+    </div>
+    </div>
+    </nav>
+    <!-- Fin barre navigation -->
+
     <!-- Modal enregistrer un membre -->
     <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
       <div class="modal-dialog">
@@ -127,6 +115,7 @@
       </div>
     </div>
     <!-- Fin modal enregistrer un membre -->
+
     <!-- Modal connexion membre -->
     <div class="modal fade modal-custom-width" id="modalConnexion" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
       <div class="modal-dialog">
@@ -157,6 +146,7 @@
       </div>
     </div>
     <!-- Fin modal connexion -->
+
     <!-- Modal enregistrer un article -->
     <div class="modal fade modal-custom-width" id="modalEnregistrer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -208,91 +198,79 @@
       </div>
     </div>
     <!-- Fin modal enregistrer un article -->
+    
+    <!--Cards bootstrap pour articles bidon pour labo 1-->
+    <div class="container card-container mt-3 d-flex flex-wrap justify-content-around">
+      <!-- Premier Article -->
+      <div class="card card-custom" style="width: 18rem;">
+        <img class="card-img-top" src="https://cdn.shoplightspeed.com/shops/614362/files/49841479/image.jpg" alt="Velo de montagne" style="height: 250px; width: auto;">
+        <div class="card-body">
+          <h5 class="card-title">Vélo de Montagne</h5>
+          <p class="card-text">Un vélo de montagne robuste avec une suspension avant, idéal pour les sentiers accidentés.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Catégorie: Sports</li>
+          <li class="list-group-item">Prix: 70 $</li>
+          <li class="list-group-item">État: Bon état</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary">Acheter</a>
+        </div>
+      </div>
+      <!-- Deuxième Article -->
+      <div class="card card-custom" style="width: 18rem;">
+        <img class="card-img-top" src="https://i.insider.com/617ad55a46a50c0018d40cc9?width=1136&format=jpeg" alt="iPhone 13" style="height: 250px; width: auto;">
+        <div class="card-body">
+          <h5 class="card-title">iPhone 13</h5>
+          <p class="card-text">iPhone 13 d'occasion : Un smartphone élégant doté d'un écran Super Retina XDR, d'une puce A15 Bionic et d'une double caméra avancée.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Catégorie: Électronique</li>
+          <li class="list-group-item">Prix: 550 $</li>
+          <li class="list-group-item">État: Usagé</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary">Acheter</a>
+        </div>
+      </div>
+      <!-- Troisième Article -->
+      <div class="card card-custom" style="width: 18rem;">
+        <img class="card-img-top" src="https://www.stuff.tv/wp-content/uploads/sites/2/2022/08/Stuff-Yamaha-WS-B1A-Portable-Bluetooth-Speaker-2.png?w=1024" alt="Haut-Parleur Bluetooth" style="height: 250px; width: auto;">
+        <div class="card-body">
+          <h5 class="card-title">Haut-Parleur Bluetooth Portable</h5>
+          <p class="card-text">Une Haut-Parleur Bluetooth compacte avec un son puissant, parfaite pour les fêtes en plein air. Le son est très bon</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Catégorie: Électronique</li>
+          <li class="list-group-item">Prix: 25 $</li>
+          <li class="list-group-item">État: Usage normal</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary">Acheter</a>
+        </div>
+      </div>
+      <!-- Quatrième Article -->
+      <div class="card card-custom" style="width: 18rem;">
+        <img class="card-img-top" src="https://ca.morethanabackpack.com/cdn/shop/products/little-bee-vintage-faux-leather-backpack-444453_600x600.jpg?v=1605527770" alt="Sacà dos Vintage" style="height: 250px; width: auto;">
+        <div class="card-body">
+          <h5 class="card-title">Sac à Dos Vintage</h5>
+          <p class="card-text">Un sac à dos en cuir vintage avec plusieurs compartiments, idéal pour les amateurs de style rétro. Utilisé juste 2 fois.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Catégorie: Mode</li>
+          <li class="list-group-item">Prix: 20 $</li>
+          <li class="list-group-item">État: Légères marques d'usage</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary">Acheter</a>
+        </div>
+      </div>
+    </div>
+
     <!-- Formulaire lister -->
     <form id="formLister" action="serveur/lister.php" method="POST"></form>
     <form id="formListerMembres" action="serveur/listerMembres.php" method="POST"></form>
     <!-- Fin formulaire lister -->
-    
-    <!--Cards pour articles bidon pour labo 1-->
-    <div class="container card-container mt-3 d-flex flex-wrap justify-content-around">
-    <!-- Premier Article -->
-    <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://cdn.shoplightspeed.com/shops/614362/files/49841479/image.jpg" alt="Velo de montagne" style="height: 250px; width: auto;">
-        <div class="card-body">
-            <h5 class="card-title">Vélo de Montagne</h5>
-            <p class="card-text">Un vélo de montagne robuste avec une suspension avant, idéal pour les sentiers accidentés.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Catégorie: Sports</li>
-            <li class="list-group-item">Prix: 70 $</li>
-            <li class="list-group-item">État: Bon état</li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-    </div>
-    <!-- Deuxième Article -->
-    <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://i.insider.com/617ad55a46a50c0018d40cc9?width=1136&format=jpeg" alt="iPhone 13" style="height: 250px; width: auto;" >
-        <div class="card-body">
-            <h5 class="card-title">iPhone 13</h5>
-            <p class="card-text">iPhone 13 d'occasion : Un smartphone élégant doté d'un écran Super Retina XDR, d'une puce A15 Bionic et d'une double caméra avancée.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Catégorie: Électronique</li>
-            <li class="list-group-item">Prix: 550 $</li>
-            <li class="list-group-item">État: Usagé</li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-    </div>
-    <!-- Troisième Article -->
-    <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://www.stuff.tv/wp-content/uploads/sites/2/2022/08/Stuff-Yamaha-WS-B1A-Portable-Bluetooth-Speaker-2.png?w=1024" alt="Haut-Parleur Bluetooth" style="height: 250px; width: auto;">
-        <div class="card-body">
-            <h5 class="card-title">Haut-Parleur Bluetooth Portable</h5>
-            <p class="card-text">Une Haut-Parleur Bluetooth compacte avec un son puissant, parfaite pour les fêtes en plein air. Le son est très bon</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Catégorie: Électronique</li>
-            <li class="list-group-item">Prix: 25 $</li>
-            <li class="list-group-item">État: Usage normal</li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-    </div>
-    <!-- Quatrième Article -->
-    <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://ca.morethanabackpack.com/cdn/shop/products/little-bee-vintage-faux-leather-backpack-444453_600x600.jpg?v=1605527770" alt="Sacà dos Vintage" style="height: 250px; width: auto;">
-        <div class="card-body">
-            <h5 class="card-title">Sac à Dos Vintage</h5>
-            <p class="card-text">Un sac à dos en cuir vintage avec plusieurs compartiments, idéal pour les amateurs de style rétro. Utilisé juste 2 fois.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Catégorie: Mode</li>
-            <li class="list-group-item">Prix: 20 $</li>
-            <li class="list-group-item">État: Légères marques d'usage</li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-    </div>
-</div>
 
   </body>
-  <!-- <script>
-    $('form input').on("input", function() {
-      $(document).ready(function() { // Vérifiez si l'entrée est valide (par exemple, non vide)
-        if ($(this).val().trim() !== "") {
-          // Si l'entrée est valide, ajoutez la classe CSS "is-valid"
-          $(this).addClass("is-valid");
-        } else {
-          // Si l'entrée n'est pas valide, retirez la classe CSS "is-valid"
-          $(this).removeClass("is-valid");
-        }
-      });
-    });
-  </script> -->
 </html>
