@@ -1,8 +1,12 @@
 <?php
-    if(isset($_COOKIE['PHPSESSID'])){
-        unset($_COOKIE);
+    if(isset($_COOKIE["PHPSESSID"])){
+        unset($_COOKIE["PHPSESSID"]);
     }
     session_start();
+    $msg="";
+    if(isset($_GET['msg'])){
+        $msg = $_GET['msg'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +21,7 @@
     <script src="client/public/js/global.js"></script>
     <link rel="stylesheet" href="client/public/css/style.css">
   </head>
-  <body>
+  <body onLoad='montrerToast("<?php echo $msg; ?>");'>
     <!-- Barre navigation -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
@@ -49,10 +53,39 @@
         </div>
       </div>
     </nav>
-    <!-- Fin barre navigation -->
-    </div>
-    </div>
-    </nav>
+
+    <div id="contenu">
+      <?php
+          require_once(__DIR__.'/serveur/article/modeleArticle.php');
+
+          function obtenirCardArticle($ligne){
+              $card = <<<CARD
+                  <div class="card card_perso" style="width: 18rem;">
+                      <img src="serveur/article/photos/$ligne->photo" class="card-img-top" alt="...">
+                      <div class="card-body">
+                          <h5 class="card-title">$ligne->nom</h5>
+                          <p class="card-text">$ligne->description</p>
+                          <p class="card-text">Catégorie: $ligne->categorie</p>
+                          <p class="card-text">Prix: $ligne->prix</p>
+                          <p class="card-text">État: $ligne->etat</p>
+                          <a href="#" class="btn btn-primary">Acheter</a>
+                      </div>
+                  </div>
+              CARD;
+              return $card;
+          }
+
+          $reponseArticle = Mdl_Lister();
+
+          $repArticle = "<div class=row>";
+          while($ligneArticle = $reponseArticle->fetch_object()){
+              $repArticle .= obtenirCardArticle($ligneArticle);
+          }
+          $repArticle .= "</div>";
+          echo $repArticle;
+      ?>
+  </div>
+
     <!-- Fin barre navigation -->
 
     <!-- Modal enregistrer un membre -->
@@ -199,73 +232,18 @@
     </div>
     <!-- Fin modal enregistrer un article -->
     
-    <!--Cards bootstrap pour articles bidon pour labo 1-->
-    <div class="container card-container mt-3 d-flex flex-wrap justify-content-around">
-      <!-- Premier Article -->
-      <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://cdn.shoplightspeed.com/shops/614362/files/49841479/image.jpg" alt="Velo de montagne" style="height: 250px; width: auto;">
-        <div class="card-body">
-          <h5 class="card-title">Vélo de Montagne</h5>
-          <p class="card-text">Un vélo de montagne robuste avec une suspension avant, idéal pour les sentiers accidentés.</p>
+    <!-- Pour le Toast  -->
+    <div class="toast posToast" role="status" aria-live="polite" aria-atomic="true" data-delay="5000">
+            <div class="toast-header">
+                <img src="client/public/images/message2.png" class="rounded mr-2">
+                <strong class="mr-auto">Message</strong>
+                <!-- <button type="button" class="close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div id="textToast" class="toast-body">
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Catégorie: Sports</li>
-          <li class="list-group-item">Prix: 70 $</li>
-          <li class="list-group-item">État: Bon état</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-      </div>
-      <!-- Deuxième Article -->
-      <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://i.insider.com/617ad55a46a50c0018d40cc9?width=1136&format=jpeg" alt="iPhone 13" style="height: 250px; width: auto;">
-        <div class="card-body">
-          <h5 class="card-title">iPhone 13</h5>
-          <p class="card-text">iPhone 13 d'occasion : Un smartphone élégant doté d'un écran Super Retina XDR, d'une puce A15 Bionic et d'une double caméra avancée.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Catégorie: Électronique</li>
-          <li class="list-group-item">Prix: 550 $</li>
-          <li class="list-group-item">État: Usagé</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-      </div>
-      <!-- Troisième Article -->
-      <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://www.stuff.tv/wp-content/uploads/sites/2/2022/08/Stuff-Yamaha-WS-B1A-Portable-Bluetooth-Speaker-2.png?w=1024" alt="Haut-Parleur Bluetooth" style="height: 250px; width: auto;">
-        <div class="card-body">
-          <h5 class="card-title">Haut-Parleur Bluetooth Portable</h5>
-          <p class="card-text">Une Haut-Parleur Bluetooth compacte avec un son puissant, parfaite pour les fêtes en plein air. Le son est très bon</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Catégorie: Électronique</li>
-          <li class="list-group-item">Prix: 25 $</li>
-          <li class="list-group-item">État: Usage normal</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-      </div>
-      <!-- Quatrième Article -->
-      <div class="card card-custom" style="width: 18rem;">
-        <img class="card-img-top" src="https://ca.morethanabackpack.com/cdn/shop/products/little-bee-vintage-faux-leather-backpack-444453_600x600.jpg?v=1605527770" alt="Sacà dos Vintage" style="height: 250px; width: auto;">
-        <div class="card-body">
-          <h5 class="card-title">Sac à Dos Vintage</h5>
-          <p class="card-text">Un sac à dos en cuir vintage avec plusieurs compartiments, idéal pour les amateurs de style rétro. Utilisé juste 2 fois.</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Catégorie: Mode</li>
-          <li class="list-group-item">Prix: 20 $</li>
-          <li class="list-group-item">État: Légères marques d'usage</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary">Acheter</a>
-        </div>
-      </div>
-    </div>
 
     <!-- Formulaire lister -->
     <form id="formLister" action="serveur/lister.php" method="POST"></form>

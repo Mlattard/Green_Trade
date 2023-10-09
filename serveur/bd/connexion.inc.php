@@ -1,5 +1,5 @@
 <?php
-    require_once('../env/env.inc.php');
+    require_once(__DIR__.'/../env/env.inc.php');
     
     // avec l'API mysqli
     $connexion = new mysqli(SERVEUR, USAGER, MDP, BD);
