@@ -77,7 +77,7 @@
 
           $reponseArticle = Mdl_Lister();
 
-          $repArticle = "<div class=row>";
+          $repArticle = "<div class='row listeArticles'>";
           while($ligneArticle = $reponseArticle->fetch_object()){
               $repArticle .= obtenirCardArticle($ligneArticle);
           }
