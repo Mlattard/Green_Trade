@@ -1,10 +1,3 @@
-// let lister = () => {
-//     document.getElementById('formLister').submit();
-// }
-
-// let listerMembres = () => {
-//     document.getElementById('formListerMembres').submit();
-// }
 
 let validerFormEnregistrer = () => {
     let etat = true;
