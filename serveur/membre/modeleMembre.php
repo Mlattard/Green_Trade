@@ -1,7 +1,7 @@
 <?php
     require_once('../bd/connexion.inc.php');
 
-    function chargerPhoto($nom, $prenom){
+    function chargerPhotoMembre($nom, $prenom){
         $photo = "avatarMembre.png";
         $dossierPhotos = "photos/";
         $objPhotoRecue = $_FILES['photo'];
@@ -43,7 +43,7 @@
             $stmt->execute();
             $reponse = $stmt->get_result();
             if ($reponse -> num_rows == 0) {
-                $photo = chargerPhoto($nom, $prenom);
+                $photo = chargerPhotoMembre($nom, $prenom);
                 $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
                 $stmt = $connexion->prepare($requete);
                 $stmt->bind_param("ssssss", $nom, $prenom, $courriel, $sexe, $daten, $photo);

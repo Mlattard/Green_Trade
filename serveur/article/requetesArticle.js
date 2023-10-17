@@ -1,8 +1,6 @@
 // requetesArticle.js
 
-let enregistrerArticle = () => {
-    let formArticle = new FormData(document.getElementById('formEnreg'));
-    formArticle.append('action', 'enregistrer');
+let requeteAjax = (formArticle) => {
     $.ajax({
         type: 'POST',
         url: 'serveur/article/controleurArticle.php',
@@ -11,51 +9,31 @@ let enregistrerArticle = () => {
         contentType: false,
         processData: false,
         success: function (reponse) {
+            $('#divFormFiche').hide();
             articlesVue(reponse);
         },
         fail: function (err) {
-            // Gestion des erreurs
         }
     });
+}
+
+let enregistrerArticle = () => {
+    let formArticle = new FormData(document.getElementById('formEnreg'));
+    formArticle.append('action', 'enregistrer');
+    requeteAjax(formArticle);
 };
 
 let listerArticles = () => {
     let formArticle = new FormData();
     formArticle.append('action', 'lister');
-    $.ajax({
-        type: 'POST',
-        url: 'serveur/article/controleurArticle.php',
-        data: formArticle,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (reponse) {
-            articlesVue(reponse);
-        },
-        fail: function (err) {
-            // Gestion des erreurs
-        }
-    });
+    requeteAjax(formArticle);
 };
 
 let enleverArticle = () => {
     let leForm = document.getElementById('formEnlever');
     let formArticle = new FormData(leForm);
     formArticle.append('action', 'enlever');
-    $.ajax({
-        type: 'POST',
-        url: 'serveur/article/controleurArticle.php',
-        data: formArticle,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (reponse) {
-            articlesVue(reponse);
-        },
-        fail: function (err) {
-            // Gestion des erreurs
-        }
-    });
+    requeteAjax(formArticle);
 };
 
 let obtenirFicheArticle = () => {
@@ -63,41 +41,12 @@ let obtenirFicheArticle = () => {
     let leForm = document.getElementById('formFiche');
     let formArticle = new FormData(leForm);
     formArticle.append('action', 'fiche');
-    $.ajax({
-        type: 'POST',
-        url: 'serveur/article/controleurArticle.php',
-        data: formArticle,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (reponse) {
-            articlesVue(reponse);
-        },
-        fail: function (err) {
-            // Gestion des erreurs
-        }
-    });
+    requeteAjax(formArticle);
 };
 
 let modifierArticle = () => {
     let leForm = document.getElementById('formFicheF');
     let formArticle = new FormData(leForm);
     formArticle.append('action', 'modifier');
-    $.ajax({
-        type: 'POST',
-        url: 'serveur/article/controleurArticle.php',
-        data: formArticle,
-        contentType: false,
-        processData: false,
-        dataType: 'json',
-        success: function (reponse) {
-            $('#divFormFiche').hide();
-            articlesVue(reponse);
-        },
-        fail: function (err) {
-            // Gestion des erreurs
-        }
-    });
+    requeteAjax(formArticle);
 };
-
-// Continuez de la même manière pour obtenirFicheArticle et modifierArticle si nécessaire

@@ -1,18 +1,106 @@
 <?php
-    require_once(__DIR__.'/../bd/connexion.inc.php');
 
-    function Mdl_Lister(){
-        global $connexion;
+declare (strict_types=1);
+
+require_once(__DIR__."/../bd/connexion.inc.php");
+require_once(__DIR__."/includes/Article.inc.php");
+
+class DaoArticle {
+    static private $modelArticle = null;
+    
+    private $reponse = array();
+    private $connexion = null;
+	
+    private function __construct(){}
+    
+	static function getDaoArticle():DaoArticle {
+		if(self::$modelArticle == null){
+			self::$modelArticle = new DaoArticle();
+		}
+		return self::$modelArticle;
+	}
+	
+    function chargerPhotoArticle($nom){
+        $photo = "avatarMembre.png";
+        $dossierPhotos = "photos/";
+        $objPhotoRecue = $_FILES['photo'];
+   
+        if($objPhotoRecue['tmp_name'][0]!== ""){
+            $nouveauNom = $nom.time();
+            $extension = strrchr($objPhotoRecue['name'], ".");
+   
+            $photo = $nouveauNom.$extension;
+
+            @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
+            if (!file_exists($dossierPhotos.$photo)) {
+                $msg = "Erreur lors du téléchargement du fichier.";
+            }
+        }
+
+        return $photo;
+    }
+
+	function Dao_Article_Enregistrer(Article $article):string {
+             
+        $connexion = Connexion::getConnexion();
+
+        $requete = "INSERT INTO articles VALUES(0,?,?,?,?,?,?)";
         try{
-            // Tester si le courriel existe et mot de passe aussi
-            $requete = "SELECT * FROM articles";
+            $photo = chargerPhotoArticle($article->getNom());
+            $donnees = [$article->getNom(),$article->getDescription(),$article->getCategorie(),
+                        $article->getPrix(),$article->getEtat(),$photo];
             $stmt = $connexion->prepare($requete);
-            $stmt->execute();
-            $reponse = $stmt->get_result();
-        } catch(Exception $e) {
-            return [];
-        }finally{
-            return $reponse;
+            $stmt->execute($donnees);
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "Article bien enregistré";
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Probème lors de l'enregistrement de l'article";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
         }
     }
+	
+    function Dao_Article_Supprimer(Article $article):string {
+
+        $connexion = Connexion::getConnexion();
+        $requete = "DELETE FROM articles WHERE id=?";
+        try{
+            $donnees = $article->getIda();
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute($donnees);
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "Article bien supprimé";
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Probème lors de la suppression de l'article";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
+        }
+    }
+
+    function Dao_Article_ObtenirTout():string {
+
+        $connexion = Connexion::getConnexion();
+        $requete = "SELECT * FROM articles";
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['listeArticles'] = array();
+            while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
+                $this->reponse['listeArticles'][] = $ligne;
+            }
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
+        }
+    }
+}
 ?>
