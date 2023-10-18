@@ -2,9 +2,9 @@
 	require_once("modeleArticle.php");
 	$tabRes = array();
 
-    function CtrF_Enregistrer(){
-        $film = new Film(0,$_POST['titre'], (int)$_POST['duree'], $_POST['res'],"Pochette");
-        return DaoFilm::getDaoFilm()->MdlF_Enregistrer($film);
+    function Ctrl_Article_Enregistrer(){
+        $article = new Article(0, $_POST['nom'], $_POST['description'], $_POST['categorie'], $_POST['prix'], $_POST['etat'],"photo");
+        return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article);
     }
 
 	function Ctrl_Article_Enregistrer(){
@@ -116,7 +116,7 @@
 	//******************************************************
 	//  Contrôleur
 
-	$action=$_POST['action'];
+	$action = $_POST['action'];
 	switch($action){
 		case "enregistrer" :
 			return  $this->Ctrl_Article_Enregistrer();
