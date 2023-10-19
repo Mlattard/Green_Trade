@@ -51,15 +51,15 @@
               <a class="nav-link" href="#">Contactez-nous</a>
             </li>
             <!--
-                        <li class="nav-item"><a class="nav-link" href="javascript:lister();">Objets à vendre</a></li><li class="nav-item"><a class="nav-link" href="javascript:listerMembres();">Liste des membres</a></li><li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="javascript:lister();">Objets à vendre</a></li><li class="nav-item"><a class="nav-link" href="javascript:listerMembres();">Liste des membres</a></li><li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a></li> -->
           </ul>
         </div>
       </div>
     </nav>
-
-    <div id="contenu"></div>
-
     <!-- Fin barre navigation -->
+
+    <!-- Contenu page -->
+    <div id="contenu"></div>
 
     <!-- Modal enregistrer un membre -->
     <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">

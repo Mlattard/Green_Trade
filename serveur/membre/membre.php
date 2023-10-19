@@ -5,6 +5,7 @@
         exit();
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,9 +19,9 @@
         <script src="../../client/public/js/global.js"></script>
         <link rel="stylesheet" href="../../client/public/css/style.css">
     </head>
-<body>
-     <!-- Barre navigation -->
-     <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <body>  
+        <!-- Barre navigation -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">GreenTrade</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -55,8 +56,7 @@
     </div>
     <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
         <input type="hidden" name="action" value="deconnexion">
-        </form>
-
+    </form>
 </body>
 
 <br/>

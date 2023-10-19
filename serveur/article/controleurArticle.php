@@ -1,13 +1,6 @@
 <?php
 	require_once("includes/Article.inc.php");
 	require_once("daoArticle.php");
-	
-	// $tabRes = array();
-
-    // function Ctrl_Article_Enregistrer(){
-    //     $article = new Article(0, $_POST['nom'], $_POST['description'], $_POST['categorie'], $_POST['prix'], $_POST['etat'],"photo");
-    //     return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article);
-    // }
 
 	class ControleurArticle { 
 		static private $instanceCtrl = null;
