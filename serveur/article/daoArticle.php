@@ -6,7 +6,7 @@ require_once(__DIR__."/../bd/connexion.inc.php");
 require_once(__DIR__."/includes/Article.inc.php");
 
 class DaoArticle {
-    static private $modeleArticle = null;
+    static private $instanceDaoArticle = null;
     
     private $reponse = array();
     private $connexion = null;
@@ -14,10 +14,10 @@ class DaoArticle {
     private function __construct(){}
     
 	static function getDaoArticle():DaoArticle {
-		if(self::$modeleArticle == null){
-			self::$modeleArticle = new DaoArticle();
+		if(self::$instanceDaoArticle == null){
+			self::$instanceDaoArticle = new DaoArticle();
 		}
-		return self::$modeleArticle;
+		return self::$instanceDaoArticle;
 	}
 
     function chargerPhotoArticle($nom){
