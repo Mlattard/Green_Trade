@@ -39,14 +39,15 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Accueil</a>
             </li>
-            <!-- Lien Se connecter -->
-            <li class="nav-item">
-              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
-            </li>
             <!-- Lien Devenir Membre -->
             <li class="nav-item">
               <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalDevenirMembre">Devenir Membre</a>
             </li>
+            <!-- Lien Se connecter -->
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalConnexion">Se Connecter</a>
+            </li>
+            
             <li class="nav-item">
               <a class="nav-link" href="#">Contactez-nous</a>
             </li>
@@ -71,7 +72,7 @@
           </div>
           <div class="modal-body">
             <span id="msgErrEnregMembre"></span>
-            <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data" class="row g-3" onSubmit="return validerFormEnreg();">
+            <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data" class="row g-3">
               <div class="col-md-6">
                 <label for="nom" class="form-label">Nom du membre</label>
                 <input type="text" class="form-control" id="nom" name="nom" required>
@@ -111,6 +112,7 @@
               <br />
               <div class="col-6">
                 <button class="btn btn-primary" type="submit">Enregistrer</button>
+                <input type="hidden" name="action" value="enregistrer">
               </div>
               <div class="col-6">
                 <button class="btn btn-danger" type="reset">Vider</button>

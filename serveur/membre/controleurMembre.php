@@ -2,22 +2,7 @@
     require_once('includes/Membre.inc.php');
     require_once('daoMembre.php');
 
-    class ControleurMembre { 
-        static private $instanceCtr = null;
-        
-        private $reponse;
-    
-        private function __construct(){}
-    
-        static function getControleurMembre():ControleurMembre{
-            if(self::$instanceCtr == null){
-                self::$instanceCtr = new ControleurMembre();  
-            }
-            return self::$instanceCtr;
-        }
-    }
-
-    function Ctrl_Membre_Ajouter(){
+    function Ctrl_Membre_Enregistrer(){
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $courriel = $_POST['courriel'];
@@ -25,23 +10,33 @@
         $daten = $_POST['daten'];
         
         $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
-        return DaoMembre::getDaoMembre()->Dao_Membre_Ajouter($membre, $_POST['mdp']);
+        $msg = DaoMembre::getDaoMembre()->Dao_Membre_Enregistrer($membre, $_POST['mdp']);
+        echo $msg;
     }
     
-    function Ctrl_Membre_Actions(){
-        $action=$_POST['action'];
-        switch($action){
-            case "ajouter" :
-                return  $this->Ctrl_Membre_Ajouter();
-            break;
-            case "modifier" :
-                //modifier(); 
-            break;
-            case "desactiver" :
-                //desactiver(); 
-            break; 
-        }     
+    function Ctrl_Membre_Modifier(){
+
     }
+
+    function Ctrl_Membre_Desactiver(){
+
+    }
+
+    
+    $action=$_POST['action'];
+
+    switch($action){
+        case "enregistrer" :
+            Ctrl_Membre_Enregistrer();
+        break;
+        case "modifier" :
+            Ctrl_Membre_Modifier();
+        break;
+        case "desactiver" :
+            Ctrl_Membre_Desactiver();
+        break; 
+    }     
+    
 ?>
 
 <br/>
