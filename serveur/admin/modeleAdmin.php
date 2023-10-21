@@ -51,12 +51,12 @@ class ModeleAdmin
         return $stmt;
     }
 
-    function getFicheArticle($id)
+    function getFicheArticle($ida)
     {
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "SELECT * FROM articles WHERE id = ?";
+        $requete = "SELECT * FROM articles WHERE ida = ?";
         $stmt = $connexion->prepare($requete);
-        $stmt->execute([$id]);
+        $stmt->execute([$ida]);
         Connexion::getInstanceConnexion()->deconnexion();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }

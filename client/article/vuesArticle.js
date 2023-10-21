@@ -5,10 +5,6 @@ var actionsVues = (action, reponse) => {
         break;
 		case "enlever" :
         break;
-		case "modifier" :
-			$('#messages').html(reponse.msg);
-			setTimeout(function(){ $('#messages').html(""); }, 5000);
-		break;
 		case "listerCards" :
 			listerVuesArticlesCards(reponse.listeArticles);
 		break;
@@ -17,6 +13,9 @@ var actionsVues = (action, reponse) => {
 		break;
         case "detailsArticle" :
 			afficherModalAvecDetails(reponse.article);
+		break;
+        case "modifier" :
+			afficherModalModifier(reponse.article);
 		break;
 	}
 }
@@ -87,7 +86,7 @@ let afficherModalAvecDetails = (article) => {
 
 let modalDetailsArticle = (article) => {
     return `
-    <div class="modal modal-xl fade" id="modalDetailsArticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal modal-xl fade" id="modalDetailsArticle" tabindex="-1" aria-labelledby="modalDetailsArticle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,8 +101,72 @@ let modalDetailsArticle = (article) => {
                     <p>État: ${article.etat}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Modifier</button>
+                    <button type="button" class="btn btn-secondary" onclick="rendreInvisible('modalDetailsArticle'); modifierArticle(${article.ida});">Modifier</button>
                     <button type="button" class="btn btn-secondary">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+let afficherModalModifier = (article) => {
+    document.getElementById('modals').innerHTML = modalModifierArticle(article);
+    const modalModifier = new bootstrap.Modal('#modalModifierArticle', {
+    });
+    alert(JSON.stringify(article));
+	$('#nomProduit').val(article.nom);
+	$('#description').val(article.description);
+	$('#categorie').val(article.categorie);
+	$('#prix').val(article.prix);
+    $('#etat').val(article.etat);
+    modalModifier.show();
+}
+
+let modalModifierArticle = (article) => {
+    return `
+    <div class="modal modal-xl fade" id="modalModifierArticle" tabindex="-1" aria-labelledby="modalModifierArticle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">${article.ida} - ${article.nom}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="msgErrModifierArticle"></span>
+                    <form class="row g-3" id="formModifierArticle">
+                        <input type="hidden" value="${article.ida}" id="mdArticleIda">
+                        <div class="col-md-12">
+                            <label for="nomProduit" class="form-label">Nom du produit</label>
+                            <input type="text" class="form-control " id="nomProduit" name="nomProduit" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control " id="description" name="description" required></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="categorie" class="form-label">Catégorie</label>
+                            <input type="text" class="form-control " id="categorie" name="categorie" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="prix" class="form-label">Prix</label>
+                            <input type="number" min="0" step="0.01" class="form-control " id="prix" name="prix" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="etat" class="form-label">État</label>
+                            <select class="form-select " id="etat" name="etat" required>
+                            <option value="Neuf">Neuf</option>
+                            <option value="Occasion">Occasion</option>
+                            <option value="Usagé">Usagé</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="photoArticle" class="form-label">Photo</label>
+                            <input type="file" class="form-control" id="photoArticle" name="photoArticle">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Modifier</button>
                 </div>
             </div>
         </div>

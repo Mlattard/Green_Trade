@@ -61,7 +61,7 @@ class DaoArticle {
             return json_encode($this->reponse);
         }
     }
-	
+
     function Dao_Article_Supprimer(Article $article):string {
 
         $connexion = Connexion::getConnexion();
@@ -123,6 +123,32 @@ class DaoArticle {
             unset($connexion);
             return json_encode($this->reponse);
         }
+    }
+
+    function Dao_Article_Modifier($articleId):string {
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete="SELECT photo FROM articles WHERE ida=".$articleId;
+        try{
+			$stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+			
+			$anciennePhoto = $this->reponse['article']->photo;
+			$photo = chargerPhotoArticle($anciennePhoto);	
+			
+			$requete = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo=".$photo." WHERE ida=?";
+			$donnees = [$_POST['nom'], $_POST['description'], $_POST['categorie'], $_POST['prix'], $_POST['etat']];
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute($donnees);
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "modifier";
+		}catch(Exception $e){
+		}finally{
+			unset($instanceModele);
+		}
     }
 }
 ?>

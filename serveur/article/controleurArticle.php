@@ -35,6 +35,10 @@
 			return DaoArticle::getDaoArticle()->Dao_Article_Details((int)$articleId); 
 		}
 
+		function Ctrl_Article_Modifier($articleId){
+			return DaoArticle::getDaoArticle()->Dao_Article_Modifier((int)$articleId); 
+		}
+
 	    function Ctrl_Article_Actions(){
 			$action = $_POST['action'];
 
@@ -45,12 +49,12 @@
 				case "supprimer" :
 					return $this->Ctrl_Article_Supprimer();
 				break;
-				case "modifier" :
-					return $this->Ctrl_Article_Modifier();
-				break;
 				case "listerTab" :
 				case "listerCards" :
 					return $this->Ctrl_Article_Lister();
+				break;
+				case "modifier" :
+					return $this->Ctrl_Article_Modifier($_POST['articleId']);
 				break;
 				case "detailsArticle" :
 					return $this->Ctrl_Article_Details($_POST['articleId']);

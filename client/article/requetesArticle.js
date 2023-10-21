@@ -50,26 +50,20 @@ let enregistrerArticle = () => {
     requeteAjaxIndex(formArticle);
 };
 
-let enleverArticle = () => {
-    let leForm = document.getElementById('formEnlever');
-    let formArticle = new FormData(leForm);
-    formArticle.append('action', 'enlever');
-    requeteAjaxIndex(formArticle);
-};
+// let enleverArticle = () => {
+//     let leForm = document.getElementById('formEnlever');
+//     let formArticle = new FormData(leForm);
+//     formArticle.append('action', 'enlever');
+//     requeteAjaxIndex(formArticle);
+// };
 
-let obtenirFicheArticle = () => {
-    $('#divFiche').hide();
-    let leForm = document.getElementById('formFiche');
-    let formArticle = new FormData(leForm);
-    formArticle.append('action', 'fiche');
-    requeteAjaxIndex(formArticle);
-};
-
-let modifierArticle = () => {
-    let leForm = document.getElementById('formFicheF');
-    let formArticle = new FormData(leForm);
+let modifierArticle = (articleId) => {
+    $('#modalDetailsArticle').hide();
+    let formArticle = new FormData();
     formArticle.append('action', 'modifier');
-    requeteAjaxIndex(formArticle);
+    formArticle.append('articleId', articleId);
+    requeteAjaxAdmin(formArticle);
+
 };
 
 let trouverDetailsArticleParId = (articleId) => {

@@ -3,8 +3,7 @@ require_once("modeleAdmin.php");
 
 $tabRes = array();
 
-function enregistrer()
-{
+function enregistrer(){
     global $tabRes;
 
     // Récupérer les données du formulaire
@@ -27,8 +26,7 @@ function enregistrer()
     }
 }
 
-function lister()
-{
+function lister(){
     global $tabRes;
 
     try {
@@ -44,8 +42,7 @@ function lister()
     }
 }
 
-function enlever()
-{
+function enlever(){
     global $tabRes;
 
     // Récupérer l'ID de l'article à supprimer
@@ -64,8 +61,7 @@ function enlever()
     }
 }
 
-function fiche()
-{
+function fiche(){
     global $tabRes;
 
     // Récupérer l'ID de l'article à afficher
@@ -85,8 +81,7 @@ function fiche()
     }
 }
 
-function modifier()
-{
+function modifier(){
     global $tabRes;
 
     // Récupérer les données du formulaire
