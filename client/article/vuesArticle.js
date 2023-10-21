@@ -11,12 +11,16 @@ var actionsVues = (action, reponse) => {
         case "listerTab" :
 			listerVuesArticlesTab(reponse.listeArticles);
 		break;
-        case "detailsArticle" :
-			afficherModalAvecDetails(reponse.article);
+        case "ficheArticle" :
+			afficherModalFiche(reponse.article);
 		break;
-        case "modifier" :
+        case "formModifier" :
 			afficherModalModifier(reponse.article);
 		break;
+        case "modifierArticle" :
+			modifierArticle(reponse.article);
+		break;
+        
 	}
 }
 
@@ -68,7 +72,7 @@ function listerVuesArticlesTab(listeArticles){
 }
 
 function remplirTableauArticle(article){
-    var ligne = '<tr onclick="trouverDetailsArticleParId(' + article.ida + ');">';
+    var ligne = '<tr onclick="obtenirFicheArticle(' + article.ida + ');">';
     ligne += '<th scope="row">' + article.ida + '</th>';
     ligne += '<td>' + article.nom + '</td>';
     ligne += '<td>' + article.categorie + '</td>';
@@ -77,16 +81,16 @@ function remplirTableauArticle(article){
     return ligne;
 }
 
-let afficherModalAvecDetails = (article) => {
-    document.getElementById('modals').innerHTML = modalDetailsArticle(article);
-    const modalDetails = new bootstrap.Modal('#modalDetailsArticle', {
+let afficherModalFiche = (article) => {
+    document.getElementById('modals').innerHTML = modalFicheArticle(article);
+    const modalFiche = new bootstrap.Modal('#modalFicheArticle', {
     });
-    modalDetails.show();
+    modalFiche.show();
 }
 
-let modalDetailsArticle = (article) => {
+let modalFicheArticle = (article) => {
     return `
-    <div class="modal modal-xl fade" id="modalDetailsArticle" tabindex="-1" aria-labelledby="modalDetailsArticle" aria-hidden="true">
+    <div class="modal modal-xl fade" id="modalFicheArticle" tabindex="-1" aria-labelledby="modalFicheArticle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -95,13 +99,13 @@ let modalDetailsArticle = (article) => {
                 </div>
                 <div class="modal-body">
                     <img src="../article/photos/${article.photo}" class="photoArticle" alt="...">
-                    <p>${article.description}</p>
+                    <p>Description: ${article.description}</p>
                     <p>Catégorie: ${article.categorie}</p>
                     <p>Prix: ${article.prix} $</p>
                     <p>État: ${article.etat}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="rendreInvisible('modalDetailsArticle'); modifierArticle(${article.ida});">Modifier</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormModifier(${article.ida});">Modifier</button>
                     <button type="button" class="btn btn-secondary">Supprimer</button>
                 </div>
             </div>
@@ -166,7 +170,7 @@ let modalModifierArticle = (article) => {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Modifier</button>
+                    <button type="submit" class="btn btn-secondary" onclick="modifierArticle(${article.ida});">Modifier</button>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ let requeteAjaxIndex = (formArticle) => {
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
-}
+};
 
 let requeteAjaxAdmin = (formArticle) => {
     $.ajax({
@@ -30,7 +30,7 @@ let requeteAjaxAdmin = (formArticle) => {
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
-}
+};
 
 let listerArticlesCards = () => {
     let formArticle = new FormData();
@@ -44,11 +44,25 @@ let listerArticlesTab = () => {
     requeteAjaxAdmin(formArticle);
 };
 
-let enregistrerArticle = () => {
-    let formArticle = new FormData(document.getElementById('formEnreg'));
-    formArticle.append('action', 'enregistrer');
-    requeteAjaxIndex(formArticle);
+let obtenirFicheArticle = (articleIda) => {
+    let formArticle = new FormData();
+    formArticle.append('action', 'ficheArticle');
+    formArticle.append('articleIda', articleIda);
+    requeteAjaxAdmin(formArticle);
 };
+
+let obtenirFormModifier = (articleIda) => {
+    let formArticle = new FormData();
+    formArticle.append('action', 'formModifier');
+    formArticle.append('articleIda', articleIda);
+    requeteAjaxAdmin(formArticle);
+};
+
+// let enregistrerArticle = () => {
+//     let formArticle = new FormData(document.getElementById('formEnreg'));
+//     formArticle.append('action', 'enregistrer');
+//     requeteAjaxIndex(formArticle);
+// };
 
 // let enleverArticle = () => {
 //     let leForm = document.getElementById('formEnlever');
@@ -57,18 +71,9 @@ let enregistrerArticle = () => {
 //     requeteAjaxIndex(formArticle);
 // };
 
-let modifierArticle = (articleId) => {
-    $('#modalDetailsArticle').hide();
-    let formArticle = new FormData();
-    formArticle.append('action', 'modifier');
-    formArticle.append('articleId', articleId);
-    requeteAjaxAdmin(formArticle);
-
-};
-
-let trouverDetailsArticleParId = (articleId) => {
-    let formArticle = new FormData();
-    formArticle.append('action', 'detailsArticle');
-    formArticle.append('articleId', articleId);
-    requeteAjaxAdmin(formArticle);
-}
+// let modifierArticle = (articleIda) => {
+//     let formArticle = new FormData();
+//     formArticle.append('action', 'modifierArticle');
+//     formArticle.append('articleIda', articleIda);
+//     requeteAjaxAdmin(formArticle);
+// };

@@ -31,12 +31,16 @@
 			return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article); 
 	    }
 
-		function Ctrl_Article_Details($articleId){
-			return DaoArticle::getDaoArticle()->Dao_Article_Details((int)$articleId); 
+		function Ctrl_Article_Fiche($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Fiche($articleIda); 
 		}
 
-		function Ctrl_Article_Modifier($articleId){
-			return DaoArticle::getDaoArticle()->Dao_Article_Modifier((int)$articleId); 
+		function Ctrl_Article_Form_Modifier($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Form_Modifier($articleIda); 
+		}
+
+		function Ctrl_Article_Modifier($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($articleIda); 
 		}
 
 	    function Ctrl_Article_Actions(){
@@ -53,11 +57,14 @@
 				case "listerCards" :
 					return $this->Ctrl_Article_Lister();
 				break;
-				case "modifier" :
-					return $this->Ctrl_Article_Modifier($_POST['articleId']);
+				case "formModifier" :
+					return $this->Ctrl_Article_Form_Modifier($_POST['articleIda']);
 				break;
-				case "detailsArticle" :
-					return $this->Ctrl_Article_Details($_POST['articleId']);
+				case "ficheArticle" :
+					return $this->Ctrl_Article_Fiche($_POST['articleIda']);
+				break;
+				case "modifierArticle" :
+					return $this->Ctrl_Article_Modifier($_POST['articleIda']);
 				break;
 			}
 	    }
