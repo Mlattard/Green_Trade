@@ -103,5 +103,26 @@ class DaoArticle {
             return json_encode($this->reponse);
         }
     }
+
+    function Dao_Article_Details($articleId){
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "SELECT * FROM articles WHERE ida=".$articleId;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "detailsArticle";
+            //$this->reponse['article'] = array();
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+            
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
+        }
+    }
 }
 ?>

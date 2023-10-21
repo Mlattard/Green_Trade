@@ -1,4 +1,3 @@
-
 let validerFormEnregistrer = () => {
     let etat = true;
     const mdp = document.getElementById("mdp");

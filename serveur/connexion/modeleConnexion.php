@@ -22,15 +22,16 @@
                     $reponse2 = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($reponse['role'] == 'M'){
                         $_SESSION['role'] = 'M';
-                        $_SESSION['prenom'] = $ligne2->prenom;
-                        $_SESSION['nom'] = $ligne2->nom;
-                        $_SESSION['photo'] = "../membre/photos/".$ligne2->photo;
+                        $_SESSION['prenom'] = $reponse2['prenom'];
+                        $_SESSION['nom'] = $reponse2['nom'];
+                        $_SESSION['photo'] = "../membre/photos/".$reponse2['photo'];
                         header('Location: ../membre/membre.php');
                         exit();
                     } else { // Dans ce cas c'est un admin
                         $_SESSION['role']= 'A';
-                        $_SESSION['prenom'] = $ligne->prenom;
-                        $_SESSION['nom'] = $ligne->nom;
+                        $_SESSION['prenom'] = $reponse2['prenom'];
+                        $_SESSION['nom'] = $reponse2['nom'];
+                        $_SESSION['photo'] = "../membre/photos/".$reponse2['photo'];
                         header('Location: ../admin/admin.php');
                         exit();
                     }
