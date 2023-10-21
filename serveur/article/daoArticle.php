@@ -124,7 +124,7 @@ class DaoArticle {
         }
     }
 
-    function Dao_Article_Form_Fiche($articleIda){
+    function Dao_Article_Form_Modifier($articleIda){
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
         try{
@@ -134,12 +134,12 @@ class DaoArticle {
             $this->reponse['msg'] = "";
             $this->reponse['action'] = "formModifier";
             $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
-            
         }catch (Exception $e){
             $this->reponse['OK'] = false;
             $this->reponse['msg'] = "Problème pour obtenir les données des articles";
         }finally {
             unset($connexion);
+
             return json_encode($this->reponse);
         }
     }
