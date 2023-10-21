@@ -11,16 +11,16 @@ var actionsVues = (action, reponse) => {
         case "listerTab" :
 			listerVuesArticlesTab(reponse.listeArticles);
 		break;
+        case "envoyerModif" :
         case "ficheArticle" :
 			afficherModalFiche(reponse.article);
 		break;
         case "formModifier" :
 			afficherModalModifier(reponse.article);
-		break;
-        case "modifierArticle" :
-			modifierArticle(reponse.article);
-		break;
-        
+		break;   
+        case "formSupprimer" :
+			afficherModalSupprimer(reponse.article);
+		break;        
 	}
 }
 
@@ -82,6 +82,7 @@ function remplirTableauArticle(article){
 }
 
 let afficherModalFiche = (article) => {
+    alert('test');
     document.getElementById('modals').innerHTML = modalFicheArticle(article);
     const modalFiche = new bootstrap.Modal('#modalFicheArticle', {
     });
@@ -106,7 +107,7 @@ let modalFicheArticle = (article) => {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormModifier(${article.ida});">Modifier</button>
-                    <button type="button" class="btn btn-secondary">Supprimer</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormSupprimer(${article.ida});">Supprimer</button>
                 </div>
             </div>
         </div>
@@ -117,13 +118,22 @@ let afficherModalModifier = (article) => {
     document.getElementById('modals').innerHTML = modalModifierArticle(article);
     const modalModifier = new bootstrap.Modal('#modalModifierArticle', {
     });
-    alert(JSON.stringify(article));
-	$('#nomProduit').val(article.nom);
+	$('#nomArticle').val(article.nom);
 	$('#description').val(article.description);
 	$('#categorie').val(article.categorie);
 	$('#prix').val(article.prix);
     $('#etat').val(article.etat);
     modalModifier.show();
+}
+
+let afficherModalSupprimer = (article) => {
+    document.getElementById('modals').innerHTML = modalSupprimerArticle(article);
+    const modalSupprimer = new bootstrap.Modal('#modalSupprimerArticle', {
+    });
+    $('#nomArticle').val(article.nom);
+	$('#ida').val(article.ida);
+	
+    modalSupprimer.show();
 }
 
 let modalModifierArticle = (article) => {
@@ -137,11 +147,11 @@ let modalModifierArticle = (article) => {
                 </div>
                 <div class="modal-body">
                     <span id="msgErrModifierArticle"></span>
-                    <form class="row g-3" id="formModifierArticle">
+                    <form class="row g-3" id="formModifierArticle" action="envoyerModifArticle(${article.ida})" method="POST" enctype="multipart/form-data">
                         <input type="hidden" value="${article.ida}" id="mdArticleIda">
                         <div class="col-md-12">
-                            <label for="nomProduit" class="form-label">Nom du produit</label>
-                            <input type="text" class="form-control " id="nomProduit" name="nomProduit" required>
+                            <label for="nomArticle" class="form-label">Nom du produit</label>
+                            <input type="text" class="form-control " id="nomArticle" name="nomArticle" required>
                         </div>
                         <div class="col-md-12">
                             <label for="description" class="form-label">Description</label>
@@ -170,7 +180,32 @@ let modalModifierArticle = (article) => {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" onclick="modifierArticle(${article.ida});">Modifier</button>
+                    <button type="submit" class="btn btn-secondary">Modifier</button>
+                    <input type="hidden" name="action" value="modifier">
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+let modalSupprimerArticle = (article) => {
+    return `
+    <div class="modal modal-xl fade" id="modalSupprimerArticle" tabindex="-1" aria-labelledby="modalSupprimerArticle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Supprimer un article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="msgErrSupprimerArticle"></span>
+                    <p>Êtes-vous sûr de vouloir supprimer l'article: ${article.ida} - ${article.nom} ?</p>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Supprimer</button>
+                    <input type="hidden" name="action" value="modifier">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 </div>
             </div>
         </div>

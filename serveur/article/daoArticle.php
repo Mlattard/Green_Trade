@@ -21,9 +21,9 @@ class DaoArticle {
 	}
 
     function chargerPhotoArticle($nom){
-        $photo = "avatarMembre.png";
+        $photo = "logo.png";
         $dossierPhotos = "photos/";
-        $objPhotoRecue = $_FILES['photo'];
+        $objPhotoRecue = $_POST['photo'];
    
         if($objPhotoRecue['tmp_name'][0]!== ""){
             $nouveauNom = $nom.time();
@@ -31,6 +31,26 @@ class DaoArticle {
    
             $photo = $nouveauNom.$extension;
 
+            @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
+            if (!file_exists($dossierPhotos.$photo)) {
+                $msg = "Erreur lors du téléchargement du fichier.";
+            }
+        }
+
+        return $photo;
+    }
+
+    function chargerPhotoMembre($nom, $prenom){
+        $photo = "avatarMembre.png";
+        $dossierPhotos = "photos/";
+        $objPhotoRecue = $_FILES['photo'];
+   
+        if($objPhotoRecue['tmp_name'][0]!== ""){
+            $nouveauNom = $nom.$prenom.time();
+            $extension = strrchr($objPhotoRecue['name'], ".");
+
+            $photo = $nouveauNom.$extension;
+   
             @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
             if (!file_exists($dossierPhotos.$photo)) {
                 $msg = "Erreur lors du téléchargement du fichier.";
@@ -144,27 +164,63 @@ class DaoArticle {
         }
     }
 
-    function Dao_Article_Modifier($articleIda):string {
+    function Dao_Article_Form_Supprimer($articleIda){
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete="SELECT photo FROM articles WHERE ida=".$articleIda;
+        $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "formSupprimer";
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+        }finally {
+            unset($connexion);
+
+            return json_encode($this->reponse);
+        }
+    }
+
+    function Dao_Article_Modifier($article):string {
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete="SELECT photo FROM articles WHERE ida=".$article->articleIda;
+
+        $this->reponse = [
+            'OK' => false,
+            'msg' => "",
+            'action' => "",
+            'article' => null,
+            'photoArticle' => null,
+        ];
+
         try{
 			$stmt = $connexion->prepare($requete);
             $stmt->execute();
-            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+            $this->reponse['photoArticle'] = $stmt->fetch(PDO::FETCH_OBJ)->photo;
 			
-			$anciennePhoto = $this->reponse['article']->photo;
-			$photo = chargerPhotoArticle($anciennePhoto);	
+			$anciennePhoto = $this->reponse['photoArticle'];
+			//$photo = chargerPhotoArticle($anciennePhoto);	
 			
-			$requete = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo=".$photo." WHERE ida=".$articleIda;
-			$donnees = [$_POST['nom'], $_POST['description'], $_POST['categorie'], $_POST['prix'], $_POST['etat']];
-            $stmt = $connexion->prepare($requete);
-            $stmt->execute($donnees);
+			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo=".$anciennePhoto." WHERE ida=".$articleIda;
+			$donnees2 = [$article->nom, $article->description, $article->categorie, $article->prix, $article->etat];
+            $stmt = $connexion->prepare($requete2);
+            $stmt->execute($donnees2);
+
+            $requete3 = "SELECT * FROM articles WHERE ida=".$articleIda;
+            $stmt = $connexion->prepare($requete3);
+            $stmt->execute();
+            
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
-            $this->reponse['action'] = "modifier";
+            $this->reponse['action'] = "envoyerModif";
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
 		}catch(Exception $e){
 		}finally{
-			unset($instanceModele);
+			unset($connexion);
+            return json_encode($this->reponse);
 		}
     }
 }

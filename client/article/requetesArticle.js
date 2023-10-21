@@ -58,6 +58,36 @@ let obtenirFormModifier = (articleIda) => {
     requeteAjaxAdmin(formArticle);
 };
 
+let obtenirFormSupprimer = (articleIda) => {
+    let formArticle = new FormData();
+    formArticle.append('action', 'formSupprimer');
+    formArticle.append('articleIda', articleIda);
+    requeteAjaxAdmin(formArticle);
+};
+
+let envoyerModifArticle = (articleIda) => {
+    let formArticle = new FormData();
+    formArticle.append('action', 'envoyerModif');
+    formArticle.append('articleIda', articleIda);
+    // requeteAjaxAdmin(formArticle);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formArticle,
+        dataType: 'text',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            alert(reponse)
+            actionsVues(formArticle.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            alert(5);
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
 // let enregistrerArticle = () => {
 //     let formArticle = new FormData(document.getElementById('formEnreg'));
 //     formArticle.append('action', 'enregistrer');
@@ -71,9 +101,3 @@ let obtenirFormModifier = (articleIda) => {
 //     requeteAjaxIndex(formArticle);
 // };
 
-// let modifierArticle = (articleIda) => {
-//     let formArticle = new FormData();
-//     formArticle.append('action', 'modifierArticle');
-//     formArticle.append('articleIda', articleIda);
-//     requeteAjaxAdmin(formArticle);
-// };

@@ -39,8 +39,21 @@
 			return DaoArticle::getDaoArticle()->Dao_Article_Form_Modifier($articleIda); 
 		}
 
+		function Ctrl_Article_Form_Supprimer($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Form_Supprimer($articleIda); 
+		}
+
 		function Ctrl_Article_Modifier($articleIda){
-			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($articleIda); 
+			$ida = $articleIda;
+			$nom = $_POST['nomArticle'];
+			$description = $_POST['description'];
+			$categorie = $_POST['categorie'];
+			$prix = $_POST['prix'];
+			$etat = $_POST['etat'];
+			$photo = $_POST['photoArticle'];
+
+			$article = new Article($articleIda, $nom, $description, $categorie, $prix, $etat, $photo);
+			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($article); 
 		}
 
 	    function Ctrl_Article_Actions(){
@@ -60,10 +73,13 @@
 				case "formModifier" :
 					return $this->Ctrl_Article_Form_Modifier($_POST['articleIda']);
 				break;
+				case "formSupprimer" :
+					return $this->Ctrl_Article_Form_Supprimer($_POST['articleIda']);
+				break;
 				case "ficheArticle" :
 					return $this->Ctrl_Article_Fiche($_POST['articleIda']);
 				break;
-				case "modifierArticle" :
+				case "envoyerModif" :
 					return $this->Ctrl_Article_Modifier($_POST['articleIda']);
 				break;
 			}

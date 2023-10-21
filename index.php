@@ -105,11 +105,11 @@
               </div>
               <div class="col-md-6">
                 <label for="daten" class="form-label">Date de naissance</label>
-                <input type="date" class="form-control is-valid" id="daten" name="daten">
+                <input type="date" class="form-control" id="daten" name="daten">
               </div>
               <div class="col-md-12">
                 <label for="photo" class="form-label">Ajouter votre photo</label>
-                <input type="file" class="form-control is-valid " id="photo" name="photo">
+                <input type="file" class="form-control" id="photo" name="photo">
               </div>
               <br />
               <div class="col-6">
