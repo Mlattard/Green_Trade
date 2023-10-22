@@ -60,7 +60,7 @@
 
     <!-- Fin barre navigation -->
 
-    <div id="contenu"></div>
+    <div id="contenuAdmin"></div>
 
     <div id="modals"></div>
 

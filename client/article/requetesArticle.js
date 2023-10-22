@@ -3,17 +3,14 @@ let requeteAjaxIndex = (formArticle) => {
         type: 'POST',
         url: 'routes.php',
         data: formArticle,
-        dataType: 'text',
+        dataType: 'json',
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(reponse);
-            //actionsVues(formArticle.get('action'), reponse);
+            actionsVuesArticle(formArticle.get('action'), reponse);
         },
         error: function (xhr, status, error) {
             console.log(formArticle);
-            alert(formArticle.get('action'));
-            alert(formArticle.get('route'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
@@ -28,7 +25,7 @@ let requeteAjaxAdmin = (formArticle) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            actionsVues(formArticle.get('action'), reponse);
+            actionsVuesArticle(formArticle.get('action'), reponse);
         },
         error: function (xhr, status, error) {
             alert('Erreur de requête : ' + status + ' - ' + error);
@@ -38,14 +35,14 @@ let requeteAjaxAdmin = (formArticle) => {
 
 let listerArticlesCards = () => {
     let formArticle = new FormData();
-    // formArticle.append('action', 'listerCards');
-    // formArticle.append('route', 'article');
+    formArticle.append('action', 'listerCards');
+    formArticle.append('route', 'article');
     requeteAjaxIndex(formArticle);
 };
 
 let listerArticlesTab = () => {
     let formArticle = new FormData();
-    formArticle.append('action', 'listerTab');
+    formArticle.append('action', 'listerTabA');
     formArticle.append('route', 'article');
     requeteAjaxAdmin(formArticle);
 };
@@ -136,13 +133,4 @@ let envoyerEnregistrerArticle = () => {
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
-}
-
-// let enregistrerArticle = () => {
-//     let formArticle = new FormData(document.getElementById('formEnreg'));
-//     formArticle.append('action', 'enregistrer');
-//     requeteAjaxIndex(formArticle);
-// };
-
-
-
+};

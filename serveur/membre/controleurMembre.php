@@ -58,7 +58,7 @@
         function Ctrl_Membre_Actions(){
 			
 			switch($_POST['action']){
-				case "listerMembreTab" :
+				case "listerTabM" :
 					return $this->Ctrl_Membre_Lister();
 				break;
                 case "ficheMembre" :

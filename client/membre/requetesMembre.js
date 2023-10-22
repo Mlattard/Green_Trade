@@ -7,7 +7,8 @@ let requeteAjaxMembre = (formMembre) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            actionsVues(formMembre.get('action'), reponse);
+            console.log(reponse);
+            actionsVuesMembre(formMembre.get('action'), reponse);
         },
         error: function (xhr, status, error) {
             alert('Erreur de requête : ' + status + ' - ' + error);
@@ -15,9 +16,44 @@ let requeteAjaxMembre = (formMembre) => {
     });
 };
 
-let listerMembreTab = () => {
+let listerMembresTab = () => {
     let formMembre = new FormData();
-    formMembre.append('action', 'listerMembreTab');
+    formMembre.append('action', 'listerTabM');
     formMembre.append('route', 'membre');
-    requeteAjaxMembre(formMembre);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formMembre,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            actionsVuesMembre(formMembre.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
+let obtenirFicheMembre = (membreIdm) => {
+    let formMembre = new FormData();
+    formMembre.append('action', 'ficheMembre');
+    formMembre.append('route', 'membre');
+    formMembre.append('membreIdm', membreIdm);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formMembre,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            console.log(reponse);
+            actionsVuesMembre(formMembre.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
 };

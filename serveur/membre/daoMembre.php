@@ -39,6 +39,29 @@
             return $photo;
         }
        
+        function Dao_Membre_Lister():string {
+
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "SELECT * FROM membres";
+            try{
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute();
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "";
+                $this->reponse['action'] = "listerM";
+                $this->reponse['listeMembres'] = array();
+                while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
+                    $this->reponse['listeMembres'][] = $ligne;
+                }
+            }catch (Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
         function Dao_Membre_Enregistrer(Membre $membre, String $mdp):string {
 
             $nom = $membre->getNom();
@@ -78,6 +101,27 @@
                 unset($connexion);
                 return $msg;
             }
+        }
+    }
+
+    function Dao_Membre_Fiche($membreIdm){
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "SELECT * FROM membres WHERE idm = ".$membreIdm;
+        //$requete = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "ficheMembre";
+            $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
+            
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des membres";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
         }
     }
 ?>

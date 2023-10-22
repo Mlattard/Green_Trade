@@ -93,7 +93,7 @@ class DaoArticle {
             $stmt->execute();
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
-            $this->reponse['action'] = "lister";
+            $this->reponse['action'] = "listerTabA";
             $this->reponse['listeArticles'] = array();
             while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                 $this->reponse['listeArticles'][] = $ligne;

@@ -65,7 +65,7 @@
 				case "envoyerEnregistrer" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;
-				case "listerTab" :
+				case "listerTabA" :
 				case "listerCards" :
 					return $this->Ctrl_Article_Lister();
 				break;

@@ -1,17 +1,17 @@
 
 // Liste des actions
-var actionsVues = (action, reponse) => {
+var actionsVuesArticle = (action, reponse) => {
 
 	switch(action){
 		case "formEnregistrerArticle" :
-            afficherModalEnregsitrerArticle();
+            afficherModalEnregistrerArticle();
         break;
 		case "enlever" :
         break;
 		case "listerCards" :
 			listerVuesArticlesCards(reponse.listeArticles);
 		break;
-        case "listerTab" :
+        case "listerTabA" :
 			listerVuesArticlesTab(reponse.listeArticles);
 		break;
         case "envoyerModif" :
@@ -56,7 +56,7 @@ function obtenirCardArticle(article){
 // Lister en tableau
 
 function listerVuesArticlesTab(listeArticles){
-    var contenu = $('#contenu');
+    var contenu = $('#contenuAdmin');
     contenu.empty();
     var tab = '<table class="table table-hover" id="contenuDynamique">';
     tab += '<thead>';
