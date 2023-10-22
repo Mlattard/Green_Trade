@@ -162,5 +162,54 @@
                 return json_encode($this->reponse);
             }
         }
+
+        function Dao_Membre_Modifier($membre):string {
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "SELECT * FROM membres WHERE idm=".$membre->getIdm();
+    
+            $this->reponse = [
+                'OK' => false,
+                'msg' => "debut",
+                'action' => "",
+                'membre' => null,
+                'photoMembre' => null,
+            ];
+    
+            try{
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute();
+                $this->reponse['photoMembre'] = $stmt->fetch(PDO::FETCH_OBJ)->photo;
+                
+                $anciennePhoto = $this->reponse['photoMembre'];
+                
+                $requete2 = "UPDATE membres SET nom=?, prenom=?, courriel=?, sexe=?, datenaissance=?, photo='".$anciennePhoto."' WHERE idm=".$membre->getIdm();
+                try{
+                    $donnees2 = [$membre->getNom(), $membre->getPrenom(), $membre->getCourriel(), $membre->getSexe(), $membre->getDaten()];
+                    $stmt2 = $connexion->prepare($requete2);
+                    $stmt2->execute($donnees2);
+                    try{
+                        $requete3 = "SELECT * FROM membres WHERE idm=".$membre->getIdm();
+                        $stmt3 = $connexion->prepare($requete3);
+                        $stmt3->execute();
+                        
+                        $this->reponse['OK'] = true;
+                        $this->reponse['msg'] = "c'est okay";
+                        $this->reponse['action'] = "envoyerModifM";
+                    }catch(Exception $e){
+                        $this->reponse['OK'] = false;
+                        $this->reponse['msg'] = "Problème requete3";
+                    }
+                }catch(Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Problème requete2";
+                }         
+            }catch(Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème requete1";
+            }finally{
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
     }
 ?>

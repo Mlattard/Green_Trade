@@ -82,7 +82,7 @@ let obtenirFormModifierM = (membreIdm) => {
 
 let obtenirFormChangerStatutM = (membreIdm) => {
     let formMembre = new FormData();
-    formMembre.append('action', 'ficheChangerStatutM');
+    formMembre.append('action', 'formChangerStatutM');
     formMembre.append('route', 'membre');
     formMembre.append('membreIdm', membreIdm);
     $.ajax({
@@ -101,3 +101,47 @@ let obtenirFormChangerStatutM = (membreIdm) => {
         }
     });
 };
+
+let envoyerModifMembre = (membreIdm) => {
+    var leForm = document.getElementById('formModifierMembre');
+    let formMembre = new FormData(leForm);
+    formMembre.append('action', 'envoyerModifM');
+    formMembre.append('route', 'membre');
+    formMembre.append('membreIdm', membreIdm);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formMembre,
+        dataType: 'text',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            console.log(formMembre.get('msg'));
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
+let changerStatutMembre = (articleIda) => {
+    let formArticle = new FormData();
+    formArticle.append('action', 'supprimer');
+    formArticle.append('route', 'article');
+    formArticle.append('articleIda', articleIda);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formArticle,
+        dataType: 'text',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            alert(reponse);
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+

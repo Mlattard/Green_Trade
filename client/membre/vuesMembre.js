@@ -6,6 +6,7 @@ var actionsVuesMembre = (action, reponse) => {
 		case "listerTabM" :
 			listerVuesMembresTab(reponse.listeMembres);
 		break;
+        case "envoyerModifM" :
         case "ficheMembre" :
 			afficherModalFicheM(reponse.membre);
 		break;
@@ -20,9 +21,6 @@ var actionsVuesMembre = (action, reponse) => {
         break;
 		case "enlever" :
         break;
-        case "envoyerModif" :
-           
-             
 	}
 }
 
@@ -34,7 +32,7 @@ function listerVuesMembresTab(listeMembres){
     var tab = '<table class="table table-hover" id="contenuDynamique">';
     tab += '<thead>';
     tab += '<tr>';
-    tab += '<th scope="col">ID Membres</th>';
+    tab += '<th scope="col">ID Membre</th>';
     tab += '<th scope="col">Nom Complet</th>';
     tab += '<th scope="col">Courriel</th>';
     tab += '</tr>';
@@ -136,8 +134,10 @@ let afficherModalModifierM = (membre) => {
     $('#prenomMembre').val(membre.prenom);
     $('#courrielMembre').val(membre.courriel);
 	$('#sexeMembre').val(membre.sexe);
-    $('#dateNaissanceMembre').val(membre.dateNaissance);
-    $('#photoMembre').val(membre.photo);
+
+    var dateInput = document.getElementById("dateNaissanceMembre");
+    dateInput.valueAsDate = new Date(membre.datenaissance);;
+
     modalModifierM.show();
 }
 
@@ -154,13 +154,13 @@ let modalModifierMembre = (membre) => {
                     <span id="msgErrModifierMembre"></span>
                     <form class="row g-3" id="formModifierMembre">
                         <input type="hidden" value="${membre.idm}" id="mdMembreIdm">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="nomMembre" class="form-label">Nom du membre</label>
                             <input type="text" class="form-control " id="nomMembre" name="nomMembre" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="prenomMembre" class="form-label">Prénom du membre</label>
-                            <textarea class="form-control " id="prenomMembre" name="prenomMembre" required></textarea>
+                            <input class="form-control " id="prenomMembre" name="prenomMembre" required></input>
                         </div>
                         <div class="col-md-12">
                             <label for="courrielMembre" class="form-label">Courriel</label>

@@ -45,14 +45,14 @@
 
 		function Ctrl_Membre_Modifier($membreIdm){
 			$idm = $membreIdm;
-			$nom = $_POST['nom'];
-            $prenom = $_POST['prenom'];
-            $courriel = $_POST['courriel'];
-            $sexe = $_POST['sexe'];
-            $daten = $_POST['daten'];
+			$nom = $_POST['nomMembre'];
+            $prenom = $_POST['prenomMembre'];
+            $courriel = $_POST['courrielMembre'];
+            $sexe = $_POST['sexeMembre'];
+            $daten = $_POST['dateNaissanceMembre'];
 
 			$membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
-			return DaoMembre::getDaoMembre()->Dao_Membre_Modifier($article); 
+			return DaoMembre::getDaoMembre()->Dao_Membre_Modifier($membre); 
 		}
 
         function Ctrl_Membre_Actions(){
