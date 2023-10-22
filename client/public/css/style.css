@@ -25,3 +25,17 @@
 .row{
     justify-content: space-between;
 }
+
+.photoArticle{
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+#contenu{
+    padding: 2% 10% 2% 10%;
+}
+
+#contenuAdmin{
+    padding: 2% 10% 2% 10%;
+}

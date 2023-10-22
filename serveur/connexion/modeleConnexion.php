@@ -1,41 +1,40 @@
 <?php
+    declare (strict_types=1);
+
     require_once('../bd/connexion.inc.php');
 
     function Mdl_connexion($courriel, $mdp){
-        global $connexion;
         $msg = "";
-
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        
         try{
             $requete = "SELECT * FROM connexion WHERE courriel=? AND pass=?";
+            $donnees = [$courriel, $mdp];
             $stmt = $connexion->prepare($requete);
-            $stmt->bind_param("ss", $courriel, $mdp);
-            $stmt->execute();
-            $reponse = $stmt->get_result();
-            if ($reponse->num_rows > 0) { // OK, courriel et mot de passe existent
-                $ligne = $reponse->fetch_object();
-                if($ligne->statut == 'A'){
-                    //obtenir les infos du membre
+            $stmt->execute($donnees);
+            $reponse = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($reponse) {
+                if($reponse['statut'] == 'A'){
                     $requete = "SELECT * FROM membres WHERE courriel=?";
+                    $donnees = [$courriel];
                     $stmt = $connexion->prepare($requete);
-                    $stmt->bind_param("s", $courriel);
-                    $stmt->execute();
-                    $reponse = $stmt->get_result();
-                    $ligne2 = $reponse -> fetch_object();
-                    if($ligne->role == 'M'){
+                    $stmt->execute($donnees);
+                    $reponse2 = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($reponse['role'] == 'M'){
                         $_SESSION['role'] = 'M';
-                        $_SESSION['prenom'] = $ligne2->prenom;
-                        $_SESSION['nom'] = $ligne2->nom;
-                        $_SESSION['photo'] = "../membre/photos/".$ligne2->photo;
+                        $_SESSION['prenom'] = $reponse2['prenom'];
+                        $_SESSION['nom'] = $reponse2['nom'];
+                        $_SESSION['photo'] = "../membre/photos/".$reponse2['photo'];
                         header('Location: ../membre/membre.php');
                         exit();
                     } else { // Dans ce cas c'est un admin
                         $_SESSION['role']= 'A';
-                        $_SESSION['prenom'] = $ligne->prenom;
-                        $_SESSION['nom'] = $ligne->nom;
+                        $_SESSION['prenom'] = $reponse2['prenom'];
+                        $_SESSION['nom'] = $reponse2['nom'];
+                        $_SESSION['photo'] = "../membre/photos/".$reponse2['photo'];
                         header('Location: ../admin/admin.php');
                         exit();
                     }
-                    
                 } else {// Membre inactif
                     $msg = "<b>SVP contactez l'administrateur !!!</b>";
                 }

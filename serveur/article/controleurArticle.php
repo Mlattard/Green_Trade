@@ -1,13 +1,6 @@
 <?php
 	require_once("includes/Article.inc.php");
 	require_once("daoArticle.php");
-	
-	// $tabRes = array();
-
-    // function Ctrl_Article_Enregistrer(){
-    //     $article = new Article(0, $_POST['nom'], $_POST['description'], $_POST['categorie'], $_POST['prix'], $_POST['etat'],"photo");
-    //     return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article);
-    // }
 
 	class ControleurArticle { 
 		static private $instanceCtrl = null;
@@ -27,32 +20,69 @@
 	    }
 
 		function Ctrl_Article_Enregistrer(){
-			$nom = $_POST['nom'];
+			$nom = $_POST['nomArticle'];
 			$description = $_POST['description'];
 			$categorie = $_POST['categorie'];
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
-			$photo = $_POST['photo'];
 
-			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, $photo);
+			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, 'logo.png');
 			return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article); 
 	    }
 
-	    function Ctrl_Article_Actions(){
-			$action = $_POST['action'];
+		function Ctrl_Article_Fiche($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Fiche($articleIda); 
+		}
 
+		function Ctrl_Article_Form_Modifier($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Form_Modifier($articleIda); 
+		}
+
+		function Ctrl_Article_Modifier($articleIda){
+			$ida = $articleIda;
+			$nom = $_POST['nomArticle'];
+			$description = $_POST['description'];
+			$categorie = $_POST['categorie'];
+			$prix = $_POST['prix'];
+			$etat = $_POST['etat'];
+
+			$article = new Article($ida, $nom, $description, $categorie, $prix, $etat, 'logo.png');
+			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($article); 
+		}
+
+
+		function Ctrl_Article_Form_Supprimer($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Form_Supprimer($articleIda); 
+		}
+
+		function Ctrl_Article_Supprimer($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Supprimer($articleIda); 
+		}
+
+	    function Ctrl_Article_Actions($action){
+			
 			switch($action){
-				case "enregistrer" :
+				case "envoyerEnregistrer" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;
-				case "supprimer" :
-					return $this->Ctrl_Article_Supprimer();
-				break;
-				case "modifier" :
-					return $this->Ctrl_Article_Modifier();
-				break;
-				case "lister" :
+				case "listerTabA" :
+				case "listerCards" :
 					return $this->Ctrl_Article_Lister();
+				break;
+				case "formModifier" :
+					return $this->Ctrl_Article_Form_Modifier($_POST['articleIda']);
+				break;
+				case "envoyerModif" :
+					return $this->Ctrl_Article_Modifier($_POST['articleIda']);
+				break;
+				case "formSupprimer" :
+					return $this->Ctrl_Article_Form_Supprimer($_POST['articleIda']);
+				break;
+				case "supprimer" :
+					return $this->Ctrl_Article_Supprimer($_POST['articleIda']);
+				break;
+				case "ficheArticle" :
+					return $this->Ctrl_Article_Fiche($_POST['articleIda']);
 				break;
 			}
 	    }
