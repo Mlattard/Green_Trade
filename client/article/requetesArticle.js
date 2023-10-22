@@ -48,7 +48,6 @@ let listerArticlesCards = () => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(reponse);
             actionsVuesArticle(formArticle.get('action'), reponse);
         },
         error: function (xhr, status, error) {
@@ -103,7 +102,6 @@ let supprimerArticle = (articleIda) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            alert(reponse);
         },
         error: function (xhr, status, error) {
             console.log(error);

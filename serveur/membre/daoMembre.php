@@ -178,16 +178,17 @@
             try{
                 $stmt = $connexion->prepare($requete);
                 $stmt->execute();
-                $statutMembre = $stmt->fetch(PDO::FETCH_OBJ);
-                switch($statutMembre){
+                $this->reponse['statutMembre'] = $stmt->fetch(PDO::FETCH_OBJ)->statut;
+
+                switch($this->reponse['statutMembre']){
                     case "A" :
-                        $nouveauStatut = "I";
+                        $this->reponse['statutMembre'] = 'I';
                     break;
                     case "I" :
-                        $nouveauStatut = "A";
+                        $this->reponse['statutMembre'] = 'A';
                     break;
                     }
-                $requete2 = "UPDATE connexion SET statut='".$nouveauStatut."' WHERE idm=".$membreIdm;
+                $requete2 = "UPDATE connexion SET statut='".$this->reponse['statutMembre']."' WHERE idm=".$membreIdm;
                 try{
                     $stmt2 = $connexion->prepare($requete2);
                     $stmt2->execute();

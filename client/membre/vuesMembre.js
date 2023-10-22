@@ -96,7 +96,7 @@ let modalFicheMembre = (membre) => {
 			membre.statut='Actif'
 		break;
         case "I" :
-			membre.sexe='Inactif'
+			membre.statut='Inactif'
 		break;
     }
 
@@ -211,7 +211,7 @@ let modalChangerStatutMembre = (membre) => {
 			membre.statut='Actif'
 		break;
         case "I" :
-			membre.sexe='Inactif'
+			membre.statut='Inactif'
 		break;
     }
 

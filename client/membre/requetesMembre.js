@@ -7,7 +7,6 @@ let requeteAjaxMembre = (formMembre) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(reponse);
             actionsVuesMembre(formMembre.get('action'), reponse);
         },
         error: function (xhr, status, error) {
@@ -137,7 +136,6 @@ let changerStatutMembre = (membreIdm) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            alert(reponse);
         },
         error: function (xhr, status, error) {
             alert('Erreur de requête : ' + status + ' - ' + error);
