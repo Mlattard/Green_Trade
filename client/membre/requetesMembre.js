@@ -112,11 +112,11 @@ let envoyerModifMembre = (membreIdm) => {
         type: 'POST',
         url: '../../routes.php',
         data: formMembre,
-        dataType: 'text',
+        dataType: 'json',
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(formMembre.get('msg'));
+            actionsVuesMembre(formMembre.get('action'), reponse);
         },
         error: function (xhr, status, error) {
             alert('Erreur de requête : ' + status + ' - ' + error);
@@ -124,15 +124,15 @@ let envoyerModifMembre = (membreIdm) => {
     });
 };
 
-let changerStatutMembre = (articleIda) => {
-    let formArticle = new FormData();
-    formArticle.append('action', 'supprimer');
-    formArticle.append('route', 'article');
-    formArticle.append('articleIda', articleIda);
+let changerStatutMembre = (membreIdm) => {
+    let formMembre = new FormData();
+    formMembre.append('action', 'changerStatutM');
+    formMembre.append('route', 'membre');
+    formMembre.append('membreIdm', membreIdm);
     $.ajax({
         type: 'POST',
         url: '../../routes.php',
-        data: formArticle,
+        data: formMembre,
         dataType: 'text',
         contentType: false,
         processData: false,

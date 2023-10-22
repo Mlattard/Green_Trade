@@ -6,6 +6,7 @@ var actionsVuesMembre = (action, reponse) => {
 		case "listerTabM" :
 			listerVuesMembresTab(reponse.listeMembres);
 		break;
+        case "changerStatutM":
         case "envoyerModifM" :
         case "ficheMembre" :
 			afficherModalFicheM(reponse.membre);
@@ -117,7 +118,7 @@ let modalFicheMembre = (membre) => {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormModifierM(${membre.idm});">Modifier</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormChangerStatutM(${membre.ida});">Changer Statut</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormChangerStatutM(${membre.idm});">Changer Statut</button>
                 </div>
             </div>
         </div>
@@ -197,13 +198,23 @@ let modalModifierMembre = (membre) => {
 // Modal Changer Statut Membre
 
 let afficherModalChangerStatutM = (membre) => {
+    
     document.getElementById('modals').innerHTML = modalChangerStatutMembre(membre);
-    const modalChangerStatut = new bootstrap.Modal('#modalChangerStatutArticle', {
+    const modalChangerStatut = new bootstrap.Modal('#modalChangerStatutMembre', {
     });	
     modalChangerStatut.show();
 }
 
 let modalChangerStatutMembre = (membre) => {
+    switch(membre.statut){
+		case "A" :
+			membre.statut='Actif'
+		break;
+        case "I" :
+			membre.sexe='Inactif'
+		break;
+    }
+
     return `
     <div class="modal modal-xl fade" id="modalChangerStatutMembre" tabindex="-1" aria-labelledby="modalChangerStatutMembre" aria-hidden="true">
         <div class="modal-dialog">

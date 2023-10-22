@@ -145,20 +145,74 @@
     
         function Dao_Membre_Form_Changer_Statut($membreIdm){
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
-            $requete = "SELECT * FROM connexion WHERE ida=".$membreIdm;
+            $requete = "SELECT M.idm, M.nom, M.prenom, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
             try{
                 $stmt = $connexion->prepare($requete);
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "formChangerStatut";
+                $this->reponse['action'] = "formChangerStatutM";
                 $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
             }catch (Exception $e){
+                $this->reponse['requete'] = $requete;
                 $this->reponse['OK'] = false;
                 $this->reponse['msg'] = "Problème pour obtenir les données des articles";
             }finally {
                 unset($connexion);
     
+                return json_encode($this->reponse);
+            }
+        }
+
+        function Dao_Membre_Changer_Statut($membreIdm):string {
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "SELECT statut FROM connexion WHERE idm=".$membreIdm;
+
+            $this->reponse = [
+                'OK' => false,
+                'msg' => "debut",
+                'action' => "",
+                'statutMembre' => null,
+            ];
+
+            try{
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute();
+                
+                switch($stmt->fetch(PDO::FETCH_OBJ)){
+                    case "A" :
+                        $nouveauStatut = "I";
+                    break;
+                    case "I" :
+                        $nouveauStatut = "A";
+                    break;
+
+                $requete2 = "UPDATE connexion SET statut='".$nouveauStatut."' WHERE idm=".$membreIdm;
+                try{
+                    $stmt2 = $connexion->prepare($requete2);
+                    $stmt2->execute();
+                    $requete3 = $requete = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
+                    try{
+                        $stmt3 = $connexion->prepare($requete3);
+                        $stmt3->execute();
+                        
+                        $this->reponse['OK'] = true;
+                        $this->reponse['msg'] = "c'est okay";
+                        $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
+                        $this->reponse['action'] = "changerStatutM";
+                    }catch(Exception $e){
+                        $this->reponse['OK'] = false;
+                        $this->reponse['msg'] = "Problème requete3";
+                    }
+                }catch(Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Problème requete2";
+                }         
+            }catch(Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème requete1";
+            }finally{
+                unset($connexion);
                 return json_encode($this->reponse);
             }
         }
@@ -187,13 +241,14 @@
                     $donnees2 = [$membre->getNom(), $membre->getPrenom(), $membre->getCourriel(), $membre->getSexe(), $membre->getDaten()];
                     $stmt2 = $connexion->prepare($requete2);
                     $stmt2->execute($donnees2);
+                    $requete3 = $requete = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membre->getIdm();
                     try{
-                        $requete3 = "SELECT * FROM membres WHERE idm=".$membre->getIdm();
                         $stmt3 = $connexion->prepare($requete3);
                         $stmt3->execute();
                         
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "c'est okay";
+                        $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
                         $this->reponse['action'] = "envoyerModifM";
                     }catch(Exception $e){
                         $this->reponse['OK'] = false;
