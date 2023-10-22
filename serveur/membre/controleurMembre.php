@@ -39,6 +39,10 @@
 			return DaoMembre::getDaoMembre()->Dao_Membre_Form_Modifier($membreIdm); 
 		}
 
+		function Ctrl_Membre_Form_Changer_Statut($membreIdm){
+			return DaoMembre::getDaoMembre()->Dao_Membre_Form_Changer_Statut($membreIdm); 
+		}
+
 		function Ctrl_Membre_Modifier($membreIdm){
 			$idm = $membreIdm;
 			$nom = $_POST['nom'];
@@ -51,10 +55,6 @@
 			return DaoMembre::getDaoMembre()->Dao_Membre_Modifier($article); 
 		}
 
-        function Ctrl_Membre_Desactiver(){
-
-        }
-
         function Ctrl_Membre_Actions(){
 			
 			switch($_POST['action']){
@@ -64,16 +64,16 @@
                 case "ficheMembre" :
 					return $this->Ctrl_Membre_Fiche($_POST['membreIdm']);
 				break;
-				case "formModifier" :
+				case "formModifierM" :
 					return $this->Ctrl_Membre_Form_Modifier($_POST['membreIdm']);
 				break;
-				case "envoyerModif" :
+				case "envoyerModifM" :
 					return $this->Ctrl_Membre_Modifier($_POST['membreIdm']);
 				break;
-				case "formChangerStatut" :
+				case "formChangerStatutM" :
 					return $this->Ctrl_Membre_Form_Changer_Statut($_POST['membreIdm']);
 				break;
-				case "changerStaut" :
+				case "changerStatutM" :
 					return $this->Ctrl_Membre_Changer_Statut($_POST['membreIdm']);
 				break;
 			}

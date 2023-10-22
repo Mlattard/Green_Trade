@@ -49,10 +49,54 @@ let obtenirFicheMembre = (membreIdm) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(reponse);
             actionsVuesMembre(formMembre.get('action'), reponse);
         },
         error: function (xhr, status, error) {
+            alert(formMembre.get('membre'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
+let obtenirFormModifierM = (membreIdm) => {
+    let formMembre = new FormData();
+    formMembre.append('action', 'formModifierM');
+    formMembre.append('route', 'membre');
+    formMembre.append('membreIdm', membreIdm);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formMembre,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            actionsVuesMembre(formMembre.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            alert(formMembre.get('membre'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
+let obtenirFormChangerStatutM = (membreIdm) => {
+    let formMembre = new FormData();
+    formMembre.append('action', 'ficheChangerStatutM');
+    formMembre.append('route', 'membre');
+    formMembre.append('membreIdm', membreIdm);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formMembre,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            actionsVuesMembre(formMembre.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            alert(formMembre.get('membre'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
