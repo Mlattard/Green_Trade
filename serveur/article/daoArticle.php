@@ -22,15 +22,15 @@ class DaoArticle {
 
     function chargerPhotoArticle($nom){
         $photo = "logo.png";
-        $dossierPhotos = "photos/";
-        $objPhotoRecue = $_POST['photo'];
-   
+        $dossierPhotos = "photos/";   
+        $objPhotoRecue = $_FILES['photo'];
+       
         if($objPhotoRecue['tmp_name'][0]!== ""){
             $nouveauNom = $nom.time();
             $extension = strrchr($objPhotoRecue['name'], ".");
-   
-            $photo = $nouveauNom.$extension;
 
+            $photo = $nouveauNom.$extension;
+   
             @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
             if (!file_exists($dossierPhotos.$photo)) {
                 $msg = "Erreur lors du téléchargement du fichier.";
@@ -38,22 +38,17 @@ class DaoArticle {
         }
 
         return $photo;
-    }
+    } 
 
 	function Dao_Article_Enregistrer($article):string {
              
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, ?)";
-        try{
-            $stmt = $connexion->prepare($requete);
-            $stmt->bindParam(':nom', $article->getNom());
-            $stmt->bindParam(':description', $article->getDescription());
-            $stmt->bindParam(':categorie', $article->getCategorie());
-            $stmt->bindParam(':prix', $article->getPrix());
-            $stmt->bindParam(':etat', $article->getEtat());
-            $stmt->bindParam(':photo', 'logo.png'); // Vérifiez la fonction chargerPhotoArticle
 
-            $stmt->execute();
+        $requete = "INSERT INTO articles VALUES (0, ?, ?, ?, ?, ?, 'logo.png')";
+        try{
+            $donnees = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute($donnees);
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "Article enregistré avec succès";
         }catch (Exception $e){

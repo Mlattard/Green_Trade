@@ -137,18 +137,18 @@ let envoyerModifArticle = (articleIda) => {
 let envoyerEnregistrerArticle = () => {
     var leForm = document.getElementById('formEnregistrerArticle');
     let formArticle = new FormData(leForm);
-    formArticle.append('action', 'envoyerEnregistrer');
+    formArticle.append('action', 'envoyerEnregistrerA');
     formArticle.append('route', 'article');
     
     $.ajax({
         type: 'POST',
         url: '../../routes.php',
         data: formArticle,
-        dataType: 'json',
+        dataType: 'text',
         contentType: false,
         processData: false,
         success: (reponse) => {
-            alert(formArticle.get('msg'));
+            console.log(reponse);
         },
         error: function (xhr, status, error) {
             console.log(error);

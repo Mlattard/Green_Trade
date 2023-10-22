@@ -32,8 +32,17 @@
     margin-bottom: 20px;
 }
 
-#contenu{
+#contenu {
     padding: 2% 10% 2% 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+#contenu > div {
+    width: auto; 
+    margin: 10px; 
+    text-align: center;
 }
 
 #contenuAdmin{

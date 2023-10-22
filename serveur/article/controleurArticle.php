@@ -62,7 +62,7 @@
 	    function Ctrl_Article_Actions($action){
 			
 			switch($action){
-				case "envoyerEnregistrer" :
+				case "envoyerEnregistrerA" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;
 				case "listerTabA" :
