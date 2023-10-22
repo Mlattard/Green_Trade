@@ -178,15 +178,15 @@
             try{
                 $stmt = $connexion->prepare($requete);
                 $stmt->execute();
-                
-                switch($stmt->fetch(PDO::FETCH_OBJ)){
+                $statutMembre = $stmt->fetch(PDO::FETCH_OBJ);
+                switch($statutMembre){
                     case "A" :
                         $nouveauStatut = "I";
                     break;
                     case "I" :
                         $nouveauStatut = "A";
                     break;
-
+                    }
                 $requete2 = "UPDATE connexion SET statut='".$nouveauStatut."' WHERE idm=".$membreIdm;
                 try{
                     $stmt2 = $connexion->prepare($requete2);
@@ -216,7 +216,7 @@
                 return json_encode($this->reponse);
             }
         }
-
+    
         function Dao_Membre_Modifier($membre):string {
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
             $requete = "SELECT * FROM membres WHERE idm=".$membre->getIdm();
