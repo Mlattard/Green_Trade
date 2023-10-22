@@ -59,9 +59,9 @@
 			return DaoArticle::getDaoArticle()->Dao_Article_Supprimer($articleIda); 
 		}
 
-	    function Ctrl_Article_Actions(){
+	    function Ctrl_Article_Actions($action){
 			
-			switch($_POST['action']){
+			switch($action){
 				case "envoyerEnregistrer" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;

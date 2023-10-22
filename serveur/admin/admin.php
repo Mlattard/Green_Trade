@@ -17,6 +17,8 @@
     <script src="../../client/public/js/global.js"></script>
     <script src="../../client/article/requetesArticle.js"></script>
     <script src="../../client/article/vuesArticle.js"></script>
+    <script src="../../client/membre/requetesMembre.js"></script>
+    <script src="../../client/membre/vuesMembre.js"></script>
     <link rel="stylesheet" href="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../client/public/css/style.css">
 </head>
@@ -37,10 +39,16 @@
                 <ul class="navbar-nav">
                     <!-- Boutons CRUD -->
                     <li class="nav-item">
-                        <button id="btnAjouterArticle" class="btn btn-link" onclick="afficherModalEnregistrerArticle()">Ajouter un Article</button>
+                        <a id="btnAfficherCategorie" class="nav-link" aria-current="page" href="#" onclick="listerArticlesTab()">Afficher les articles</a>
                     </li>
                     <li class="nav-item">
-                        <button id="btnListerParCategorie" class="btn btn-link">Lister par Catégorie</button>
+                        <a id="btnAjouterArticle" class="nav-link" aria-current="page" href="#" onclick="afficherModalEnregistrerArticle()">Enregistrer un article</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="btnListerArticle" class="nav-link" aria-current="page" href="#" onclick="afficherArticlesParCategorie()">Lister par categorie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="btnAfficherMembre" class="nav-link" aria-current="page" href="#" onclick="listerMembresTab()">Afficher les membres</a>
                     </li>
                 </ul>
                 <?php
@@ -49,6 +57,7 @@
             </div>
         </div>
     </nav>
+
     <!-- Fin barre navigation -->
 
     <div id="contenu"></div>
@@ -59,7 +68,4 @@
         <input type="hidden" name="action" value="deconnexion">
     </form>
 </body>
-
-<br/>
-<a href="../../index.php">Retour à l'accueil</a>
 </html>
