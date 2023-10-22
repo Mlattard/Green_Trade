@@ -42,26 +42,23 @@ class DaoArticle {
 
 	function Dao_Article_Enregistrer($article):string {
              
-        $nom = $article->getNom();
-        $description = $article->getDescription();
-        $categorie = $article->getCategorie();
-        $prix = $article->getPrix();
-        $etat = $article->getEtat();
-        $photo = chargerPhotoArticle($nom);
-
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "INSERT INTO articles VALUES(0,?,?,?,?,?,?)";
+        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            $donnees = [$nom, $description, $categorie, $prix, $etat, $photo];
             $stmt = $connexion->prepare($requete);
-            $stmt->execute($donnees);
-            
-            $this->reponse['donnees'] = $donnees;
+            $stmt->bindParam(':nom', $article->getNom());
+            $stmt->bindParam(':description', $article->getDescription());
+            $stmt->bindParam(':categorie', $article->getCategorie());
+            $stmt->bindParam(':prix', $article->getPrix());
+            $stmt->bindParam(':etat', $article->getEtat());
+            $stmt->bindParam(':photo', 'logo.png'); // Vérifiez la fonction chargerPhotoArticle
+
+            $stmt->execute();
             $this->reponse['OK'] = true;
-            $this->reponse['msg'] = "Article bien enregistré";
+            $this->reponse['msg'] = "Article enregistré avec succès";
         }catch (Exception $e){
             $this->reponse['OK'] = false;
-            $this->reponse['msg'] = '$requete';
+            $this->reponse['msg'] = "Erreur lors de l'enregistrement de l'article : " . $e->getMessage();;
         }finally {
             unset($connexion);
             return json_encode($this->reponse);

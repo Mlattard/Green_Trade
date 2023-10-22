@@ -26,7 +26,7 @@
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
 
-			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, ' ');
+			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, 'logo.png');
 			return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article); 
 	    }
 
@@ -46,7 +46,7 @@
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
 
-			$article = new Article($ida, $nom, $description, $categorie, $prix, $etat, ' ');
+			$article = new Article($ida, $nom, $description, $categorie, $prix, $etat, 'logo.png');
 			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($article); 
 		}
 

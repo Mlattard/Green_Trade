@@ -24,7 +24,7 @@ class ModeleAdmin
     function enregistrerArticle($nom, $description, $categorie, $prix, $etat)
     {
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat) VALUES (?, ?, ?, ?, ?)";
+        $requete = "INSERT INTO articles VALUES (0, ?, ?, ?, ?, ?)";
         $stmt = $connexion->prepare($requete);
         $stmt->execute([$nom, $description, $categorie, $prix, $etat]);
         Connexion::getInstanceConnexion()->deconnexion();

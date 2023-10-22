@@ -109,7 +109,7 @@ let envoyerEnregistrerArticle = () => {
     var leForm = document.getElementById('formEnregistrerArticle');
     let formArticle = new FormData(leForm);
     formArticle.append('action', 'envoyerEnregistrer');
-    alert(formArticle.get('action'));
+    
     $.ajax({
         type: 'POST',
         url: '../../routes.php',
@@ -117,7 +117,8 @@ let envoyerEnregistrerArticle = () => {
         dataType: 'json',
         contentType: false,
         processData: false,
-        success: () => {
+        success: (reponse) => {
+            alert(formArticle.get('msg'));
         },
         error: function (xhr, status, error) {
             alert('Erreur de requête : ' + status + ' - ' + error);
