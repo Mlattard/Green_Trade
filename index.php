@@ -19,9 +19,12 @@
     <script src="client/public/utilitaires/jquery-3.6.3.min.js"></script>
     <script src="client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
     <script src="client/public/js/global.js"></script>
+    <script src="client/article/requetesArticle.js"></script>
+    <script src="client/article/vuesArticle.js"></script>
     <link rel="stylesheet" href="client/public/css/style.css">
   </head>
-  <body onLoad='montrerToast("<?php echo $msg; ?>");'>
+
+  <body onLoad="listerArticles();">
     <!-- Barre navigation -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
@@ -54,37 +57,7 @@
       </div>
     </nav>
 
-    <div id="contenu">
-      <?php
-          require_once(__DIR__.'/serveur/article/modeleArticle.php');
-
-          function obtenirCardArticle($ligne){
-              $card = <<<CARD
-                  <div class="card card_perso" style="width: 18rem;">
-                      <img src="serveur/article/photos/$ligne->photo" class="card-img-top" alt="...">
-                      <div class="card-body">
-                          <h5 class="card-title">$ligne->nom</h5>
-                          <p class="card-text">$ligne->description</p>
-                          <p class="card-text">Catégorie: $ligne->categorie</p>
-                          <p class="card-text">Prix: $ligne->prix</p>
-                          <p class="card-text">État: $ligne->etat</p>
-                          <a href="#" class="btn btn-primary">Acheter</a>
-                      </div>
-                  </div>
-              CARD;
-              return $card;
-          }
-
-          $reponseArticle = Mdl_Lister();
-
-          $repArticle = "<div class='row listeArticles'>";
-          while($ligneArticle = $reponseArticle->fetch_object()){
-              $repArticle .= obtenirCardArticle($ligneArticle);
-          }
-          $repArticle .= "</div>";
-          echo $repArticle;
-      ?>
-  </div>
+    <div id="contenu"></div>
 
     <!-- Fin barre navigation -->
 
@@ -233,17 +206,17 @@
     <!-- Fin modal enregistrer un article -->
     
     <!-- Pour le Toast  -->
-    <div class="toast posToast" role="status" aria-live="polite" aria-atomic="true" data-delay="5000">
+    <!-- <div class="toast posToast" role="status" aria-live="polite" aria-atomic="true" data-delay="5000">
             <div class="toast-header">
                 <img src="client/public/images/message2.png" class="rounded mr-2">
                 <strong class="mr-auto">Message</strong>
-                <!-- <button type="button" class="close" data-dismiss="toast" aria-label="Close">
+                <button type="button" class="close" data-dismiss="toast" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button> -->
+                </button>
             </div>
             <div id="textToast" class="toast-body">
             </div>
-        </div>
+        </div> -->
 
     <!-- Formulaire lister -->
     <form id="formLister" action="serveur/lister.php" method="POST"></form>

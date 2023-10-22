@@ -1,31 +1,28 @@
-// requetesArticle.js
-
 let requeteAjax = (formArticle) => {
     $.ajax({
         type: 'POST',
-        url: 'serveur/article/controleurArticle.php',
+        url: 'routes.php',
         data: formArticle,
         dataType: 'json',
         contentType: false,
         processData: false,
-        success: function (reponse) {
-            $('#divFormFiche').hide();
-            articlesVue(reponse);
+        success: (reponse) => {    
+            actionsVues("lister", reponse);
         },
-        fail: function (err) {
+        error: function (err) {
         }
     });
 }
 
-let enregistrerArticle = () => {
-    let formArticle = new FormData(document.getElementById('formEnreg'));
-    formArticle.append('action', 'enregistrer');
-    requeteAjax(formArticle);
-};
-
 let listerArticles = () => {
     let formArticle = new FormData();
     formArticle.append('action', 'lister');
+    requeteAjax(formArticle);
+};
+
+let enregistrerArticle = () => {
+    let formArticle = new FormData(document.getElementById('formEnreg'));
+    formArticle.append('action', 'enregistrer');
     requeteAjax(formArticle);
 };
 

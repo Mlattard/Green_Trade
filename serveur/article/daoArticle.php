@@ -6,7 +6,7 @@ require_once(__DIR__."/../bd/connexion.inc.php");
 require_once(__DIR__."/includes/Article.inc.php");
 
 class DaoArticle {
-    static private $modelArticle = null;
+    static private $instanceDaoArticle = null;
     
     private $reponse = array();
     private $connexion = null;
@@ -14,12 +14,12 @@ class DaoArticle {
     private function __construct(){}
     
 	static function getDaoArticle():DaoArticle {
-		if(self::$modelArticle == null){
-			self::$modelArticle = new DaoArticle();
+		if(self::$instanceDaoArticle == null){
+			self::$instanceDaoArticle = new DaoArticle();
 		}
-		return self::$modelArticle;
+		return self::$instanceDaoArticle;
 	}
-	
+
     function chargerPhotoArticle($nom){
         $photo = "avatarMembre.png";
         $dossierPhotos = "photos/";
@@ -81,15 +81,16 @@ class DaoArticle {
         }
     }
 
-    function Dao_Article_ObtenirTout():string {
+    function Dao_Article_Lister():string {
 
-        $connexion = Connexion::getConnexion();
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles";
         try{
             $stmt = $connexion->prepare($requete);
             $stmt->execute();
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
+            $this->reponse['action'] = "lister";
             $this->reponse['listeArticles'] = array();
             while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                 $this->reponse['listeArticles'][] = $ligne;
