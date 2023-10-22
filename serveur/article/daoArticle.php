@@ -40,58 +40,44 @@ class DaoArticle {
         return $photo;
     }
 
-    function chargerPhotoMembre($nom, $prenom){
-        $photo = "avatarMembre.png";
-        $dossierPhotos = "photos/";
-        $objPhotoRecue = $_FILES['photo'];
-   
-        if($objPhotoRecue['tmp_name'][0]!== ""){
-            $nouveauNom = $nom.$prenom.time();
-            $extension = strrchr($objPhotoRecue['name'], ".");
-
-            $photo = $nouveauNom.$extension;
-   
-            @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
-            if (!file_exists($dossierPhotos.$photo)) {
-                $msg = "Erreur lors du téléchargement du fichier.";
-            }
-        }
-
-        return $photo;
-    }
-
-	function Dao_Article_Enregistrer(Article $article):string {
+	function Dao_Article_Enregistrer($article):string {
              
-        $connexion = Connexion::getConnexion();
+        $nom = $article->getNom();
+        $description = $article->getDescription();
+        $categorie = $article->getCategorie();
+        $prix = $article->getPrix();
+        $etat = $article->getEtat();
+        $photo = chargerPhotoArticle($nom);
 
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "INSERT INTO articles VALUES(0,?,?,?,?,?,?)";
         try{
-            $photo = chargerPhotoArticle($article->getNom());
-            $donnees = [$article->getNom(),$article->getDescription(),$article->getCategorie(),
-                        $article->getPrix(),$article->getEtat(),$photo];
+            $donnees = [$nom, $description, $categorie, $prix, $etat, $photo];
             $stmt = $connexion->prepare($requete);
             $stmt->execute($donnees);
+            
+            $this->reponse['donnees'] = $donnees;
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "Article bien enregistré";
         }catch (Exception $e){
             $this->reponse['OK'] = false;
-            $this->reponse['msg'] = "Probème lors de l'enregistrement de l'article";
+            $this->reponse['msg'] = '$requete';
         }finally {
             unset($connexion);
             return json_encode($this->reponse);
         }
     }
 
-    function Dao_Article_Supprimer(Article $article):string {
+    function Dao_Article_Supprimer($articleIda):string {
 
-        $connexion = Connexion::getConnexion();
-        $requete = "DELETE FROM articles WHERE id=?";
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "DELETE FROM articles WHERE ida=".$articleIda;
         try{
-            $donnees = $article->getIda();
             $stmt = $connexion->prepare($requete);
-            $stmt->execute($donnees);
+            $stmt->execute();
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "Article bien supprimé";
+            $this->reponse['action'] = "supprimer";
         }catch (Exception $e){
             $this->reponse['OK'] = false;
             $this->reponse['msg'] = "Probème lors de la suppression de l'article";
@@ -186,7 +172,7 @@ class DaoArticle {
 
     function Dao_Article_Modifier($article):string {
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete="SELECT photo FROM articles WHERE ida=".$article->articleIda;
+        $requete = "SELECT * FROM articles WHERE ida=".$article->getIda();
 
         $this->reponse = [
             'OK' => false,
@@ -202,22 +188,31 @@ class DaoArticle {
             $this->reponse['photoArticle'] = $stmt->fetch(PDO::FETCH_OBJ)->photo;
 			
 			$anciennePhoto = $this->reponse['photoArticle'];
-			//$photo = chargerPhotoArticle($anciennePhoto);	
 			
-			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo=".$anciennePhoto." WHERE ida=".$articleIda;
-			$donnees2 = [$article->nom, $article->description, $article->categorie, $article->prix, $article->etat];
-            $stmt = $connexion->prepare($requete2);
-            $stmt->execute($donnees2);
-
-            $requete3 = "SELECT * FROM articles WHERE ida=".$articleIda;
-            $stmt = $connexion->prepare($requete3);
-            $stmt->execute();
-            
-            $this->reponse['OK'] = true;
-            $this->reponse['msg'] = "";
-            $this->reponse['action'] = "envoyerModif";
-            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$anciennePhoto."' WHERE ida=".$article->getIda();
+			try{
+                $donnees2 = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
+                $stmt2 = $connexion->prepare($requete2);
+                $stmt2->execute($donnees2);
+                try{
+                    $requete3 = "SELECT * FROM articles WHERE ida=".$article->getIda();
+                    $stmt3 = $connexion->prepare($requete3);
+                    $stmt3->execute();
+                    
+                    $this->reponse['OK'] = true;
+                    $this->reponse['msg'] = "";
+                    $this->reponse['action'] = "envoyerModif";
+                }catch(Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Problème requete3";
+                }
+            }catch(Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème requete2";
+            }         
 		}catch(Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème requete1";
 		}finally{
 			unset($connexion);
             return json_encode($this->reponse);

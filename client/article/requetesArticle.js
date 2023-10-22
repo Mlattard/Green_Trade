@@ -65,11 +65,10 @@ let obtenirFormSupprimer = (articleIda) => {
     requeteAjaxAdmin(formArticle);
 };
 
-let envoyerModifArticle = (articleIda) => {
+let supprimerArticle = (articleIda) => {
     let formArticle = new FormData();
-    formArticle.append('action', 'envoyerModif');
+    formArticle.append('action', 'supprimer');
     formArticle.append('articleIda', articleIda);
-    // requeteAjaxAdmin(formArticle);
     $.ajax({
         type: 'POST',
         url: '../../routes.php',
@@ -78,15 +77,53 @@ let envoyerModifArticle = (articleIda) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            alert(reponse)
-            actionsVues(formArticle.get('action'), reponse);
+            alert(reponse);
         },
         error: function (xhr, status, error) {
-            alert(5);
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
 };
+
+let envoyerModifArticle = (articleIda) => {
+    var leForm = document.getElementById('formModifierArticle');
+    let formArticle = new FormData(leForm);
+    formArticle.append('action', 'envoyerModif');
+    formArticle.append('articleIda', articleIda);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formArticle,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: () => {
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+};
+
+let envoyerEnregistrerArticle = () => {
+    var leForm = document.getElementById('formEnregistrerArticle');
+    let formArticle = new FormData(leForm);
+    formArticle.append('action', 'envoyerEnregistrer');
+    alert(formArticle.get('action'));
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: formArticle,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: () => {
+        },
+        error: function (xhr, status, error) {
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+}
 
 // let enregistrerArticle = () => {
 //     let formArticle = new FormData(document.getElementById('formEnreg'));
@@ -94,10 +131,5 @@ let envoyerModifArticle = (articleIda) => {
 //     requeteAjaxIndex(formArticle);
 // };
 
-// let enleverArticle = () => {
-//     let leForm = document.getElementById('formEnlever');
-//     let formArticle = new FormData(leForm);
-//     formArticle.append('action', 'enlever');
-//     requeteAjaxIndex(formArticle);
-// };
+
 

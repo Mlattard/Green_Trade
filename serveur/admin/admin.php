@@ -37,7 +37,7 @@
                 <ul class="navbar-nav">
                     <!-- Boutons CRUD -->
                     <li class="nav-item">
-                        <button id="btnAjouterArticle" class="btn btn-link">Ajouter un Article</button>
+                        <button id="btnAjouterArticle" class="btn btn-link" onclick="afficherModalEnregistrerArticle()">Ajouter un Article</button>
                     </li>
                     <li class="nav-item">
                         <button id="btnListerParCategorie" class="btn btn-link">Lister par Catégorie</button>

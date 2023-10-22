@@ -1,7 +1,10 @@
+
+// Liste des actions
 var actionsVues = (action, reponse) => {
 
 	switch(action){
-		case "enregistrer" :
+		case "formEnregistrerArticle" :
+            afficherModalEnregsitrerArticle();
         break;
 		case "enlever" :
         break;
@@ -23,6 +26,8 @@ var actionsVues = (action, reponse) => {
 		break;        
 	}
 }
+
+// Lister en Cards
 
 function listerVuesArticlesCards(listeArticles){
     var contenu = $('#contenu');
@@ -47,6 +52,8 @@ function obtenirCardArticle(article){
     
     return card;
 }
+
+// Lister en tableau
 
 function listerVuesArticlesTab(listeArticles){
     var contenu = $('#contenu');
@@ -81,8 +88,9 @@ function remplirTableauArticle(article){
     return ligne;
 }
 
+// Modal Fiche Article
+
 let afficherModalFiche = (article) => {
-    alert('test');
     document.getElementById('modals').innerHTML = modalFicheArticle(article);
     const modalFiche = new bootstrap.Modal('#modalFicheArticle', {
     });
@@ -114,6 +122,69 @@ let modalFicheArticle = (article) => {
     `;
 }
 
+// Modal Form Enregistrer Article
+
+let afficherModalEnregistrerArticle = () => {
+    document.getElementById('modals').innerHTML = modalEnregistrerArticle();
+    const modalFiche = new bootstrap.Modal('#modalEnregistrerArticle', {
+    });
+    modalFiche.show();
+}
+
+let modalEnregistrerArticle = () => {
+    return `
+    <div class="modal modal-xl fade" id="modalEnregistrerArticle" tabindex="-1" aria-labelledby="modalEnregistrerArticle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enregistrer un nouvel article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="msgErrEnregistrerArticle"></span>                  
+                    <form class="row g-3" id="formEnregistrerArticle">
+                        <div class="col-md-12">
+                            <label for="nomArticle" class="form-label">Nom du produit</label>
+                            <input type="text" class="form-control " id="nomArticle" name="nomArticle" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control " id="description" name="description" required></textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="categorie" class="form-label">Catégorie</label>
+                            <input type="text" class="form-control " id="categorie" name="categorie" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="prix" class="form-label">Prix</label>
+                            <input type="number" min="0" step="0.01" class="form-control " id="prix" name="prix" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="etat" class="form-label">État</label>
+                            <select class="form-select " id="etat" name="etat" required>
+                            <option value="Neuf">Neuf</option>
+                            <option value="Occasion">Occasion</option>
+                            <option value="Usagé">Usagé</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="photoArticle" class="form-label">Photo</label>
+                            <input type="file" class="form-control" id="photoArticle" name="photoArticle">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="envoyerEnregistrerArticle();" data-bs-dismiss="modal">Enregistrer</button>
+                    <input type="hidden" name="action" value="enregistrer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Modal Form Modifier Article
+
 let afficherModalModifier = (article) => {
     document.getElementById('modals').innerHTML = modalModifierArticle(article);
     const modalModifier = new bootstrap.Modal('#modalModifierArticle', {
@@ -124,16 +195,6 @@ let afficherModalModifier = (article) => {
 	$('#prix').val(article.prix);
     $('#etat').val(article.etat);
     modalModifier.show();
-}
-
-let afficherModalSupprimer = (article) => {
-    document.getElementById('modals').innerHTML = modalSupprimerArticle(article);
-    const modalSupprimer = new bootstrap.Modal('#modalSupprimerArticle', {
-    });
-    $('#nomArticle').val(article.nom);
-	$('#ida').val(article.ida);
-	
-    modalSupprimer.show();
 }
 
 let modalModifierArticle = (article) => {
@@ -147,7 +208,7 @@ let modalModifierArticle = (article) => {
                 </div>
                 <div class="modal-body">
                     <span id="msgErrModifierArticle"></span>
-                    <form class="row g-3" id="formModifierArticle" action="envoyerModifArticle(${article.ida})" method="POST" enctype="multipart/form-data">
+                    <form class="row g-3" id="formModifierArticle">
                         <input type="hidden" value="${article.ida}" id="mdArticleIda">
                         <div class="col-md-12">
                             <label for="nomArticle" class="form-label">Nom du produit</label>
@@ -180,12 +241,21 @@ let modalModifierArticle = (article) => {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Modifier</button>
+                    <button type="button" class="btn btn-secondary" onclick="envoyerModifArticle(${article.ida});" data-bs-dismiss="modal">Modifier</button>
                     <input type="hidden" name="action" value="modifier">
                 </div>
             </div>
         </div>
     `;
+}
+
+// Modal Supprimer Article
+
+let afficherModalSupprimer = (article) => {
+    document.getElementById('modals').innerHTML = modalSupprimerArticle(article);
+    const modalSupprimer = new bootstrap.Modal('#modalSupprimerArticle', {
+    });	
+    modalSupprimer.show();
 }
 
 let modalSupprimerArticle = (article) => {
@@ -201,13 +271,13 @@ let modalSupprimerArticle = (article) => {
                     <span id="msgErrSupprimerArticle"></span>
                     <p>Êtes-vous sûr de vouloir supprimer l'article: ${article.ida} - ${article.nom} ?</p>
                 </div>
-                </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Supprimer</button>
+                    <button type="button" class="btn btn-secondary" onclick="supprimerArticle(${article.ida});" data-bs-dismiss="modal">Supprimer</button>
                     <input type="hidden" name="action" value="modifier">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 </div>
             </div>
         </div>
+    </div>
     `;
 }
