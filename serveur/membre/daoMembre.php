@@ -191,7 +191,7 @@
                 try{
                     $stmt2 = $connexion->prepare($requete2);
                     $stmt2->execute();
-                    $requete3 = $requete = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
+                    $requete3 = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
                     try{
                         $stmt3 = $connexion->prepare($requete3);
                         $stmt3->execute();

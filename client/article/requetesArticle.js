@@ -10,7 +10,8 @@ let requeteAjaxIndex = (formArticle) => {
             actionsVuesArticle(formArticle.get('action'), reponse);
         },
         error: function (xhr, status, error) {
-            console.log(formArticle);
+            console.log(error);
+            console.log(formArticle.get('action'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
@@ -28,6 +29,8 @@ let requeteAjaxAdmin = (formArticle) => {
             actionsVuesArticle(formArticle.get('action'), reponse);
         },
         error: function (xhr, status, error) {
+            console.log(error);
+            console.log(formArticle.get('action'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
@@ -37,7 +40,23 @@ let listerArticlesCards = () => {
     let formArticle = new FormData();
     formArticle.append('action', 'listerCards');
     formArticle.append('route', 'article');
-    requeteAjaxIndex(formArticle);
+    $.ajax({
+        type: 'POST',
+        url: 'routes.php',
+        data: formArticle,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        success: (reponse) => {
+            console.log(reponse);
+            actionsVuesArticle(formArticle.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(formArticle.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
 };
 
 let listerArticlesTab = () => {
@@ -87,6 +106,8 @@ let supprimerArticle = (articleIda) => {
             alert(reponse);
         },
         error: function (xhr, status, error) {
+            console.log(error);
+            console.log(formArticle.get('action'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
@@ -108,6 +129,8 @@ let envoyerModifArticle = (articleIda) => {
         success: () => {
         },
         error: function (xhr, status, error) {
+            console.log(error);
+            console.log(formArticle.get('action'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
@@ -130,6 +153,7 @@ let envoyerEnregistrerArticle = () => {
             alert(formArticle.get('msg'));
         },
         error: function (xhr, status, error) {
+            console.log(error);
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
