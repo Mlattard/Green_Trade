@@ -5,6 +5,9 @@
     require_once(__DIR__."/includes/Membre.inc.php");
     
     class DaoMembre {
+
+        // Construction Dao:
+
         static private $instanceDaoMembre = null;
         
         private $reponse = array();
@@ -18,6 +21,8 @@
             }
             return self::$instanceDaoMembre;
         }
+
+        // Méthodes:
 
         function chargerPhotoMembre($nom, $prenom){
             $photo = "avatarMembre.png";
@@ -38,29 +43,9 @@
 
             return $photo;
         }
-       
-        function Dao_Membre_Lister():string {
-
-            $connexion = Connexion::getInstanceConnexion()->getConnexion();
-            $requete = "SELECT * FROM membres";
-            try{
-                $stmt = $connexion->prepare($requete);
-                $stmt->execute();
-                $this->reponse['OK'] = true;
-                $this->reponse['msg'] = "";
-                $this->reponse['action'] = "listerM";
-                $this->reponse['listeMembres'] = array();
-                while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
-                    $this->reponse['listeMembres'][] = $ligne;
-                }
-            }catch (Exception $e){
-                $this->reponse['OK'] = false;
-                $this->reponse['msg'] = "Problème pour obtenir les données des articles";
-            }finally {
-                unset($connexion);
-                return json_encode($this->reponse);
-            }
-        }
+    
+        // CRUD:
+        // Create:
 
         function Dao_Membre_Enregistrer(Membre $membre, String $mdp):string {
 
@@ -103,6 +88,31 @@
             }
         }
 
+        // Read:
+
+        function Dao_Membre_Lister():string {
+
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "SELECT * FROM membres";
+            try{
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute();
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "";
+                $this->reponse['action'] = "listerTabMembre";
+                $this->reponse['listeMembres'] = array();
+                while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
+                    $this->reponse['listeMembres'][] = $ligne;
+                }
+            }catch (Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
         function Dao_Membre_Fiche($membreIdm){
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
             $requete = "SELECT M.idm, M.nom, M.prenom, M.courriel, M.sexe, M.datenaissance, M.photo, C.role, C.statut FROM membres M INNER JOIN connexion C ON M.idm = C.idm WHERE M.idm = ".$membreIdm;
@@ -123,6 +133,8 @@
             }
         }
 
+        // Update:
+
         function Dao_Membre_Form_Modifier($membreIdm){
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
             $requete = "SELECT * FROM membres WHERE idm=".$membreIdm;
@@ -131,7 +143,7 @@
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "formModifierM";
+                $this->reponse['action'] = "formModifierMembre";
                 $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
             }catch (Exception $e){
                 $this->reponse['OK'] = false;
@@ -151,7 +163,7 @@
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "formChangerStatutM";
+                $this->reponse['action'] = "formChangerStatutMembre";
                 $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
             }catch (Exception $e){
                 $this->reponse['requete'] = $requete;
@@ -200,7 +212,7 @@
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "c'est okay";
                         $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
-                        $this->reponse['action'] = "changerStatutM";
+                        $this->reponse['action'] = "changerStatutMembre";
                     }catch(Exception $e){
                         $this->reponse['OK'] = false;
                         $this->reponse['msg'] = "Problème requete3";
@@ -250,7 +262,7 @@
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "c'est okay";
                         $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
-                        $this->reponse['action'] = "envoyerModifM";
+                        $this->reponse['action'] = "envoyerModifMembre";
                     }catch(Exception $e){
                         $this->reponse['OK'] = false;
                         $this->reponse['msg'] = "Problème requete3";

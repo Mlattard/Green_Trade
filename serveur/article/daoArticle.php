@@ -6,6 +6,9 @@ require_once(__DIR__."/../bd/connexion.inc.php");
 require_once(__DIR__."/includes/Article.inc.php");
 
 class DaoArticle {
+
+    // Construction Dao:
+
     static private $instanceDaoArticle = null;
     
     private $reponse = array();
@@ -19,6 +22,8 @@ class DaoArticle {
 		}
 		return self::$instanceDaoArticle;
 	}
+
+    // Méthodes:
 
     function chargerPhotoArticle($nom){
         $photo = "logo.png";
@@ -40,20 +45,18 @@ class DaoArticle {
         return $photo;
     }
 
-	function Dao_Article_Enregistrer($article):string {
+    // CRUD:
+    // Create:
+
+    function Dao_Article_Enregistrer($article):string {
              
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, ?)";
+        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, 'logo.png')";
         try{
+            $donnees = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
             $stmt = $connexion->prepare($requete);
-            $stmt->bindParam(':nom', $article->getNom());
-            $stmt->bindParam(':description', $article->getDescription());
-            $stmt->bindParam(':categorie', $article->getCategorie());
-            $stmt->bindParam(':prix', $article->getPrix());
-            $stmt->bindParam(':etat', $article->getEtat());
-            $stmt->bindParam(':photo', 'logo.png'); // Vérifiez la fonction chargerPhotoArticle
-
-            $stmt->execute();
+            $stmt->execute($donnees);
+            
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "Article enregistré avec succès";
         }catch (Exception $e){
@@ -65,26 +68,9 @@ class DaoArticle {
         }
     }
 
-    function Dao_Article_Supprimer($articleIda):string {
+    // Read:
 
-        $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "DELETE FROM articles WHERE ida=".$articleIda;
-        try{
-            $stmt = $connexion->prepare($requete);
-            $stmt->execute();
-            $this->reponse['OK'] = true;
-            $this->reponse['msg'] = "Article bien supprimé";
-            $this->reponse['action'] = "supprimer";
-        }catch (Exception $e){
-            $this->reponse['OK'] = false;
-            $this->reponse['msg'] = "Probème lors de la suppression de l'article";
-        }finally {
-            unset($connexion);
-            return json_encode($this->reponse);
-        }
-    }
-
-    function Dao_Article_Lister():string {
+    function Dao_Article_Lister($action):string {
 
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles";
@@ -93,7 +79,7 @@ class DaoArticle {
             $stmt->execute();
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
-            $this->reponse['action'] = "listerTabA";
+            $this->reponse['action'] = $action;
             $this->reponse['listeArticles'] = array();
             while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                 $this->reponse['listeArticles'][] = $ligne;
@@ -127,42 +113,31 @@ class DaoArticle {
         }
     }
 
-    function Dao_Article_Form_Modifier($articleIda){
+    // Update:
+
+	function Dao_Article_Form_Modifier($articleIda):string {
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
+        
+        $this->reponse = [
+            'OK' => false,
+            'msg' => "",
+            'action' => "",
+            'article' => null,
+        ];
+
         try{
             $stmt = $connexion->prepare($requete);
             $stmt->execute();
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
-            $this->reponse['action'] = "formModifier";
+            $this->reponse['action'] = "formModifierArticle";
             $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
         }catch (Exception $e){
             $this->reponse['OK'] = false;
             $this->reponse['msg'] = "Problème pour obtenir les données des articles";
         }finally {
             unset($connexion);
-
-            return json_encode($this->reponse);
-        }
-    }
-
-    function Dao_Article_Form_Supprimer($articleIda){
-        $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
-        try{
-            $stmt = $connexion->prepare($requete);
-            $stmt->execute();
-            $this->reponse['OK'] = true;
-            $this->reponse['msg'] = "";
-            $this->reponse['action'] = "formSupprimer";
-            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
-        }catch (Exception $e){
-            $this->reponse['OK'] = false;
-            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
-        }finally {
-            unset($connexion);
-
             return json_encode($this->reponse);
         }
     }
@@ -196,9 +171,10 @@ class DaoArticle {
                     $stmt3 = $connexion->prepare($requete3);
                     $stmt3->execute();
                     
+                    $this->reponse['article'] = $stmt3->fetch(PDO::FETCH_OBJ);
                     $this->reponse['OK'] = true;
                     $this->reponse['msg'] = "";
-                    $this->reponse['action'] = "envoyerModif";
+                    $this->reponse['action'] = "envoyerModifArticle";
                 }catch(Exception $e){
                     $this->reponse['OK'] = false;
                     $this->reponse['msg'] = "Problème requete3";
@@ -215,5 +191,45 @@ class DaoArticle {
             return json_encode($this->reponse);
 		}
     }
+
+    // Delete:
+
+    function Dao_Article_Form_Supprimer($articleIda){
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "formSupprimerArticle";
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+        }finally {
+            unset($connexion);
+
+            return json_encode($this->reponse);
+        }
+    }
+
+    function Dao_Article_Supprimer($articleIda):string {
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "DELETE FROM articles WHERE ida=".$articleIda;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "Article bien supprimé";
+        }catch (Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Probème lors de la suppression de l'article";
+        }finally {
+            unset($connexion);
+            return json_encode($this->reponse);
+        }
+    }
+
 }
 ?>

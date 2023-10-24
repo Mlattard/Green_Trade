@@ -18,8 +18,8 @@
     <script src="client/public/utilitaires/jquery-3.6.3.min.js"></script>
     <script src="client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
     <script src="client/public/js/global.js"></script>
-    <script src="client/article/requetesArticle.js"></script>
-    <script src="client/article/vuesArticle.js"></script>
+    <script src="client/index/requetesIndex.js"></script>
+    <script src="client/index/vuesIndex.js"></script>
     <link rel="stylesheet" href="client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="client/public/css/style.css">
   </head>
@@ -62,7 +62,7 @@
     <!-- Fin barre navigation -->
 
     <!-- Contenu page -->
-    <div id="contenu"></div>
+    <div id="contenuIndex"></div>
 
     <!-- Modal enregistrer un membre -->
     <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
@@ -127,6 +127,7 @@
     <!-- Fin modal enregistrer un membre -->
 
     <!-- Modal connexion membre -->
+
     <div class="modal fade modal-custom-width" id="modalConnexion" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -139,11 +140,11 @@
             <form class="row g-3" action="serveur/connexion/controleurConnexion.php" method="POST">
               <div class="col-md-12">
                 <label for="courrielConnexion" class="form-label">Adresse Email</label>
-                <input type="email" class="form-control " id="courrielConnexion" name="courrielConnexion" required>
+                <input type="email" class="form-control " id="courrielConnexion" name="courrielConnexion" value="maxime@lattard.fr" required>
               </div>
               <div class="col-md-12">
                 <label for="mdpConnexion" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control " pattern="^[A-Za-z0-9_\$#!\-]{6,10}$" id="mdpConnexion" name="mdpConnexion" required>
+                <input type="password" class="form-control " pattern="^[A-Za-z0-9_\$#!\-]{6,10}$" id="mdpConnexion" name="mdpConnexion" value="qwe123!" required>
               </div>
               <input type="hidden" name="action" value="connexion">
               <br />

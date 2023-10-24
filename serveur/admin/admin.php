@@ -15,10 +15,8 @@
     <script src="../../client/public/utilitaires/jquery-3.6.3.min.js"></script>
     <script src="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
     <script src="../../client/public/js/global.js"></script>
-    <script src="../../client/article/requetesArticle.js"></script>
-    <script src="../../client/article/vuesArticle.js"></script>
-    <script src="../../client/membre/requetesMembre.js"></script>
-    <script src="../../client/membre/vuesMembre.js"></script>
+    <script src="../../client/admin/requetesAdmin.js"></script>
+    <script src="../../client/admin/vuesAdmin.js"></script>
     <link rel="stylesheet" href="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../client/public/css/style.css">
 </head>
