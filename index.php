@@ -109,11 +109,11 @@
               </div>
               <div class="col-md-12">
                 <label for="photo" class="form-label">Ajouter votre photo</label>
-                <input type="file" class="form-control" id="photo" name="photo[]">
+                <input type="file" class="form-control" id="photo" name="photo">
               </div>
               <br />
               <div class="col-6">
-                <button class="btn btn-primary" onclick="enregistrerMembre();" data-bs-dismiss="modal">Enregistrer</button>
+                <button class="btn btn-primary" onclick="enregistrerMembre();">Enregistrer</button>
                 <input type="hidden" name="action" value="enregistrerMembre">
               </div>
               <div class="col-6">
