@@ -3,6 +3,9 @@
     require_once('daoMembre.php');
 
     class ControleurMembre { 
+
+		// Construction Controleur:
+
 		static private $instanceCtrl = null;
 		private $reponse;
 	
@@ -15,11 +18,39 @@
 			return self::$instanceCtrl;
         }
         
-        function Ctrl_Membre_Lister(){
-            return DaoMembre::getDaoMembre()->Dao_Membre_Lister(); 
-        }
+		// Repartiteur d'actions:
 
-        function Ctrl_Membre_Enregistrer(){
+		function Ctrl_Membre_Actions(){
+					
+			switch($_POST['action']){
+				case "listerTabMembre" :
+					return $this->Ctrl_Membre_Lister();
+				break;
+				case "ficheMembre" :
+					return $this->Ctrl_Membre_Fiche($_POST['membreIdm']);
+				break;
+				case "formModifierMembre" :
+					return $this->Ctrl_Membre_Form_Modifier($_POST['membreIdm']);
+				break;
+				case "envoyerModifMembre" :
+					return $this->Ctrl_Membre_Modifier($_POST['membreIdm']);
+				break;
+				case "formChangerStatutMembre" :
+					return $this->Ctrl_Membre_Form_Changer_Statut($_POST['membreIdm']);
+				break;
+				case "changerStatutMembre" :
+					return $this->Ctrl_Membre_Changer_Statut($_POST['membreIdm']);
+				break;
+				case "enregistrerMembre" :
+					return $this->Ctrl_Membre_Enregistrer();
+				break;
+			}
+		}
+
+		// CRUD:
+		// Create:
+
+		function Ctrl_Membre_Enregistrer(){
             $nom = $_POST['nom'];
             $prenom = $_POST['prenom'];
             $courriel = $_POST['courriel'];
@@ -27,13 +58,20 @@
             $daten = $_POST['daten'];
             
             $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
-            $msg = DaoMembre::getDaoMembre()->Dao_Membre_Enregistrer($membre, $_POST['mdp']);
-            echo $msg;
+            return DaoMembre::getDaoMembre()->Dao_Membre_Enregistrer($membre, $_POST['mdp']);
         }
+
+        function Ctrl_Membre_Lister(){
+            return DaoMembre::getDaoMembre()->Dao_Membre_Lister(); 
+        }
+
+        // Read:
         
         function Ctrl_Membre_Fiche($membreIdm){
 			return DaoMembre::getDaoMembre()->Dao_Membre_Fiche($membreIdm); 
 		}
+
+		// Update:
 
 		function Ctrl_Membre_Form_Modifier($membreIdm){
 			return DaoMembre::getDaoMembre()->Dao_Membre_Form_Modifier($membreIdm); 
@@ -58,29 +96,5 @@
 		function Ctrl_Membre_Changer_Statut($membreIdm){
 			return DaoMembre::getDaoMembre()->Dao_Membre_Changer_Statut($membreIdm); 
 		}
-
-        function Ctrl_Membre_Actions(){
-			
-			switch($_POST['action']){
-				case "listerTabM" :
-					return $this->Ctrl_Membre_Lister();
-				break;
-                case "ficheMembre" :
-					return $this->Ctrl_Membre_Fiche($_POST['membreIdm']);
-				break;
-				case "formModifierM" :
-					return $this->Ctrl_Membre_Form_Modifier($_POST['membreIdm']);
-				break;
-				case "envoyerModifM" :
-					return $this->Ctrl_Membre_Modifier($_POST['membreIdm']);
-				break;
-				case "formChangerStatutM" :
-					return $this->Ctrl_Membre_Form_Changer_Statut($_POST['membreIdm']);
-				break;
-				case "changerStatutM" :
-					return $this->Ctrl_Membre_Changer_Statut($_POST['membreIdm']);
-				break;
-			}
-	    }
     }
 ?>

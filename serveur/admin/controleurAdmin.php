@@ -106,25 +106,32 @@ function modifier(){
 }
 
 // Contrôleur
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-
-switch ($action) {
-    case "enregistrer":
-        enregistrer();
+function Ctrl_Admin_Actions($action){
+			
+    switch($action){
+        case "listerCardsArticle" :
+            return $this->Ctrl_Article_Lister();
         break;
-    case "lister":
-        lister();
+        case "envoyerEnregistrer" :
+            return $this->Ctrl_Article_Enregistrer();
         break;
-    case "enlever":
-        enlever();
+        case "listerTabA" :
+        
+        case "formModifier" :
+            return $this->Ctrl_Article_Form_Modifier($_POST['articleIda']);
         break;
-    case "fiche":
-        fiche();
+        case "envoyerModif" :
+            return $this->Ctrl_Article_Modifier($_POST['articleIda']);
         break;
-    case "modifier":
-        modifier();
+        case "formSupprimer" :
+            return $this->Ctrl_Article_Form_Supprimer($_POST['articleIda']);
         break;
+        case "supprimer" :
+            return $this->Ctrl_Article_Supprimer($_POST['articleIda']);
+        break;
+        case "ficheArticle" :
+            return $this->Ctrl_Article_Fiche($_POST['articleIda']);
+        break;
+    }
 }
-
-echo json_encode($tabRes);
 ?>

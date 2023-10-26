@@ -5,6 +5,9 @@
     require_once(__DIR__."/includes/Membre.inc.php");
     
     class DaoMembre {
+
+        // Construction Dao:
+
         static private $instanceDaoMembre = null;
         
         private $reponse = array();
@@ -19,26 +22,84 @@
             return self::$instanceDaoMembre;
         }
 
+        // Méthodes: 
+
         function chargerPhotoMembre($nom, $prenom){
             $photo = "avatarMembre.png";
-            $dossierPhotos = "photos/";
             $objPhotoRecue = $_FILES['photo'];
        
-            if($objPhotoRecue['tmp_name'][0]!== ""){
+            if($objPhotoRecue['tmp_name']!== ""){
                 $nouveauNom = $nom.$prenom.time();
                 $extension = strrchr($objPhotoRecue['name'], ".");
     
                 $photo = $nouveauNom.$extension;
-       
-                @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
-                if (!file_exists($dossierPhotos.$photo)) {
-                    $msg = "Erreur lors du téléchargement du fichier.";
-                }
+                
+                try {
+                    @move_uploaded_file($objPhotoRecue['tmp_name'], "serveur/membre/photos/".$photo);
+                    if (!file_exists("serveur/membre/photos/".$photo)) {
+                        $this->reponse['msg'] = "Erreur lors du téléchargement du fichier.";
+                    }
+                } catch(Exception $e) {
+                    $this->reponse['msg'] = "Mauvais chemin";
+                } 
             }
-
             return $photo;
         }
-       
+    
+        // CRUD:
+        // Create:
+
+        function Dao_Membre_Enregistrer(Membre $membre, String $mdp):string {
+
+            $nom = $membre->getNom();
+            $prenom = $membre->getPrenom();
+            $courriel = $membre->getCourriel();
+            $sexe = $membre->getSexe();
+            $daten = $membre->getDaten();
+        
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "SELECT * FROM membres WHERE courriel = ?";
+            try{
+                $donnees = [$courriel];
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute($donnees);
+                $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_ASSOC);
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "Membre trouvé";
+
+                if (!$this->reponse['membre']) {
+                    $photo = self::chargerPhotoMembre($nom, $prenom);
+                    $requete2 = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
+                    try {   
+                        $donnees2 = [$nom, $prenom, $courriel, $sexe, $daten, $photo];
+                        $stmt2 = $connexion->prepare($requete2);
+                        $stmt2->execute($donnees2);
+                        $idm = $connexion->lastInsertId();
+    
+                        $requete3 = "INSERT INTO connexion VALUES (?, ?, ?, 'M', 'A')";
+                        try{
+                            $stmt3 = $connexion->prepare($requete3);
+                            $stmt3->execute([$idm, $courriel, $mdp]);
+                            $this->reponse['msg'] = "Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré";
+                        } catch(Exception $e) {
+                            $this->reponse['msg'] = "Une erreur est survenue lors de l'enregistrement dans connexion: ".$e->getMessage();
+                        }
+                    } catch(Exception $e) {
+                        $this->reponse['msg'] = "Une erreur est survenue lors de l'enregistrement dans membre: ".$e->getMessage();
+                    }
+                } else {
+                    $this->reponse['msg'] = "Le courriel ".$courriel." est déjà dans la base de donnée";
+                }
+            } catch(Exception $e) {
+                $this->reponse['msg'] = "Une erreur est survenue lors de la verification: ".$e->getMessage();
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
+        // Read:
+
         function Dao_Membre_Lister():string {
 
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
@@ -48,7 +109,7 @@
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "listerM";
+                $this->reponse['action'] = "listerTabMembre";
                 $this->reponse['listeMembres'] = array();
                 while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                     $this->reponse['listeMembres'][] = $ligne;
@@ -59,47 +120,6 @@
             }finally {
                 unset($connexion);
                 return json_encode($this->reponse);
-            }
-        }
-
-        function Dao_Membre_Enregistrer(Membre $membre, String $mdp):string {
-
-            $nom = $membre->getNom();
-            $prenom = $membre->getPrenom();
-            $courriel = $membre->getCourriel();
-            $sexe = $membre->getSexe();
-            $daten = $membre->getDaten();
-            $msg = "";
-        
-            $connexion = Connexion::getInstanceConnexion()->getConnexion();
-            
-            try{
-                $requete = "SELECT * FROM membres WHERE courriel = ?";
-                $donnees = [$courriel];
-                $stmt = $connexion->prepare($requete);
-                $stmt->execute($donnees);
-                $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if (!$resultat) {
-                    $photo = self::chargerPhotoMembre($nom, $prenom);
-                    $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
-                    $donnees = [$nom, $prenom, $courriel, $sexe, $daten, $photo];
-                    $stmt = $connexion->prepare($requete);
-                    $stmt->execute($donnees);
-                    $idm = $connexion->lastInsertId();
-
-                    $requete = "INSERT INTO connexion VALUES (?, ?, ?, 'M', 'A')";
-                    $stmt = $connexion->prepare($requete);
-                    $stmt->execute([$idm, $courriel, $mdp]);
-                    $msg = "<h3>Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré</h3>";
-                } else {
-                    $msg = "<h3>Le courriel ".$courriel." est déjà dans la base de donnée</h3>";
-                }
-            } catch(Exception $e) {
-                $msg = "<h3>Une erreur est survenue lors de l'enregistrement: ".$e->getMessage()."\br</h3>";
-            }finally {
-                unset($connexion);
-                return $msg;
             }
         }
 
@@ -123,6 +143,8 @@
             }
         }
 
+        // Update:
+
         function Dao_Membre_Form_Modifier($membreIdm){
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
             $requete = "SELECT * FROM membres WHERE idm=".$membreIdm;
@@ -131,7 +153,7 @@
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "formModifierM";
+                $this->reponse['action'] = "formModifierMembre";
                 $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
             }catch (Exception $e){
                 $this->reponse['OK'] = false;
@@ -151,7 +173,7 @@
                 $stmt->execute();
                 $this->reponse['OK'] = true;
                 $this->reponse['msg'] = "";
-                $this->reponse['action'] = "formChangerStatutM";
+                $this->reponse['action'] = "formChangerStatutMembre";
                 $this->reponse['membre'] = $stmt->fetch(PDO::FETCH_OBJ);
             }catch (Exception $e){
                 $this->reponse['requete'] = $requete;
@@ -200,7 +222,7 @@
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "c'est okay";
                         $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
-                        $this->reponse['action'] = "changerStatutM";
+                        $this->reponse['action'] = "changerStatutMembre";
                     }catch(Exception $e){
                         $this->reponse['OK'] = false;
                         $this->reponse['msg'] = "Problème requete3";
@@ -250,7 +272,7 @@
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "c'est okay";
                         $this->reponse['membre'] = $stmt3->fetch(PDO::FETCH_OBJ);
-                        $this->reponse['action'] = "envoyerModifM";
+                        $this->reponse['action'] = "envoyerModifMembre";
                     }catch(Exception $e){
                         $this->reponse['OK'] = false;
                         $this->reponse['msg'] = "Problème requete3";
