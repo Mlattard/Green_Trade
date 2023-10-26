@@ -35,9 +35,16 @@
     
                 $photo = $nouveauNom.$extension;
        
-                @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
-                if (!file_exists($dossierPhotos.$photo)) {
-                    $msg = "Erreur lors du téléchargement du fichier.";
+                $destination = $dossierPhotos.$photo;
+
+                if (move_uploaded_file($objPhotoRecue['tmp_name'][0], $destination)) {
+                    if (file_exists($destination)) {
+                        // Le fichier a été téléchargé avec succès
+                    } else {
+                        $msg = "Erreur lors du téléchargement du fichier.";
+                    }
+                } else {
+                    $msg = "Erreur lors du déplacement du fichier temporaire.";
                 }
             }
 
@@ -54,39 +61,60 @@
             $courriel = $membre->getCourriel();
             $sexe = $membre->getSexe();
             $daten = $membre->getDaten();
-            $msg = "";
         
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
-            
+            $requete = "SELECT * FROM membres WHERE courriel = ?";
             try{
-                $requete = "SELECT * FROM membres WHERE courriel = ?";
                 $donnees = [$courriel];
                 $stmt = $connexion->prepare($requete);
                 $stmt->execute($donnees);
                 $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if (!$resultat) {
-                    $photo = self::chargerPhotoMembre($nom, $prenom);
-                    $requete = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
-                    $donnees = [$nom, $prenom, $courriel, $sexe, $daten, $photo];
-                    $stmt = $connexion->prepare($requete);
-                    $stmt->execute($donnees);
+                    $this->reponse['photo'] = self::chargerPhotoMembre($nom, $prenom);
+                    $requete2 = "INSERT INTO membres VALUES (0, ?, ?, ?, ?, ?, ?)";
+                    $donnees2 = [$nom, $prenom, $courriel, $sexe, $daten, $this->reponse['photo']];
+                    $stmt2 = $connexion->prepare($requete2);
+                    $stmt2->execute($donnees2);
                     $idm = $connexion->lastInsertId();
 
-                    $requete = "INSERT INTO connexion VALUES (?, ?, ?, 'M', 'A')";
-                    $stmt = $connexion->prepare($requete);
-                    $stmt->execute([$idm, $courriel, $mdp]);
-                    $msg = "<h3>Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré</h3>";
+                    $requete3 = "INSERT INTO connexion VALUES (?, ?, ?, 'M', 'A')";
+                    $stmt3 = $connexion->prepare($requete3);
+                    $stmt3->execute([$idm, $courriel, $mdp]);
+                    $this->reponse['msg'] = "<h3>Le membre ".$membre->getPrenom()." ".$membre->getNom()." a bien été enregistré</h3>";
                 } else {
-                    $msg = "<h3>Le courriel ".$courriel." est déjà dans la base de donnée</h3>";
+                    $this->reponse['msg'] = "<h3>Le courriel ".$courriel." est déjà dans la base de donnée</h3>";
                 }
             } catch(Exception $e) {
-                $msg = "<h3>Une erreur est survenue lors de l'enregistrement: ".$e->getMessage()."\br</h3>";
+                $this->reponse['msg'] = "<h3>Une erreur est survenue lors de l'enregistrement: ".$e->getMessage()."\br</h3>";
             }finally {
                 unset($connexion);
-                return $msg;
+                return json_encode($this->reponse);
             }
         }
+
+
+        function Dao_Article_Enregistrer($article):string {
+             
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, 'logo.png')";
+            try{
+                $donnees = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute($donnees);
+                
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "Article enregistré avec succès";
+            }catch (Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Erreur lors de l'enregistrement de l'article : " . $e->getMessage();;
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
+
 
         // Read:
 

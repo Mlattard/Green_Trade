@@ -74,7 +74,7 @@
           </div>
           <div class="modal-body">
             <span id="msgErrEnregMembre"></span>
-            <form class="row g-3" action="serveur/membre/controleurMembre.php" method="POST" enctype="multipart/form-data" class="row g-3">
+            <form class="row g-3" id="formEnregistrerMembre">
               <div class="col-md-6">
                 <label for="nom" class="form-label">Nom du membre</label>
                 <input type="text" class="form-control" id="nom" name="nom" required>
@@ -109,12 +109,12 @@
               </div>
               <div class="col-md-12">
                 <label for="photo" class="form-label">Ajouter votre photo</label>
-                <input type="file" class="form-control" id="photo" name="photo">
+                <input type="file" class="form-control" id="photo" name="photo[]">
               </div>
               <br />
               <div class="col-6">
-                <button class="btn btn-primary" type="submit">Enregistrer</button>
-                <input type="hidden" name="action" value="enregistrer">
+                <button class="btn btn-primary" onclick="enregistrerMembre();" data-bs-dismiss="modal">Enregistrer</button>
+                <input type="hidden" name="action" value="enregistrerMembre">
               </div>
               <div class="col-6">
                 <button class="btn btn-danger" type="reset">Vider</button>

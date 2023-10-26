@@ -41,6 +41,9 @@
 				case "changerStatutMembre" :
 					return $this->Ctrl_Membre_Changer_Statut($_POST['membreIdm']);
 				break;
+				case "enregistrerMembre" :
+					return $this->Ctrl_Membre_Enregistrer();
+				break;
 			}
 		}
 
@@ -55,8 +58,7 @@
             $daten = $_POST['daten'];
             
             $membre = new Membre(0, $nom, $prenom, $courriel, $sexe, $daten, " ");
-            $msg = DaoMembre::getDaoMembre()->Dao_Membre_Enregistrer($membre, $_POST['mdp']);
-            echo $msg;
+            return DaoMembre::getDaoMembre()->Dao_Membre_Enregistrer($membre, $_POST['mdp']);
         }
 
         function Ctrl_Membre_Lister(){

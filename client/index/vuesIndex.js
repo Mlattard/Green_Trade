@@ -6,7 +6,10 @@ var actionsVuesIndex = (action, reponse) => {
 	switch(action){
 		case "listerCardsArticles" :
 			listerVuesArticlesCards(reponse.listeArticles);
-		break;      
+		break; 
+        case "enregistrerMembre" :
+            alert(reponse);  
+        break;   
 	}
 }
 
