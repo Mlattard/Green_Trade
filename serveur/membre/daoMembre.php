@@ -26,6 +26,7 @@
 
         function chargerPhotoMembre($nom, $prenom){
             $photo = "avatarMembre.png";
+            $dossierPhotos = "serveur/membre/photos/";
             $objPhotoRecue = $_FILES['photo'];
        
             if($objPhotoRecue['tmp_name']!== ""){
@@ -35,8 +36,8 @@
                 $photo = $nouveauNom.$extension;
                 
                 try {
-                    @move_uploaded_file($objPhotoRecue['tmp_name'], "serveur/membre/photos/".$photo);
-                    if (!file_exists("serveur/membre/photos/".$photo)) {
+                    @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
+                    if (!file_exists($dossierPhotos.$photo)) {
                         $this->reponse['msg'] = "Erreur lors du téléchargement du fichier.";
                     }
                 } catch(Exception $e) {

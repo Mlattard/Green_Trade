@@ -58,7 +58,7 @@
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
 
-			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, 'logo.png');
+			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, ' ');
 			return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article); 
 	    }
 

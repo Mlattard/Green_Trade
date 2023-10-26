@@ -30,7 +30,7 @@ function obtenirCardArticle(article){
     card += '<h5 class="card-title">' + article.nom + '</h5>';
     card += '<p class="card-text">' + article.description + '</p>';
     card += '<p class="card-text">Catégorie: ' + article.categorie + '</p>';
-    card += '<p class="card-text">Prix: ' + article.prix + '</p>';
+    card += '<p class="card-text">Prix: ' + article.prix + '$</p>';
     card += '<p class="card-text">État: ' + article.etat + '</p>';
     card += '<a href="#" class="btn btn-primary">Acheter</a>';
     card += '</div>';

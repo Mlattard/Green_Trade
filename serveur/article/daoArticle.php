@@ -27,21 +27,24 @@ class DaoArticle {
 
     function chargerPhotoArticle($nom){
         $photo = "logo.png";
-        $dossierPhotos = "photos/";
-        $objPhotoRecue = $_POST['photo'];
+        $dossierPhotos = "serveur/article/photos/";
+        $objPhotoRecue = $_FILES['photoArticle'];
    
-        if($objPhotoRecue['tmp_name'][0]!== ""){
+        if($objPhotoRecue['tmp_name']!== ""){
             $nouveauNom = $nom.time();
             $extension = strrchr($objPhotoRecue['name'], ".");
    
             $photo = $nouveauNom.$extension;
 
-            @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
-            if (!file_exists($dossierPhotos.$photo)) {
-                $msg = "Erreur lors du téléchargement du fichier.";
-            }
+            try {
+                @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
+                if (!file_exists($dossierPhotos.$photo)) {
+                    $this->reponse['msg'] = "Erreur lors du téléchargement du fichier.";
+                }
+            } catch(Exception $e) {
+                $this->reponse['msg'] = "Mauvais chemin";
+            } 
         }
-
         return $photo;
     }
 
@@ -50,10 +53,17 @@ class DaoArticle {
 
     function Dao_Article_Enregistrer($article):string {
              
+        $nom = $article->getNom();
+        $description = $article->getDescription();
+        $categorie = $article->getCategorie();
+        $prix = $article->getPrix();
+        $etat = $article->getEtat();
+
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, 'logo.png')";
+        $photo = self::chargerPhotoArticle($nom);
+        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            $donnees = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
+            $donnees = [$nom, $description, $categorie, $prix, $etat, $photo];
             $stmt = $connexion->prepare($requete);
             $stmt->execute($donnees);
             
