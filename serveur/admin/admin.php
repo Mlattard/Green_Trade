@@ -48,6 +48,9 @@
                     <li class="nav-item">
                         <a id="btnAfficherMembre" class="nav-link" aria-current="page" href="#" onclick="listerMembresTab()">Afficher les membres</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:document.getElementById('formDeconnexion').submit();">Deconnexion</a>
+                    </li>
                 </ul>
                 <?php
                     echo "<div class = 'infoMembre'><img class = 'avatar' src='".$_SESSION['photo']."'width=48 height=48>"."Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)</div>";
