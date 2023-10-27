@@ -7,10 +7,14 @@ var actionsVuesAdmin = (action, reponse) => {
         case "listerTabArticles" :
 			listerVuesArticlesTab(reponse.listeArticles);
 		break;
+        case "changerStatutArticle" :
         case "envoyerModifArticle" :
         case "ficheArticle" :
 			afficherModalFicheArticle(reponse.article);
 		break;
+        case "formChangerStatutArticle" :
+            afficherModalChangerStatutArticle(reponse.article);
+            break;
         case "formEnregistrerArticle" :
             afficherModalEnregistrerArticle();
         break;
@@ -114,6 +118,7 @@ function listerVuesArticlesTab(listeArticles){
     tab += '<th scope="col">ID Article</th>';
     tab += '<th scope="col">Nom</th>';
     tab += '<th scope="col">Categorie</th>';
+    tab += '<th scope="col">Statut</th>';
     tab += '</tr>';
     tab += '</thead>';
     tab += '<tbody>';
@@ -133,6 +138,7 @@ function remplirTableauArticle(article){
     ligne += '<th scope="row">' + article.ida + '</th>';
     ligne += '<td>' + article.nom + '</td>';
     ligne += '<td>' + article.categorie + '</td>';
+    ligne += '<td>' + article.statut + '</td>';
     ligne += '</tr>';
 
     return ligne;
@@ -165,6 +171,7 @@ let modalFicheArticle = (article) => {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormModifierArticle(${article.ida});">Modifier</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormChangerStatutArticle(${article.ida});">Changer le statut</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormSupprimerArticle(${article.ida});">Supprimer</button>
                 </div>
             </div>
@@ -265,7 +272,7 @@ let modalFicheMembre = (membre) => {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormModifierM(${membre.idm});">Modifier</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormChangerStatutM(${membre.idm});">Changer Statut</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="obtenirFormChangerStatutM(${membre.idm});">Changer le statut</button>
                 </div>
             </div>
         </div>
@@ -409,6 +416,50 @@ let modalModifierMembre = (membre) => {
                 </div>
             </div>
         </div>
+    `;
+}
+
+// Modal Changer Statut Article
+
+let afficherModalChangerStatutArticle = (article) => {
+    
+    document.getElementById('modals').innerHTML = modalChangerStatutArticle(article);
+    const modalChangerStatutA = new bootstrap.Modal('#modalChangerStatutArticle', {
+    });	
+    modalChangerStatutA.show();
+}
+
+let modalChangerStatutArticle = (article) => {
+    switch(article.statut){
+		case "A" :
+			article.statut='Actif'
+		break;
+        case "I" :
+			article.statut='Inactif'
+		break;
+    }
+
+    return `
+    <div class="modal modal-xl fade" id="modalChangerStatutArticle" tabindex="-1" aria-labelledby="modalChangerStatutArticle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Changer le statut de l'article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span id="msgErrChangerStatutArticle"></span>
+                    <p>Le statut de ${article.ida} - ${article.nom} est actuellement : ${article.statut}</p>
+                    <p>Êtes-vous sûr de vouloir changer son statut ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="changerStatutArticle(${article.ida});" data-bs-dismiss="modal">Confirmer</button>
+                    <input type="hidden" name="action" value="changerStatut">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
     `;
 }
 

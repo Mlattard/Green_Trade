@@ -84,7 +84,7 @@ class DaoArticle {
 
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $photo = self::chargerPhotoArticle($nom);
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo) VALUES (?, ?, ?, ?, ?, ?)";
+        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo, statut) VALUES (?, ?, ?, ?, ?, ?, ?, 'A')";
         try{
             $donnees = [$nom, $description, $categorie, $prix, $etat, $photo];
             $stmt = $connexion->prepare($requete);
@@ -183,6 +183,7 @@ class DaoArticle {
         $categorie = $article->getCategorie();
         $prix = $article->getPrix();
         $etat = $article->getEtat();
+        $statut = $article->getStatut();
 
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles WHERE ida=".$ida;
@@ -201,13 +202,13 @@ class DaoArticle {
             $anciennePhoto = $stmt->fetch(PDO::FETCH_OBJ)->photo;
             $photo = self::chargerPhotoArticleModifie($anciennePhoto);
 			
-			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$photo."' WHERE ida=".$article->getIda();
+			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$photo."', statut=? WHERE ida=".$ida;
 			try{
-                $donnees2 = [$nom, $description, $categorie, $prix, $etat];
+                $donnees2 = [$nom, $description, $categorie, $prix, $etat, $statut];
                 $stmt2 = $connexion->prepare($requete2);
                 $stmt2->execute($donnees2);
                 try{
-                    $requete3 = "SELECT * FROM articles WHERE ida=".$article->getIda();
+                    $requete3 = "SELECT * FROM articles WHERE ida=".$ida;
                     $stmt3 = $connexion->prepare($requete3);
                     $stmt3->execute();
                     
@@ -230,6 +231,81 @@ class DaoArticle {
 			unset($connexion);
             return json_encode($this->reponse);
 		}
+    }
+
+    function Dao_Article_Form_Changer_Statut($articleIda){
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "SELECT * FROM articles WHERE ida = ".$articleIda;
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['OK'] = true;
+            $this->reponse['msg'] = "";
+            $this->reponse['action'] = "formChangerStatutArticle";
+            $this->reponse['article'] = $stmt->fetch(PDO::FETCH_OBJ);
+        }catch (Exception $e){
+            $this->reponse['requete'] = $requete;
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+        }finally {
+            unset($connexion);
+
+            return json_encode($this->reponse);
+        }
+    }
+
+    function Dao_Article_Changer_Statut($articleIda):string {
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        $requete = "SELECT * FROM articles WHERE ida=".$articleIda;
+
+        $this->reponse = [
+            'OK' => false,
+            'msg' => "debut",
+            'action' => "",
+            'statutArticle' => null,
+        ];
+
+        try{
+            $stmt = $connexion->prepare($requete);
+            $stmt->execute();
+            $this->reponse['statutArticle'] = $stmt->fetch(PDO::FETCH_OBJ)->statut;
+
+            switch($this->reponse['statutArticle']){
+                case "A" :
+                    $this->reponse['statutArticle'] = 'I';
+                break;
+                case "I" :
+                    $this->reponse['statutArticle'] = 'A';
+                break;
+                }
+            $requete2 = "UPDATE articles SET statut='".$this->reponse['statutArticle']."' WHERE ida=".$articleIda;
+            try{
+                $stmt2 = $connexion->prepare($requete2);
+                $stmt2->execute();
+                $requete3 = "SELECT * FROM articles WHERE ida = ".$articleIda;
+                try{
+                    $stmt3 = $connexion->prepare($requete3);
+                    $stmt3->execute();
+                    
+                    $this->reponse['OK'] = true;
+                    $this->reponse['msg'] = "c'est okay";
+                    $this->reponse['article'] = $stmt3->fetch(PDO::FETCH_OBJ);
+                    $this->reponse['action'] = "changerStatutArticle";
+                }catch(Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Problème requete3";
+                }
+            }catch(Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Problème requete2";
+            }         
+        }catch(Exception $e){
+            $this->reponse['OK'] = false;
+            $this->reponse['msg'] = "Problème requete1";
+        }finally{
+            unset($connexion);
+            return json_encode($this->reponse);
+        }
     }
 
     // Delete:

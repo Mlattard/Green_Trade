@@ -89,10 +89,26 @@ let obtenirFormModifierArticle = (articleIda) => {
     requeteAjaxAdmin(form);
 };
 
+let obtenirFormChangerStatutArticle = (articleIda) => {
+    let form = new FormData();
+    form.append('action', 'formChangerStatutArticle');
+    form.append('route', 'article');
+    form.append('articleIda', articleIda);
+    requeteAjaxAdmin(form);
+};
+
 let envoyerModifArticle = (articleIda) => {
     var leForm = document.getElementById('formModifierArticle');
     let form = new FormData(leForm);
     form.append('action', 'envoyerModifArticle');
+    form.append('route', 'article');
+    form.append('articleIda', articleIda);
+    requeteAjaxAdmin(form);
+};
+
+let changerStatutArticle = (articleIda) => {
+    let form = new FormData();
+    form.append('action', 'changerStatutArticle');
     form.append('route', 'article');
     form.append('articleIda', articleIda);
     requeteAjaxAdmin(form);

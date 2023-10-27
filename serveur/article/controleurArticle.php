@@ -36,6 +36,12 @@
 				case "envoyerModifArticle" :
 					return $this->Ctrl_Article_Modifier($_POST['articleIda']);
 				break;
+				case "formChangerStatutArticle" :
+					return $this->Ctrl_Article_Form_Changer_Statut($_POST['articleIda']);
+				break;
+				case "changerStatutArticle" :
+					return $this->Ctrl_Article_Changer_Statut($_POST['articleIda']);
+				break;
 				case "formSupprimerArticle" :
 					return $this->Ctrl_Article_Form_Supprimer($_POST['articleIda']);
 				break;
@@ -58,7 +64,7 @@
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
 
-			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, ' ');
+			$article = new Article(0, $nom, $description, $categorie, $prix, $etat, ' ', 'A');
 			return DaoArticle::getDaoArticle()->Dao_Article_Enregistrer($article); 
 	    }
 
@@ -84,9 +90,18 @@
 			$categorie = $_POST['categorie'];
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
+			$statut = $_POST['statut'];
 
-			$article = new Article($articleIda, $nom, $description, $categorie, $prix, $etat, ' ');
+			$article = new Article($articleIda, $nom, $description, $categorie, $prix, $etat, ' ', $statut);
 			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($article); 
+		}
+
+		function Ctrl_Article_Form_Changer_Statut($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Form_Changer_Statut($articleIda); 
+		}
+
+		function Ctrl_Article_Changer_Statut($articleIda){
+			return DaoArticle::getDaoArticle()->Dao_Article_Changer_Statut($articleIda); 
 		}
 
 		// Delete

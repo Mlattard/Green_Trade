@@ -8,9 +8,10 @@ class Article {
     private $prix;
     private $etat;
     private $photo;
+    private $statut;
 
     // Constructeur
-    function __construct($ida, $nom, $description, $categorie, $prix, $etat, $photo) {
+    function __construct($ida, $nom, $description, $categorie, $prix, $etat, $photo, $statut) {
         $this->setIda($ida);
         $this->setNom($nom);
         $this->setDescription($description);
@@ -18,6 +19,7 @@ class Article {
         $this->setPrix($prix);
         $this->setEtat($etat);
         $this->setPhoto($photo);
+        $this->setStatut($statut);
     }
 
     // Getters
@@ -28,6 +30,7 @@ class Article {
     function getPrix() { return $this->prix; }
     function getEtat() { return $this->etat; }
     function getPhoto() { return $this->photo; }
+    function getStatut() { return $this->statut; }
 
     // Setters
     function setIda($ida) { $this->ida = $ida; }
@@ -37,6 +40,7 @@ class Article {
     function setPrix($prix) { $this->prix = $prix; }
     function setEtat($etat) { $this->etat = $etat; }
     function setPhoto($photo) { $this->photo = $photo; }
+    function setStatut($statut) { $this->photo = $statut; }
 
     // Fonction pour afficher les détails de l'article
     function afficher() {
@@ -47,6 +51,7 @@ class Article {
         $rep .= "Prix: " . $this->prix . "<br>";
         $rep .= "État: " . $this->etat . "<br>";
         $rep .= "Photo: " . $this->photo . "<br>";
+        $rep .= "Statut: " . $this->statut . "<br>";
         return $rep;
     }
 }
