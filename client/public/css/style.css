@@ -33,17 +33,18 @@
     margin-right: 20px;
 }
 
-#contenuIndex {
+#contenuIndex, #contenuMembre {
     padding: 2% 10% 2% 10%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
   
-#contenuIndex > div {
-    width: auto; 
+#contenuIndex > div, #contenuMembre > div {
+    width:100%; 
     margin: 5px; 
     text-align:left;
+    align-items: center;
 }
 
 #contenuAdmin{
@@ -52,4 +53,11 @@
 
 .divPhotoArticle{
     display: flex;
+}
+
+.card-img-top{
+    width:fit-content;
+    height: auto;
+    max-height: 200px;
+    margin-top: 10px;
 }

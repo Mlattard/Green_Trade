@@ -7,7 +7,6 @@
 		// Construction Controleur:
 
 		static private $instanceCtrl = null;
-		private $reponse;
 	
 		private function __construct(){}
 

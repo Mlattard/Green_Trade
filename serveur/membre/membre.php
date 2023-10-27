@@ -17,13 +17,18 @@
         <script src="../../client/public/utilitaires/jquery-3.6.3.min.js"></script>
         <script src="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
         <script src="../../client/public/js/global.js"></script>
+        <script src="../../client/membre/requetesMembre.js"></script>
+        <script src="../../client/membre/vuesMembre.js"></script>
         <link rel="stylesheet" href="../../client/public/css/style.css">
     </head>
-    <body>  
+    <body onLoad="listerArticlesCards();">  
         <!-- Barre navigation -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">GreenTrade</a>
+                <a class="navbar-brand" href="#">
+                    <img src="..\membre\photos\logo.png" alt="Logo de GreenTrade" class="logo" style="width: 50px; height: auto; margin-right: 10px;">
+                    GreenTrade 
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,8 +56,9 @@
         </nav>
         <!-- Fin barre navigation -->
 
-        <h1>Page Membre en travaux, prévu pour la partie 3</h1>
-    <div class="container" >
+    <!-- Contenu page -->
+    <div id="contenuMembre"></div>
+
     </div>
     <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
         <input type="hidden" name="action" value="deconnexion">
