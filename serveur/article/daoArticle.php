@@ -48,6 +48,29 @@ class DaoArticle {
         return $photo;
     }
 
+    function chargerPhotoArticleModifie($existante){
+        $photo = $existante;
+        $dossierPhotos = "serveur/article/photos/";
+        $objPhotoRecue = $_FILES['photoArticle'];
+   
+        if($objPhotoRecue['tmp_name']!== ""){
+            $nouveauNom = $objPhotoRecue['name'].time();
+            $extension = strrchr($objPhotoRecue['name'], ".");
+   
+            $photo = $nouveauNom.$extension;
+
+            try {
+                @move_uploaded_file($objPhotoRecue['tmp_name'], $dossierPhotos.$photo);
+                if (!file_exists($dossierPhotos.$photo)) {
+                    $this->reponse['msg'] = "Erreur lors du téléchargement du fichier.";
+                }
+            } catch(Exception $e) {
+                $this->reponse['msg'] = "Mauvais chemin";
+            } 
+        }
+        return $photo;
+    }
+
     // CRUD:
     // Create:
 
@@ -153,27 +176,34 @@ class DaoArticle {
     }
 
     function Dao_Article_Modifier($article):string {
+
+        $ida = $article->getIda();
+        $nom = $article->getNom();
+        $description = $article->getDescription();
+        $categorie = $article->getCategorie();
+        $prix = $article->getPrix();
+        $etat = $article->getEtat();
+
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
-        $requete = "SELECT * FROM articles WHERE ida=".$article->getIda();
+        $requete = "SELECT * FROM articles WHERE ida=".$ida;
 
         $this->reponse = [
             'OK' => false,
             'msg' => "",
             'action' => "",
             'article' => null,
-            'photoArticle' => null,
         ];
 
         try{
 			$stmt = $connexion->prepare($requete);
             $stmt->execute();
-            $this->reponse['photoArticle'] = $stmt->fetch(PDO::FETCH_OBJ)->photo;
 			
-			$anciennePhoto = $this->reponse['photoArticle'];
+            $anciennePhoto = $stmt->fetch(PDO::FETCH_OBJ)->photo;
+            $photo = self::chargerPhotoArticleModifie($anciennePhoto);
 			
-			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$anciennePhoto."' WHERE ida=".$article->getIda();
+			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$photo."' WHERE ida=".$article->getIda();
 			try{
-                $donnees2 = [$article->getNom(), $article->getDescription(),  $article->getCategorie(), $article->getPrix(), $article->getEtat()];
+                $donnees2 = [$nom, $description, $categorie, $prix, $etat];
                 $stmt2 = $connexion->prepare($requete2);
                 $stmt2->execute($donnees2);
                 try{

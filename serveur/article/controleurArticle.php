@@ -79,14 +79,13 @@
 		}
 
 		function Ctrl_Article_Modifier($articleIda){
-			$ida = $articleIda;
 			$nom = $_POST['nomArticle'];
 			$description = $_POST['description'];
 			$categorie = $_POST['categorie'];
 			$prix = $_POST['prix'];
 			$etat = $_POST['etat'];
 
-			$article = new Article($ida, $nom, $description, $categorie, $prix, $etat, 'logo.png');
+			$article = new Article($articleIda, $nom, $description, $categorie, $prix, $etat, ' ');
 			return DaoArticle::getDaoArticle()->Dao_Article_Modifier($article); 
 		}
 

@@ -52,7 +52,7 @@ let afficherModalEnregistrerArticle = () => {
 
 let modalEnregistrerArticle = () => {
     return `
-    <div class="modal modal-xl fade" id="modalEnregistrerArticle" tabindex="-1" aria-labelledby="modalEnregistrerArticle" aria-hidden="true">
+    <div class="modal modal-lg fade" id="modalEnregistrerArticle" tabindex="-1" aria-labelledby="modalEnregistrerArticle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,11 +74,11 @@ let modalEnregistrerArticle = () => {
                             <label for="categorie" class="form-label">Catégorie</label>
                             <input type="text" class="form-control " id="categorie" name="categorie" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="prix" class="form-label">Prix</label>
                             <input type="number" min="0" step="0.01" class="form-control " id="prix" name="prix" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="etat" class="form-label">État</label>
                             <select class="form-select " id="etat" name="etat" required>
                             <option value="Neuf">Neuf</option>
@@ -289,7 +289,7 @@ let afficherModalModifierArticle = (article) => {
 
 let modalModifierArticle = (article) => {
     return `
-    <div class="modal modal-xl fade" id="modalModifierArticle" tabindex="-1" aria-labelledby="modalModifierArticle" aria-hidden="true">
+    <div class="modal modal-lg fade" id="modalModifierArticle" tabindex="-1" aria-labelledby="modalModifierArticle" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -312,11 +312,11 @@ let modalModifierArticle = (article) => {
                             <label for="categorie" class="form-label">Catégorie</label>
                             <input type="text" class="form-control " id="categorie" name="categorie" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="prix" class="form-label">Prix</label>
                             <input type="number" min="0" step="0.01" class="form-control " id="prix" name="prix" required>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="etat" class="form-label">État</label>
                             <select class="form-select " id="etat" name="etat" required>
                             <option value="Neuf">Neuf</option>
@@ -324,9 +324,12 @@ let modalModifierArticle = (article) => {
                             <option value="Usagé">Usagé</option>
                             </select>
                         </div>
-                        <div class="col-md-12">
-                            <label for="photoArticle" class="form-label">Photo</label>
-                            <input type="file" class="form-control" id="photoArticle" name="photoArticle">
+                        <div class="col-md-12 divPhotoArticle">
+                            <img src="../article/photos/${article.photo}" class="photoArticle" alt="...">
+                            <div>
+                                <label for="photoArticle" class="form-label">Photo</label>
+                                <input type="file" class="form-control" id="photoArticle" name="photoArticle">
+                            </div>
                         </div>
                     </form>
                 </div>

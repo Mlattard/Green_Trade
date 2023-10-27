@@ -30,6 +30,7 @@
     width: 200px;
     height: auto;
     margin-bottom: 20px;
+    margin-right: 20px;
 }
 
 #contenuIndex {
@@ -47,4 +48,8 @@
 
 #contenuAdmin{
     padding: 2% 10% 2% 10%;
+}
+
+.divPhotoArticle{
+    display: flex;
 }
