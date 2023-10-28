@@ -61,3 +61,50 @@
     max-height: 200px;
     margin-top: 10px;
 }
+
+.navbar{
+    align-items: center;
+    justify-content: center;
+    padding: 1% 10% 1% 10%;
+}
+
+/* Page Index */
+
+#banniere{
+    width:100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+#banniere > img{
+    width:100%;
+    height: auto;
+}
+
+#carrouselIndex, #produitsIndex{
+    display: flex;
+    justify-content: space-between;
+}
+
+#carrouselIndex{
+    margin: 1% 10% 1% 10%;
+}
+
+.card_perso{
+    margin: 1px;
+    align-items: center;
+    justify-content: center;
+}
+
+.boutonCarrousel{
+    border: none;           /* Supprimer les bordures */
+    background: none;        /* Supprimer l'arrière-plan */
+    padding: 0;              /* Supprimer le rembourrage */
+    cursor: pointer;         /* Optionnel : changer le curseur au survol */
+    outline: none;           /* Supprimer le contour du bouton lorsqu'il est cliqué */
+}
+
+.flecheCarrousel{
+    height: 40px;
+    width: auto;
+}

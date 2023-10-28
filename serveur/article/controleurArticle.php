@@ -22,6 +22,8 @@
 		function Ctrl_Article_Actions($action){
 			
 			switch($action){
+				case "carrouselPrecedent":
+				case "carrouselSuivant":
 				case "listerTabArticles" :
 				case "listerCardsArticles" :
 					return $this->Ctrl_Article_Lister($action);

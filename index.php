@@ -61,8 +61,17 @@
     </nav>
     <!-- Fin barre navigation -->
 
-    <!-- Contenu page -->
-    <div id="contenuIndex"></div>
+    <!-- Bannière -->
+    <div id="banniere">
+      <img src="client/public/images/banniere.jpg" alt="banniere">
+    </div>
+
+    <!-- Bannière -->
+    <div id="carrouselIndex">
+      <button id="precedent" class="boutonCarrousel" onclick="pagePrecedente()"><img src="client/public/images/flecheGauche.png" class="flecheCarrousel" alt="Précédent"></button>
+      <div id="produitsIndex"></div>
+      <button id="suivant" class="boutonCarrousel" onclick="pageSuivante()"><img src="client/public/images/flecheDroite.png" class="flecheCarrousel" alt="Précédent"></button>
+    </div>
 
     <!-- Modal enregistrer un membre -->
     <div class="modal fade modal-custom-width" id="modalDevenirMembre" tabindex="-1" aria-labelledby="exampleModalLabelMembre" aria-hidden="true">

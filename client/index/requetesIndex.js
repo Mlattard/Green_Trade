@@ -52,3 +52,17 @@ let listerArticlesCards = () => {
     form.append('route', 'article');
     requeteAjaxIndex(form);
 };
+
+let pagePrecedente = () => {
+    let form = new FormData();
+    form.append('action', 'carrouselPrecedent');
+    form.append('route', 'article');
+    requeteAjaxIndex(form);
+};
+
+let pageSuivante = () => {
+    let form = new FormData();
+    form.append('action', 'carrouselSuivant');
+    form.append('route', 'article');
+    requeteAjaxIndex(form);
+};
