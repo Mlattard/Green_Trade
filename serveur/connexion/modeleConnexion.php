@@ -25,6 +25,7 @@
                         $_SESSION['prenom'] = $reponse2['prenom'];
                         $_SESSION['nom'] = $reponse2['nom'];
                         $_SESSION['photo'] = "../membre/photos/".$reponse2['photo'];
+                        $_SESSION['idm'] = $reponse2['idm'];
                         header('Location: ../membre/membre.php');
                         exit();
                     } else { // Dans ce cas c'est un admin

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    if(!isset( $_SESSION['role'])){
+    if(!isset($_SESSION['role'])){
         header('location: ../../index.php');
         exit();
     }
@@ -22,7 +22,7 @@
         <script src="../../client/membre/vuesMembre.js"></script>
         <link rel="stylesheet" href="../../client/public/css/style.css">
     </head>
-    <body onLoad="listerArticlesCards();">  
+    <body onLoad="listerArticlesCards(); creerPanier(<?php echo json_encode($_SESSION['idm'])?>);">  
         <!-- Barre navigation -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -57,18 +57,32 @@
             </div>
         </nav>
         <!-- Fin barre navigation -->
-    <div class="barrePanier">
-        <a id="panier" class="nav-link" href="javascript:afficherPanier();"><i class="bi bi-cart panierPlus"></i></a>
-        <span id="nbart">0</span>
-    </div>
+        
+        <div class="barrePanier">
+            <a id="panier" class="nav-link" aria-current="page" href="#" onclick="afficherPanier();"><i class="bi bi-cart panierPlus"></i></a>
+            <span id="nbart">0</span>
+        </div>
 
-    <!-- Contenu page -->
-    <div id="contenuMembre"></div>
+        <!-- Contenu page -->
+        <div id="contenuMembre"></div>
 
-    </div>
-    <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
-        <input type="hidden" name="action" value="deconnexion">
-    </form>
-</body>
-
+        <!-- Modal du panier -->
+        <div class="modal fade" id="idModPanier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="contenuPanier"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin du modal du panier -->
+    
+        <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
+            <input type="hidden" name="action" value="deconnexion">
+        </form>
+    </body>
 </html>

@@ -52,6 +52,9 @@
 				case "envoyerEnregistrerArticle" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;
+				case "ajouterPanier" :
+					return ;
+				break;
 			}
 	    }
 

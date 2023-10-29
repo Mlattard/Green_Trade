@@ -1,3 +1,5 @@
+var page = 1;
+const ARTICLESPARPAGE = 4;
 
 // Repartiteur d'actions:
 
@@ -23,7 +25,6 @@ var actionsVuesIndex = (action, reponse) => {
 
 function listerVuesArticlesCards(listeArticles){
     var contenu = $('#produitsIndex');
-    var page = 1;
     contenu.empty();
     listeArticles.forEach(function (article) {
         contenu.append(obtenirCardArticle(article));
@@ -43,8 +44,8 @@ function obtenirCardArticle(article){
 
 function afficherArticles(page, listeArticles) {
     var contenu = $('#produitsIndex');
-    var startIndex = (page - 1) * articlesParPage;
-    var endIndex = startIndex + articlesParPage;
+    var startIndex = (page - 1) * ARTICLESPARPAGE;
+    var endIndex = startIndex + ARTICLESPARPAGE;
     var articlesAAfficher = listeArticles.slice(startIndex, endIndex);
 
     contenu.empty();
@@ -55,7 +56,7 @@ function afficherArticles(page, listeArticles) {
 }
 
 function afficherPageSuivante(listeArticles) {
-    if (page < Math.ceil(listeArticles.length / articlesParPage)) {
+    if (page < Math.ceil(listeArticles.length / ARTICLESPARPAGE)) {
         page++;
         afficherArticles(page, listeArticles);
     }
@@ -67,6 +68,3 @@ function afficherPagePrecedente(listeArticles) {
         afficherArticles(page, listeArticles);
     }
 }
-
-var page = 1;
-var articlesParPage = 4;

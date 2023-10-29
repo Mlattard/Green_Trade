@@ -10,7 +10,6 @@ let requeteAjaxMembre = (form) => {
         contentType: false,
         processData: false,
         success: (reponse) => {
-            console.log(reponse);
             actionsVuesMembre(form.get('action'), reponse);
         },
         error: function (xhr, status, error) {
@@ -29,3 +28,19 @@ let listerArticlesCards = () => {
     form.append('route', 'article');
     requeteAjaxMembre(form);
 };
+
+let creerPanier = (membreIdm) => {
+    let form = new FormData();
+    form.append('action', 'creerPanier');
+    form.append('route', 'panier');
+    form.append('membreIdm', membreIdm);
+    requeteAjaxMembre(form);
+}
+
+let ajouterPanier = (articleIda) => {
+    let form = new FormData();
+    form.append('action', 'ajouterPanier');
+    form.append('route', 'panier');
+    form.append('articleIda', articleIda)
+    requeteAjaxMembre(form);
+}
