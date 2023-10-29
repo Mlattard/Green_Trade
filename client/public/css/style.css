@@ -1,7 +1,7 @@
 .modal-custom-width .modal-dialog {
     width: 30%;
-    max-width: 30%; /* Définissez la largeur souhaitée ici */
-    margin: 1.75rem auto; /* Pour centrer le modal horizontalement */
+    max-width: 30%;
+    margin: 1.75rem auto;
 }
 
 #navbarNav{
@@ -68,6 +68,15 @@
     padding: 1% 10% 1% 10%;
 }
 
+.barrePanier{
+    display: flex;
+    align-items:center;
+    justify-content:end;
+    padding: 0% 10% 0% 10%;
+    height: 40px;
+    background-color: rgb(198, 210, 198);
+}
+
 /* Page Index */
 
 #banniere{
@@ -97,11 +106,11 @@
 }
 
 .boutonCarrousel{
-    border: none;           /* Supprimer les bordures */
-    background: none;        /* Supprimer l'arrière-plan */
-    padding: 0;              /* Supprimer le rembourrage */
-    cursor: pointer;         /* Optionnel : changer le curseur au survol */
-    outline: none;           /* Supprimer le contour du bouton lorsqu'il est cliqué */
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
 }
 
 .flecheCarrousel{

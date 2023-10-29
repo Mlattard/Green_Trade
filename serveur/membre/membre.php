@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>GreenTrade - Page membre</title>
         <link rel="stylesheet" href="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../client/public/utilitaires/icons-1.8.1/bootstrap-icons.css">
         <script src="../../client/public/utilitaires/jquery-3.6.3.min.js"></script>
         <script src="../../client/public/utilitaires/bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
         <script src="../../client/public/js/global.js"></script>
@@ -48,6 +49,7 @@
                             <a class="nav-link" href="javascript:document.getElementById('formDeconnexion').submit();">Deconnexion</a>
                         </li>
                     </ul>
+                    
                     <?php
                         echo "<div class = 'infoMembre'><img class = 'avatar' src='".$_SESSION['photo']."'width=48 height=48>"."Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)</div>";
                     ?>
@@ -55,6 +57,10 @@
             </div>
         </nav>
         <!-- Fin barre navigation -->
+    <div class="barrePanier">
+        <a id="panier" class="nav-link" href="javascript:afficherPanier();"><i class="bi bi-cart panierPlus"></i></a>
+        <span id="nbart">0</span>
+    </div>
 
     <!-- Contenu page -->
     <div id="contenuMembre"></div>
