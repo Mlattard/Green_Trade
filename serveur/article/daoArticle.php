@@ -54,7 +54,7 @@ class DaoArticle {
         $objPhotoRecue = $_FILES['photoArticle'];
    
         if($objPhotoRecue['tmp_name']!== ""){
-            $nouveauNom = $objPhotoRecue['name'].time();
+            $nouveauNom = pathinfo($objPhotoRecue['name'], PATHINFO_FILENAME).time();
             $extension = strrchr($objPhotoRecue['name'], ".");
    
             $photo = $nouveauNom.$extension;
@@ -202,9 +202,9 @@ class DaoArticle {
             $anciennePhoto = $stmt->fetch(PDO::FETCH_OBJ)->photo;
             $photo = self::chargerPhotoArticleModifie($anciennePhoto);
 			
-			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo='".$photo."', statut=? WHERE ida=".$ida;
+			$requete2 = "UPDATE articles SET nom=?, description=?, categorie=?, prix=?, etat=?, photo=?, statut=? WHERE ida=".$ida;
 			try{
-                $donnees2 = [$nom, $description, $categorie, $prix, $etat, $statut];
+                $donnees2 = [$nom, $description, $categorie, $prix, $etat, $photo, $statut];
                 $stmt2 = $connexion->prepare($requete2);
                 $stmt2->execute($donnees2);
                 try{

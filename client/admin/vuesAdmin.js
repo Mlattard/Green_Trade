@@ -291,6 +291,7 @@ let afficherModalModifierArticle = (article) => {
 	$('#categorie').val(article.categorie);
 	$('#prix').val(article.prix);
     $('#etat').val(article.etat);
+    //$('#statut').val(article.statut);
     modalModifierA.show();
 }
 
@@ -307,6 +308,7 @@ let modalModifierArticle = (article) => {
                     <span id="msgErrModifierArticle"></span>
                     <form class="row g-3" id="formModifierArticle">
                         <input type="hidden" value="${article.ida}" id="mdArticleIda">
+                        <input type="hidden" value="${article.statut}" id="statut" name="statut">
                         <div class="col-md-12">
                             <label for="nomArticle" class="form-label">Nom du produit</label>
                             <input type="text" class="form-control " id="nomArticle" name="nomArticle" required>

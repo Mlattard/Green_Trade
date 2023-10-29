@@ -40,7 +40,7 @@ class Article {
     function setPrix($prix) { $this->prix = $prix; }
     function setEtat($etat) { $this->etat = $etat; }
     function setPhoto($photo) { $this->photo = $photo; }
-    function setStatut($statut) { $this->photo = $statut; }
+    function setStatut($statut) { $this->statut = $statut; }
 
     // Fonction pour afficher les détails de l'article
     function afficher() {

@@ -14,6 +14,7 @@ let requeteAjaxAdmin = (form) => {
         },
         error: function (xhr, status, error) {
             console.log(error);
+            console.log(form.get('msg'));
             alert('Erreur de requête : ' + status + ' - ' + error);
         }
     });
