@@ -2,39 +2,36 @@ const TVQ = 0.09975;
 const TPS = 0.05;
 const TAXES = TVQ + TPS;
 
-let panier = null;
-
-if (localStorage.getItem("panier") == undefined) {
-    localStorage.setItem("panier", '[]');
-}
-
 // Repartiteur d'actions:
 
 var actionsVuesMembre = (action, reponse) => {
 
 	switch(action){
 		case "listerCardsArticles" :
-			listerVuesArticlesCards(reponse.listeArticles);
+			listerVuesArticlesCards(reponse.listeArticles, reponse.panier);
 		break;
         case "afficherPanier" :
 			afficherPanier(reponse.panier);
 		break;
         case "creerPanier" :
 		break;
+        case 'ajouterPanier' :
+            console.log(reponse);
+        break;
 	}
 }
 
 // Lister en Cards:
 
-function listerVuesArticlesCards(listeArticles){
+function listerVuesArticlesCards(listeArticles, panier){
     var contenu = $('#contenuMembre');
     contenu.empty();
     listeArticles.forEach(function (article) {
-        contenu.append(obtenirCardArticle(article));
+        contenu.append(obtenirCardArticle(article, panier));
     });
 }
 
-function obtenirCardArticle(article){
+function obtenirCardArticle(article, panier){
     var card = '<div class="card card_perso" style="width: 18rem;">';
     card += '<img src="../article/photos/' + article.photo + '" class="card-img-top" alt="...">';
     card += '<div class="card-body">';
@@ -43,7 +40,7 @@ function obtenirCardArticle(article){
     card += '<p class="card-text">Catégorie: ' + article.categorie + '</p>';
     card += '<p class="card-text">Prix: ' + article.prix + '$</p>';
     card += '<p class="card-text">État: ' + article.etat + '</p>';
-    card += '<a href="#" class="btn btn-primary" onclick="ajouterPanier('+ article.ida +')">Acheter</a>';
+    card += '<a href="#" class="btn btn-primary" onclick="ajouterPanier(' + article.ida + ', ' + panier.idp + ')">Acheter</a>';
     card += '</div>';
     card += '</div>';
     
@@ -86,7 +83,6 @@ let afficherPanier = () => {
                     <div class="col"><div class="close closeBtn" onClick="enleverArticle(this,${unArticle.ida});">&#10005;</div></div>
                 </div>
             </div>
-        
         `;
         totalAchat += montantTotalCetArticle;
     }

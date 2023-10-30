@@ -7,6 +7,7 @@ var actionsVuesIndex = (action, reponse) => {
 
 	switch(action){
 		case "listerCardsArticles" :
+            console.log(reponse);
 			afficherArticles(page, reponse.listeArticles)
 		break;
         case "carrouselPrecedent":

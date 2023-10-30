@@ -103,7 +103,7 @@ class DaoArticle {
 
     // Read:
 
-    function Dao_Article_Lister($action):string {
+    function Dao_Article_Lister($action, $membreIdm):string {
 
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $requete = "SELECT * FROM articles";
@@ -116,6 +116,19 @@ class DaoArticle {
             $this->reponse['listeArticles'] = array();
             while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                 $this->reponse['listeArticles'][] = $ligne;
+            }
+            if ($membreIdm != null) {
+                try{
+                    $requete2 = "SELECT * FROM paniers WHERE idm =".$membreIdm." AND statut = 'A'";
+                    $stmt2 = $connexion->prepare($requete2);
+                    $stmt2->execute();
+                    $this->reponse['OK'] = true;
+                    $this->reponse['msg'] = "";              
+                    $this->reponse['panier'] = $stmt2->fetch(PDO::FETCH_OBJ);
+                }catch (Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Problème pour obtenir les données des articles";
+                }
             }
         }catch (Exception $e){
             $this->reponse['OK'] = false;

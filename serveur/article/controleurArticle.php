@@ -52,9 +52,6 @@
 				case "envoyerEnregistrerArticle" :
 					return $this->Ctrl_Article_Enregistrer();
 				break;
-				case "ajouterPanier" :
-					return ;
-				break;
 			}
 	    }
 
@@ -75,7 +72,13 @@
 		// Read:
 
 		function Ctrl_Article_Lister($action){
-			return DaoArticle::getDaoArticle()->Dao_Article_Lister($action); 
+			
+			if (isset($_POST['membreIdm'])) {
+				$membreIdm = $_POST['membreIdm'];
+			} else {
+				$membreIdm = null;
+			}
+			return DaoArticle::getDaoArticle()->Dao_Article_Lister($action, $membreIdm); 
 	    }
 
 		function Ctrl_Article_Fiche($articleIda){

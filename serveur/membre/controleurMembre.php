@@ -21,7 +21,6 @@
 		// Repartiteur d'actions:
 
 		function Ctrl_Membre_Actions(){
-					
 			switch($_POST['action']){
 				case "listerTabMembre" :
 					return $this->Ctrl_Membre_Lister();
@@ -82,7 +81,6 @@
 		}
 
 		function Ctrl_Membre_Modifier($membreIdm){
-			
 			$nom = $_POST['nomMembre'];
             $prenom = $_POST['prenomMembre'];
             $courriel = $_POST['courrielMembre'];

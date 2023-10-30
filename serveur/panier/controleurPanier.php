@@ -23,20 +23,20 @@
 			
 			switch($action){
                 case "creerPanier" :
-					return $this->Ctrl_Panier_Creer();
+					return $this->Ctrl_Panier_Creer($_POST['membreIdm']);
 				break;
                 case "ajouterPanier" :
-					return $this->Ctrl_Panier_Ajouter($_POST['articleIda']);
+					return $this->Ctrl_Panier_Ajouter($_POST['panierIdp'], $_POST['articleIda']);
 				break;
             }
         }
 
-        function Ctrl_Panier_Creer(){
-			return DaoPanier::getDaoPanier()->Dao_Panier_Creer($_POST['membreIdm']); 
+        function Ctrl_Panier_Creer($membreIdm){
+			return DaoPanier::getDaoPanier()->Dao_Panier_Creer($membreIdm); 
 		}
 
-        function Ctrl_Panier_Ajouter($articleIda){
-			return DaoPanier::getDaoPanier()->Dao_Panier_Ajouter($articleIda); 
+        function Ctrl_Panier_Ajouter($panierIdp, $articleIda){
+			return DaoPanier::getDaoPanier()->Dao_Panier_Ajouter($panierIdp, $articleIda); 
 		}
     }
 ?>    

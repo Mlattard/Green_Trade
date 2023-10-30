@@ -22,7 +22,7 @@
         <script src="../../client/membre/vuesMembre.js"></script>
         <link rel="stylesheet" href="../../client/public/css/style.css">
     </head>
-    <body onLoad="listerArticlesCards(); creerPanier(<?php echo json_encode($_SESSION['idm'])?>);">  
+    <body onLoad="listerArticlesCards(<?php echo json_encode($_SESSION['idm'])?>); creerPanier(<?php echo json_encode($_SESSION['idm'])?>);">  
         <!-- Barre navigation -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
