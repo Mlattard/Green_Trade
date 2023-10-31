@@ -4,6 +4,7 @@
         header('location: ../../index.php');
         exit();
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,7 @@
         <script src="../../client/membre/vuesMembre.js"></script>
         <link rel="stylesheet" href="../../client/public/css/style.css">
     </head>
-    <body onLoad="listerArticlesCards(<?php echo json_encode($_SESSION['idm'])?>); creerPanier(<?php echo json_encode($_SESSION['idm'])?>);">  
+    <body onLoad="listerArticlesCards(<?php echo json_encode($_SESSION['idm'])?>); creerPanier(<?php echo json_encode($_SESSION['idm'])?>); afficherPanier(<?php echo json_encode($_SESSION['idm'])?>);">  
         <!-- Barre navigation -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -49,37 +50,28 @@
                             <a class="nav-link" href="javascript:document.getElementById('formDeconnexion').submit();">Deconnexion</a>
                         </li>
                     </ul>
-                    
-                    <?php
-                        echo "<div class = 'infoMembre'><img class = 'avatar' src='".$_SESSION['photo']."'width=48 height=48>"."Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)</div>";
-                    ?>
                 </div>
             </div>
         </nav>
         <!-- Fin barre navigation -->
         
-        <div class="barrePanier">
-            <a id="panier" class="nav-link" aria-current="page" href="#" onclick="afficherPanier();"><i class="bi bi-cart panierPlus"></i></a>
-            <span id="nbart">0</span>
-        </div>
+        <div class="contenuPage">
 
-        <!-- Contenu page -->
-        <div id="contenuMembre"></div>
+            <!-- Contenu page -->
+            <div id="contenuMembre"></div>
 
-        <!-- Modal du panier -->
-        <div class="modal fade" id="idModPanier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="contenuPanier"></div>
-                    </div>
+            <!-- Contenu panier -->        
+            <aside id="contenuPanier"> 
+                <div id="infosMembre">
+                    <?php
+                        echo "<div class = 'infoMembre'><img class = 'avatar' src='".$_SESSION['photo']."'width=48 height=48>"."Bonjour ".$_SESSION['prenom']." ".$_SESSION['nom']." :)</div>";
+                    ?>
                 </div>
-            </div>
+                <div id="panierMembre">
+                </div>
+            </aside>
+
         </div>
-        <!-- Fin du modal du panier -->
     
         <form id="formDeconnexion" action="../connexion/controleurConnexion.php" method="POST">
             <input type="hidden" name="action" value="deconnexion">

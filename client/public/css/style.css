@@ -33,12 +33,21 @@
     margin-right: 20px;
 }
 
-#contenuIndex, #contenuMembre {
+#contenuIndex {
     padding: 2% 10% 2% 10%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
+    width: 75%;
+}
+
+#contenuMembre {
+    padding: 2% 5% 2% 10%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 75%;
+}
   
 #contenuIndex > div, #contenuMembre > div {
     width:100%; 
@@ -74,7 +83,6 @@
     justify-content:end;
     padding: 0% 10% 0% 10%;
     height: 40px;
-    background-color: rgb(198, 210, 198);
 }
 
 /* Page Index */
@@ -96,7 +104,7 @@
 }
 
 #carrouselIndex{
-    margin: 1% 10% 1% 10%;
+    margin: 1% 8% 1% 8%;
 }
 
 .card_perso{
@@ -116,4 +124,30 @@
 .flecheCarrousel{
     height: 40px;
     width: auto;
+}
+
+.contenuPage{
+    display: flex;
+}
+
+#contenuPanier{
+    width:25%;
+    background-color: rgb(198, 210, 198);
+}
+
+#infosMembre{
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+#panierMembre{
+    margin: 10% 2% 10% 2%;
+}
+
+.nomArticlePanier{
+    width: 65%;
+}
+
+.prixPanier{
+    text-align: right;
 }

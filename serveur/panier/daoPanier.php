@@ -74,6 +74,49 @@
             }
         }
 
+        function Dao_Panier_Afficher($membreIdm):string {
+
+            $connexion = Connexion::getInstanceConnexion()->getConnexion();
+            
+            try{
+                $requete = "SELECT idp FROM paniers WHERE idm = ? AND statut = 'A'";
+                $donnees = [$membreIdm];
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute($donnees);
+                
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "Panier trouvé";
+                $this->reponse['idp'] = $stmt->fetch(PDO::FETCH_OBJ)->idp;
+                try{
+                    $requete4 = "SELECT * FROM articlespanier WHERE idp = ?";
+                    $donnees4 = [$this->reponse['idp']];
+                    $stmt4 = $connexion->prepare($requete4);
+                    $stmt4->execute($donnees4);
+                    
+                    $this->reponse['OK'] = true;
+                    $this->reponse['msg'] = "Article trouvé dans le panier";
+
+                    $this->reponse['panier'] = array();
+                    while($ligne = $stmt4->fetch(PDO::FETCH_OBJ)){
+                        $this->reponse['panier'][] = $ligne;
+                    }
+                }catch (Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Pas d'Articles dans le panier: " . $e->getMessage();
+                }finally {
+                    unset($connexion);
+                    return json_encode($this->reponse);
+                }
+            }catch (Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Panier pas trouvé: " . $e->getMessage();
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
+
         function Dao_Panier_Ajouter($panierIdp, $articleIda):string {
 
             $connexion = Connexion::getInstanceConnexion()->getConnexion();
@@ -93,26 +136,30 @@
 
                     $this->reponse['OK'] = true;
                     $this->reponse['msg'] = "Article trouvé avec succès";
-                    $this->reponse['nom'] = $stmt2->fetch(PDO::FETCH_OBJ)->nom;
-
+                    $this->reponse['article'] = $stmt2->fetch(PDO::FETCH_OBJ);
+                    $this->reponse['nom'] = $this->reponse['article']->nom;
+                    $this->reponse['prix'] = $this->reponse['article']->prix;
                     try{
-                        $requete3 = "INSERT INTO articlespanier VALUES (?, ?, ?, 1)";
-                        $donnees3 = [$this->reponse['idp'], $articleIda, $this->reponse['nom']];
+                        $requete3 = "INSERT INTO articlespanier VALUES (?, ?, ?, ?)";
+                        $donnees3 = [$this->reponse['idp'], $articleIda, $this->reponse['nom'], $this->reponse['prix']];
                         $stmt3 = $connexion->prepare($requete3);
                         $stmt3->execute($donnees3);
                         
                         $this->reponse['OK'] = true;
                         $this->reponse['msg'] = "Article enregistré avec succès dans le panier";
-                        
                         try{
-                            $requete4 = "SELECT * FROM articlespanier WHERE idp = ? AND ida = ?";
-                            $donnees4 = [$this->reponse['idp'], $articleIda];
+                            $requete4 = "SELECT * FROM articlespanier WHERE idp = ?";
+                            $donnees4 = [$this->reponse['idp']];
                             $stmt4 = $connexion->prepare($requete4);
                             $stmt4->execute($donnees4);
                             
                             $this->reponse['OK'] = true;
-                            $this->reponse['msg'] = "Article enregistré avec succès dans le panier";
-                            $this->reponse['articlePanier'] = $stmt4->fetch(PDO::FETCH_OBJ);
+                            $this->reponse['msg'] = "Article trouvé dans le panier";
+
+                            $this->reponse['panier'] = array();
+                            while($ligne = $stmt4->fetch(PDO::FETCH_OBJ)){
+                                $this->reponse['panier'][] = $ligne;
+                            }
                         }catch (Exception $e){
                             $this->reponse['OK'] = false;
                             $this->reponse['msg'] = "Article pas trouvé dans le panier: " . $e->getMessage();
@@ -128,6 +175,47 @@
             }catch (Exception $e){
                 $this->reponse['OK'] = false;
                 $this->reponse['msg'] = "Panier pas trouvé: " . $e->getMessage();
+            }finally {
+                unset($connexion);
+                return json_encode($this->reponse);
+            }
+        }
+
+    function Dao_Panier_Enlever($panierIdp, $articleIda):string {
+
+        $connexion = Connexion::getInstanceConnexion()->getConnexion();
+        
+            try{
+                $requete = "DELETE FROM articlespanier WHERE idp = ? AND ida = ?";
+                $donnees = [$panierIdp, $articleIda];
+                $stmt = $connexion->prepare($requete);
+                $stmt->execute($donnees);
+                
+                $this->reponse['OK'] = true;
+                $this->reponse['msg'] = "Article supprimé avec succès du panier";
+                try{
+                    $requete2 = "SELECT * FROM articlespanier WHERE idp = ?";
+                    $donnees2 = [$panierIdp];
+                    $stmt2 = $connexion->prepare($requete2);
+                    $stmt2->execute($donnees2);
+                    
+                    $this->reponse['OK'] = true;
+                    $this->reponse['msg'] = "Articles trouvé dans le panier";
+                    $this->reponse['idp'] = $panierIdp;
+                    $this->reponse['panier'] = array();
+                    while($ligne = $stmt2->fetch(PDO::FETCH_OBJ)){
+                        $this->reponse['panier'][] = $ligne;
+                    }
+                }catch (Exception $e){
+                    $this->reponse['OK'] = false;
+                    $this->reponse['msg'] = "Panier vide: " . $e->getMessage();
+                }finally {
+                    unset($connexion);
+                    return json_encode($this->reponse);
+                }
+            }catch (Exception $e){
+                $this->reponse['OK'] = false;
+                $this->reponse['msg'] = "Erreur lors de la suppression de l'article du le panier: " . $e->getMessage();
             }finally {
                 unset($connexion);
                 return json_encode($this->reponse);

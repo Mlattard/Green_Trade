@@ -28,6 +28,13 @@
                 case "ajouterPanier" :
 					return $this->Ctrl_Panier_Ajouter($_POST['panierIdp'], $_POST['articleIda']);
 				break;
+				case "afficherPanier" :
+					return $this->Ctrl_Panier_Afficher($_POST['membreIdm']);
+				break;
+				case "enleverArticlePanier" :
+					return $this->Ctrl_Panier_Enlever($_POST['panierIdp'], $_POST['articleIda']);
+				break;
+				
             }
         }
 
@@ -35,8 +42,16 @@
 			return DaoPanier::getDaoPanier()->Dao_Panier_Creer($membreIdm); 
 		}
 
+		function Ctrl_Panier_Afficher($membreIdm){
+			return DaoPanier::getDaoPanier()->Dao_Panier_Afficher($membreIdm); 
+		}
+
         function Ctrl_Panier_Ajouter($panierIdp, $articleIda){
 			return DaoPanier::getDaoPanier()->Dao_Panier_Ajouter($panierIdp, $articleIda); 
+		}
+
+		function Ctrl_Panier_Enlever($panierIdp, $articleIda){
+			return DaoPanier::getDaoPanier()->Dao_Panier_Enlever($panierIdp, $articleIda); 
 		}
     }
 ?>    

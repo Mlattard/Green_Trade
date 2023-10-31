@@ -11,13 +11,12 @@ var actionsVuesMembre = (action, reponse) => {
 			listerVuesArticlesCards(reponse.listeArticles, reponse.panier);
 		break;
         case "afficherPanier" :
-			afficherPanier(reponse.panier);
+        case 'ajouterPanier' :
+        case 'enleverArticlePanier' :
+			afficherPanierMembre(reponse);
 		break;
         case "creerPanier" :
-		break;
-        case 'ajouterPanier' :
-            console.log(reponse);
-        break;
+		break;        
 	}
 }
 
@@ -47,81 +46,53 @@ function obtenirCardArticle(article, panier){
     return card;
 }
 
-let afficherPanier = () => {
-    let panier = JSON.parse(localStorage.getItem("panier"));
-    let nbArt = panier.length;
+
+let afficherPanierMembre = (reponse) => {
+    
+    console.log(reponse);
+
+    let nbArt = reponse.panier.length;
     let vuePanier = `
-        <div class="card">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="title">
-                        <div class="row">
-                            <div class="col">
-                                <h4><b>Panier d'achats</b></h4>
-                            </div>
-                            <div class="col align-self-center text-right text-muted">${nbArt} articles</div>
-                        </div>
-                    </div> 
+        <table class="table" id="tablePanier">
+            <tbody>
         `;
-    let listeArticlesAchetes = [];
-    panier.forEach(idArticle => {
-        listeArticlesAchetes.push(listeArticles.find(unArticle => unArticle.ida == idArticle));
-    });
-    let totalAchat = 0;
-    let montantTotalCetArticle;
-    for (let unArticle of listeArticlesAchetes) {
-        montantTotalCetArticle = parseFloat(unArticle.prix);
-        vuePanier += ` 
-            <div class="row border-top border-bottom">
-                <div class="row align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="../../images_articles/${unArticle.imageart}"></div>
-                    <div class="col">
-                        <div class="row text-muted">${unArticle.nomarticle}</div>
-                    </div>
-                    <div class="col"> <input type="number" id="qte" name="qte" min="1" max="100" value=1 onChange="ajusterTotalAchat(this,${unArticle.prix}, ${montantTotalCetArticle});"></div>
-                    <div class="col">${montantTotalCetArticle}$</div>
-                    <div class="col"><div class="close closeBtn" onClick="enleverArticle(this,${unArticle.ida});">&#10005;</div></div>
-                </div>
-            </div>
+
+    let montantAvantTaxes = 0;
+
+    for (let unArticle of reponse.panier) {
+        let prix = parseFloat(unArticle.prix);
+        vuePanier += `
+            <tr>
+                <td class="nomArticlePanier">${unArticle.nom}</td>
+                <td class="prixPanier">${prix.toFixed(2)} $</td>
+                <td><a href="#" class="close closeBtn" onclick="enleverArticlePanier(${unArticle.ida}, ${reponse.idp});">&#10005;</a></td>
+            </tr> 
         `;
-        totalAchat += montantTotalCetArticle;
+        montantAvantTaxes += prix;
     }
     
-    let montantTaxes = totalAchat * TAXES;
-    let totalPayer = totalAchat + montantTaxes;
+    let montantTaxes = parseFloat((montantAvantTaxes * TAXES).toFixed(2));
+    let montantTotal = montantAvantTaxes + montantTaxes;
 
     vuePanier += `
-            </div>
-                    <div class="col-md-4 bg-info text-dark">
-                        <div>
-                            <h5><b>Facture</b></h5>
-                        </div>
-                        <hr>
-                        <br/>
-                        <div class="row">
-                            <div class="col" style="padding-left:10;">${nbArt} ARTICLES</div>
-                            <div id="totalAchat" class="col text-right">${totalAchat.toFixed(2)}$</div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col" style="padding-left:10;">MONTANT TAXES</div>
-                            <div id="idTaxes" class="col text-right">${montantTaxes.toFixed(2)}$</div>
-                        </div>
-                        <br/>
-                        <div class="row">
-                            <div class="col" style="padding-left:10;">MONTANT À PAYER</div>
-                            <div id="totalPayer" class="col text-right">${totalPayer.toFixed(2)}$</div>
-                        </div> 
-                        </br>
-                        <button class="btn btn-dark" onclick="payer();">PAYER</button>
-                        <span id="payer"></span>
-                        <br/> 
-                    </div>
-                </div>
-            </div>
+            <tr>
+                <th>${nbArt} articles</th>
+                <td class="prixPanier">${montantAvantTaxes.toFixed(2)} $</td>
+            </tr>
+            <tr>
+                <th>Taxes</th>
+                <td class="prixPanier">${montantTaxes.toFixed(2)} $</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td class="prixPanier">${montantTotal.toFixed(2)} $</td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-dark" onclick="payer();">Payer</button>
+        <span id="payer"></span>
         `;
-    $('#contenuPanier').html(vuePanier);
-    document.getElementById("payer").innerHTML = "";
-    let modalPanier = new bootstrap.Modal(document.getElementById('idModPanier'), {});
-    modalPanier.show();
+
+    $('#panierMembre').html(vuePanier);
+    // document.getElementById("payer").innerHTML = "";   
 }
