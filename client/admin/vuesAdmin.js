@@ -148,9 +148,11 @@ function remplirTableauArticle(article){
 
 let afficherModalFicheArticle = (article) => {
     document.getElementById('modals').innerHTML = modalFicheArticle(article);
-    const modalFiche = new bootstrap.Modal('#modalFicheArticle', {
-    });
+    const modalFiche = new bootstrap.Modal('#modalFicheArticle');
     modalFiche.show();
+    modalFiche._element.addEventListener('hide.bs.modal', event => {
+        listerArticlesTab();
+    })  
 }
 
 let modalFicheArticle = (article) => {
@@ -221,6 +223,9 @@ let afficherModalFicheMembre = (membre) => {
     const modalFicheM = new bootstrap.Modal('#modalFicheMembre', {
     });
     modalFicheM.show();
+    modalFicheM._element.addEventListener('hide.bs.modal', event => {
+        listerMembresTab();
+    }) 
 }
 
 let modalFicheMembre = (membre) => {
@@ -291,7 +296,7 @@ let afficherModalModifierArticle = (article) => {
 	$('#categorie').val(article.categorie);
 	$('#prix').val(article.prix);
     $('#etat').val(article.etat);
-    //$('#statut').val(article.statut);
+
     modalModifierA.show();
 }
 

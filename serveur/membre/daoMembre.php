@@ -76,7 +76,7 @@
                         $stmt2 = $connexion->prepare($requete2);
                         $stmt2->execute($donnees2);
                         $idm = $connexion->lastInsertId();
-    
+
                         $requete3 = "INSERT INTO connexion VALUES (?, ?, ?, 'M', 'A')";
                         try{
                             $stmt3 = $connexion->prepare($requete3);

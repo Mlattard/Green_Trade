@@ -39,11 +39,11 @@
                     <ul class="navbar-nav">
                         <!-- Lien Accueil -->
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="#" onclick="listerArticlesCards(<?php echo json_encode($_SESSION['idm'])?>); creerPanier(<?php echo json_encode($_SESSION['idm'])?>); afficherPanier(<?php echo json_encode($_SESSION['idm'])?>);">Accueil</a>
                         </li>
                         <!-- Lien Se connecter -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Profil</a>
+                            <a id="btnCommandesPassees "class="nav-link" aria-current="page" href="#" onclick="afficherCommandesPassees(<?php echo json_encode($_SESSION['idm'])?>)">Commandes passées</a>
                         </li>
                         <!-- Lien Devenir Membre -->
                         <li class="nav-item">

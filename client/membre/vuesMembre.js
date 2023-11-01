@@ -5,33 +5,48 @@ const TAXES = TVQ + TPS;
 // Repartiteur d'actions:
 
 var actionsVuesMembre = (action, reponse) => {
-
+    
+    console.log(action + ' / ' + reponse.msg);
 	switch(action){
 		case "listerCardsArticles" :
-			listerVuesArticlesCards(reponse.listeArticles, reponse.panier);
+			listerVuesArticlesCards(reponse);
 		break;
         case "afficherPanier" :
         case 'ajouterPanier' :
         case 'enleverArticlePanier' :
+        case "obtenirDetailsPanier" :
 			afficherPanierMembre(reponse);
 		break;
+        case 'afficherCommandesPassees' :
+            afficherCommandesPasseesMembre(reponse);
+        break;
         case "creerPanier" :
-		break;        
+		break;    
 	}
 }
 
 // Lister en Cards:
 
-function listerVuesArticlesCards(listeArticles, panier){
+function listerVuesArticlesCards(reponse){
+    console.log('listerVuesArticlesCards');
+    console.log(reponse);
     var contenu = $('#contenuMembre');
     contenu.empty();
-    listeArticles.forEach(function (article) {
-        contenu.append(obtenirCardArticle(article, panier));
+    reponse.listeArticles.forEach(function (article) {
+        if (article.statut == 'A') {
+            contenu.append(obtenirCardArticle(article, reponse.panier, reponse.membreIdm));
+        }
+    });
+    reponse.listeArticles.forEach(function (article) {
+        if (article.statut == 'I') {
+            contenu.append(obtenirCardArticle(article, reponse.panier, reponse.membreIdm));
+        }
     });
 }
 
-function obtenirCardArticle(article, panier){
+function obtenirCardArticle(article, panier, membreIdm){
     var card = '<div class="card card_perso" style="width: 18rem;">';
+    if (article.statut == 'I'){card += '<div class="card-overlay"></div>'};
     card += '<img src="../article/photos/' + article.photo + '" class="card-img-top" alt="...">';
     card += '<div class="card-body">';
     card += '<h5 class="card-title">' + article.nom + '</h5>';
@@ -39,7 +54,7 @@ function obtenirCardArticle(article, panier){
     card += '<p class="card-text">Catégorie: ' + article.categorie + '</p>';
     card += '<p class="card-text">Prix: ' + article.prix + '$</p>';
     card += '<p class="card-text">État: ' + article.etat + '</p>';
-    card += '<a href="#" class="btn btn-primary" onclick="ajouterPanier(' + article.ida + ', ' + panier.idp + ')">Acheter</a>';
+    card += '<a href="#" class="btn btn-primary" onclick="ajouterPanier(' + article.ida + ', ' + panier.idp + ', ' + membreIdm + ')">Acheter</a>';
     card += '</div>';
     card += '</div>';
     
@@ -48,11 +63,16 @@ function obtenirCardArticle(article, panier){
 
 
 let afficherPanierMembre = (reponse) => {
-    
     console.log(reponse);
-
     let nbArt = reponse.panier.length;
-    let vuePanier = `
+    let vuePanier = '';
+    if (reponse.statut == 'I'){
+        vuePanier += '<h5>Facture commande ' + reponse.panierIdp + '</h5>';
+    } else {
+        vuePanier += '<h5>Panier ' + reponse.panierIdp + '</h5>'
+    }
+
+    vuePanier += `
         <table class="table" id="tablePanier">
             <tbody>
         `;
@@ -65,9 +85,11 @@ let afficherPanierMembre = (reponse) => {
             <tr>
                 <td class="nomArticlePanier">${unArticle.nom}</td>
                 <td class="prixPanier">${prix.toFixed(2)} $</td>
-                <td><a href="#" class="close closeBtn" onclick="enleverArticlePanier(${unArticle.ida}, ${reponse.idp});">&#10005;</a></td>
-            </tr> 
-        `;
+        `
+        if (reponse.statut == 'A'){
+            vuePanier += '<td><a href="#" class="close closeBtn" onclick="enleverArticlePanier(' + unArticle.ida + ', ' + reponse.panierIdp + ');">&#10005;</a></td>';
+        }
+        vuePanier += '</tr>'; 
         montantAvantTaxes += prix;
     }
     
@@ -89,10 +111,48 @@ let afficherPanierMembre = (reponse) => {
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-dark" onclick="payer();">Payer</button>
-        <span id="payer"></span>
-        `;
+        `
+        if (reponse.statut == 'A'){
+            vuePanier += '<button class="btn btn-dark" id="btnPayer" onclick="desactiverPanier(' + reponse.panierIdp + '); listerArticlesCards(' + reponse.membreIdm + '); creerPanier(' + reponse.membreIdm + '); afficherPanier(' + reponse.membreIdm + '); payer();">Payer</button>';
+            vuePanier += '<span id="payer"></span>';
+        }
 
     $('#panierMembre').html(vuePanier);
-    // document.getElementById("payer").innerHTML = "";   
+    $("#payer").innerHTML = "";   
+}
+
+let payer = () => {
+    document.getElementById("payer").innerHTML = "Commande passée :)";
+}
+// Lister Commandes Passées
+
+function afficherCommandesPasseesMembre(reponse){
+    var contenu = $('#contenuMembre');
+    contenu.empty();
+    var tab = '<table class="table table-hover" id="contenuDynamique">';
+    tab += '<thead>';
+    tab += '<tr>';
+    tab += '<th scope="col">ID Panier</th>';
+    tab += '<th scope="col">Date de création</th>';
+    tab += '</tr>';
+    tab += '</thead>';
+    tab += '<tbody>';
+    
+    reponse.paniers.forEach(function (panier) {
+        tab += remplirTableauPaniers(panier, reponse.membreIdm);
+    });
+
+    tab += '</tbody>';
+    tab += '</table>';
+
+    contenu.append(tab);
+}
+
+function remplirTableauPaniers(panier, membreIdm){
+    var ligne = '<tr onclick="obtenirDetailsPanier(' + membreIdm + ', ' + panier.idp + ');">';
+    ligne += '<th scope="row">' + panier.idp + '</th>';
+    ligne += '<td>' + panier.date_creation + '</td>';
+    ligne += '</tr>';
+
+    return ligne;
 }

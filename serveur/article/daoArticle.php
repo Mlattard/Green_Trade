@@ -113,13 +113,14 @@ class DaoArticle {
             $this->reponse['OK'] = true;
             $this->reponse['msg'] = "";
             $this->reponse['action'] = $action;
+            $this->reponse['membreIdm'] = $membreIdm;
             $this->reponse['listeArticles'] = array();
             while($ligne = $stmt->fetch(PDO::FETCH_OBJ)){
                 $this->reponse['listeArticles'][] = $ligne;
             }
             if ($membreIdm != null) {
                 try{
-                    $requete2 = "SELECT * FROM paniers WHERE idm =".$membreIdm." AND statut = 'A'";
+                    $requete2 = "SELECT * FROM paniers WHERE idm = ".$membreIdm." AND statut = 'A'";
                     $stmt2 = $connexion->prepare($requete2);
                     $stmt2->execute();
                     $this->reponse['OK'] = true;

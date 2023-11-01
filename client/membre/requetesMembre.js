@@ -27,7 +27,23 @@ let listerArticlesCards = (membreIdm) => {
     form.append('action', 'listerCardsArticles');
     form.append('membreIdm', membreIdm);
     form.append('route', 'article');
-    requeteAjaxMembre(form);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: form,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: false,
+        success: (reponse) => {
+            actionsVuesMembre(form.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(form.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
 };
 
 let creerPanier = (membreIdm) => {
@@ -35,9 +51,24 @@ let creerPanier = (membreIdm) => {
     form.append('action', 'creerPanier');
     form.append('route', 'panier');
     form.append('membreIdm', membreIdm);
-    requeteAjaxMembre(form);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: form,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: false,
+        success: (reponse) => {
+            actionsVuesMembre(form.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(form.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
 }
-
 
 let afficherPanier = (membreIdm) => {
     let form = new FormData();
@@ -51,6 +82,7 @@ let afficherPanier = (membreIdm) => {
         dataType: 'json',
         contentType: false,
         processData: false,
+        async: false,
         success: (reponse) => {
             actionsVuesMembre(form.get('action'), reponse);
         },
@@ -62,11 +94,14 @@ let afficherPanier = (membreIdm) => {
     });
 }
 
-let ajouterPanier = (articleIda, panierIdp) => {
+let ajouterPanier = (articleIda, panierIdp, membreIdm) => {
+    console.log('ajouterPanier: ');
+    console.log(panierIdp);
     let form = new FormData();
     form.append('action', 'ajouterPanier');
     form.append('route', 'panier');
     form.append('panierIdp', panierIdp);
+    form.append('membreIdm', membreIdm);
     form.append('articleIda', articleIda);
     $.ajax({
         type: 'POST',
@@ -99,7 +134,82 @@ let enleverArticlePanier = (articleIda, panierIdp) => {
         dataType: 'json',
         contentType: false,
         processData: false,
+        async: false,
         success: (reponse) => {
+            actionsVuesMembre(form.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(form.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+}
+
+let afficherCommandesPassees = (membreIdm) => {
+    let form = new FormData();
+    form.append('action', 'afficherCommandesPassees');
+    form.append('route', 'panier');
+    form.append('membreIdm', membreIdm);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: form,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: false,
+        success: (reponse) => {
+            actionsVuesMembre(form.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(form.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+}
+
+let obtenirDetailsPanier = (membreIdm, panierIdp) => {
+    let form = new FormData();
+    form.append('action', 'obtenirDetailsPanier');
+    form.append('route', 'panier');
+    form.append('membreIdm', membreIdm);
+    form.append('panierIdp', panierIdp);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: form,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: false,
+        success: (reponse) => {
+            actionsVuesMembre(form.get('action'), reponse);
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            console.log(form.get('action'));
+            alert('Erreur de requête : ' + status + ' - ' + error);
+        }
+    });
+}
+
+let desactiverPanier = (panierIdp) => {
+    let form = new FormData();
+    form.append('action', 'desactiverPanier');
+    form.append('route', 'panier');
+    form.append('panierIdp', panierIdp);
+    $.ajax({
+        type: 'POST',
+        url: '../../routes.php',
+        data: form,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        async: false,
+        success: (reponse) => {
+            console.log(reponse);
             actionsVuesMembre(form.get('action'), reponse);
         },
         error: function (xhr, status, error) {
