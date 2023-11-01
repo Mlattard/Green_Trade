@@ -53,8 +53,6 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Contactez-nous</a>
             </li>
-            <!--
-            <li class="nav-item"><a class="nav-link" href="javascript:lister();">Objets à vendre</a></li><li class="nav-item"><a class="nav-link" href="javascript:listerMembres();">Liste des membres</a></li><li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalEnregistrer">Ajouter un objet</a></li> -->
           </ul>
         </div>
       </div>
@@ -153,7 +151,7 @@
               </div>
               <div class="col-md-12">
                 <label for="mdpConnexion" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control " pattern="^[A-Za-z0-9_\$#!\-]{6,10}$" id="mdpConnexion" name="mdpConnexion" value="qwe123!" required>
+                <input type="password" class="form-control" id="mdpConnexion" name="mdpConnexion" value="qwe123!" required>
               </div>
               <input type="hidden" name="action" value="connexion">
               <br />
