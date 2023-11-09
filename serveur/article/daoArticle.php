@@ -84,7 +84,7 @@ class DaoArticle {
 
         $connexion = Connexion::getInstanceConnexion()->getConnexion();
         $photo = self::chargerPhotoArticle($nom);
-        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo, statut) VALUES (?, ?, ?, ?, ?, ?, ?, 'A')";
+        $requete = "INSERT INTO articles (nom, description, categorie, prix, etat, photo, statut) VALUES (?, ?, ?, ?, ?, ?, 'A')";
         try{
             $donnees = [$nom, $description, $categorie, $prix, $etat, $photo];
             $stmt = $connexion->prepare($requete);
